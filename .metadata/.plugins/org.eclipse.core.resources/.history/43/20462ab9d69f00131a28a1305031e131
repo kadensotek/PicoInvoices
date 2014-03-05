@@ -1,0 +1,111 @@
+package com.example.myfirstapp;
+
+import android.app.Activity;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ListView;
+/*
+ * Steps to using the DB
+ * 1. Instantiate the DB Adapter
+ * 2. Open the DB
+ * 3. Use the DB
+ * 4. Close the DB
+ * 
+ */
+
+public class DBA extends Activity {
+
+	DBAdapter myDb;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_db);
+		
+		openDB();
+		populateListView();
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.db, menu);
+		return true;
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		closeDB();
+	}
+
+	private void closeDB() 
+	{
+		// TODO Auto-generated method stub
+		myDb.close();
+	}
+	private void openDB() 
+	{
+		myDb = new DBAdapter(this);
+		myDb.open();
+	}
+	
+	/*
+	 * 	onClickListeners are implemented here
+	 */
+	public void onClick_AddRecord(View v)
+	{
+		long newID = myDb.insertRow("Mike", 987, "blue");
+		//query for the record we just added
+		Cursor cursor = myDb.getRow(newID);
+		displayRecordSet(cursor);
+	}
+	
+	public void onClick_Clear(View v)
+	{
+		myDb.deleteAll();
+	}
+
+	
+	/*
+	 * 	display an entire record set to the screen
+	 */
+	private void displayRecordSet(Cursor cursor) 
+	{
+		String message = "";
+		//popluate the message from the cursor
+		
+		//reset cursor to start to check for data
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				//process the data:
+				int id  = cursor.getInt(DBAdapter.COL_ROWID);
+				String name  = cursor.getString(DBAdapter.COL_NAME);
+				int studentNumber  = cursor.getInt(DBAdapter.COL_STUDENTNUM);
+				
+				//append data to the message
+				message+= "id=" + id
+						+"name=" + name
+						+"#="+ studentNumber
+						+"\n";
+			}while(cursor.moveToNext());
+		}
+		cursor.close();
+	}
+	
+	
+	/*
+	 * 	Set up the listview
+	 */
+//	private void populateListView() {
+//		Cursor cursor = myDb.getAllRows();
+//		
+//		//set adapter for the listview
+//		ListView myList = (ListView) findViewById(R.id.clientListView);
+//		myList.setAdapter(myCursorAdapter);
+//		
+//	}
+}
