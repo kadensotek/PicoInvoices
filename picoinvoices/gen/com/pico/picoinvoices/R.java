@@ -57,14 +57,16 @@ public final class R {
         public static final int activity_client_invoices=0x7f030001;
         public static final int activity_client_list=0x7f030002;
         public static final int activity_home=0x7f030003;
-        public static final int client_name=0x7f030004;
-        public static final int invoice_listview_layout_template=0x7f030005;
+        public static final int activity_show_detailed_invoice=0x7f030004;
+        public static final int client_name=0x7f030005;
+        public static final int invoice_listview_layout_template=0x7f030006;
     }
     public static final class menu {
         public static final int add_new_client=0x7f070000;
         public static final int client_invoices=0x7f070001;
         public static final int client_list=0x7f070002;
         public static final int home=0x7f070003;
+        public static final int show_detailed_invoice=0x7f070004;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -73,6 +75,7 @@ public final class R {
         public static final int title_activity_add_new_client=0x7f050003;
         public static final int title_activity_client_invoices=0x7f050004;
         public static final int title_activity_home=0x7f050005;
+        public static final int title_activity_show_detailed_invoice=0x7f050006;
     }
     public static final class style {
         /** 

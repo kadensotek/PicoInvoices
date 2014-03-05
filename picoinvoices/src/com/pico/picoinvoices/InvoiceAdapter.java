@@ -3,8 +3,6 @@
 // TODO: Change the package to match your project.
 package com.pico.picoinvoices;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -152,14 +150,14 @@ public class InvoiceAdapter {
 		return c;
 	}
 	
-	public ArrayList<?> getCustomerContact(long customer)
-	{
-		Cursor mCursor = db.rawQuery("SELECT * FROM Table1, Table2 " +
-                "WHERE Table1.id = Table2.id_table1 " +
-                "GROUP BY Table1.data1", null);
-		
-		return null;
-	}
+//	public ArrayList<?> getCustomerContact(long customer)
+//	{
+//		Cursor mCursor = db.rawQuery("SELECT * FROM Table1, Table2 " +
+//                "WHERE Table1.id = Table2.id_table1 " +
+//                "GROUP BY Table1.data1", null);
+//		
+//		return null;
+//	}
 	
 	// Change an existing row to be equal to new data.
 	public boolean updateRow(long rowId, String issuedate, String customer, String dateserviceperformed, 
