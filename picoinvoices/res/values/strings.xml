@@ -7,5 +7,6 @@
     <string name="title_activity_add_new_client">AddNewClient</string>
     <string name="title_activity_client_invoices">ClientInvoices</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_show_detailed_invoice">ShowDetailedInvoice</string>
 
 </resources>
