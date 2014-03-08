@@ -13,6 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class ClientInvoices extends Activity 
 {
 

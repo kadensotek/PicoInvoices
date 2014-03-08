@@ -78,5 +78,4 @@ public class AddNewClient extends Activity
 		startActivity(intent);
 	}
 	
-	
 }
