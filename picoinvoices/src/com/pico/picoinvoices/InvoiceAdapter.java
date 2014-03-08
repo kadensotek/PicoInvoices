@@ -13,7 +13,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 // TO USE:
 // Change the package (at top) to match your project.
 // Search for "TODO", and make the appropriate changes.
-public class InvoiceAdapter {
+public class InvoiceAdapter 
+{
 
 	/////////////////////////////////////////////////////////////////////
 	//	Constants & Data
@@ -62,13 +63,15 @@ public class InvoiceAdapter {
 	//	Public methods:
 	/////////////////////////////////////////////////////////////////////
 	
-	public InvoiceAdapter(Context ctx) {
+	public InvoiceAdapter(Context ctx) 
+	{
 		this.context = ctx;
 		myDBHelper = new DatabaseHelper(context);
 	}
 	
 	// Open the database connection.
-	public InvoiceAdapter open() {
+	public InvoiceAdapter open() 
+	{
 		db = myDBHelper.getWritableDatabase();
 		return this;
 	}
@@ -80,7 +83,8 @@ public class InvoiceAdapter {
 	
 	// Add a new set of values to the database.
 	public long insertRow(String issuedate, Long customer, String dateserviceperformed, 
-			String priceservice, String servicedesc, String amountdue, String status) {
+			String priceservice, String servicedesc, String amountdue, String status) 
+	{
 		/*
 		 * CHANGE 3:
 		 */		
@@ -101,16 +105,20 @@ public class InvoiceAdapter {
 	}
 	
 	// Delete a row from the database, by rowId (primary key)
-	public boolean deleteRow(long rowId) {
+	public boolean deleteRow(long rowId) 
+	{
 		String where = KEY_ROWID + "=" + rowId;
 		return db.delete(DATABASE_TABLE, where, null) != 0;
 	}
 	
-	public void deleteAll() {
+	public void deleteAll() 
+	{
 		Cursor c = getAllRows();
 		long rowId = c.getColumnIndexOrThrow(KEY_ROWID);
-		if (c.moveToFirst()) {
-			do {
+		if (c.moveToFirst()) 
+		{
+			do
+			{
 				deleteRow(c.getLong((int) rowId));				
 			} while (c.moveToNext());
 		}
@@ -118,33 +126,39 @@ public class InvoiceAdapter {
 	}
 	
 	// Return all data in the database.
-	public Cursor getAllRows() {
+	public Cursor getAllRows() 
+	{
 		String where = null;
 		Cursor c = 	db.query(true, DATABASE_TABLE, ALL_KEYS, 
 							where, null, null, null, null, null);
-		if (c != null) {
+		if (c != null) 
+		{
 			c.moveToFirst();
 		}
 		return c;
 	}
 
 	// Get a specific row (by rowId)
-	public Cursor getRow(long rowId) {
+	public Cursor getRow(long rowId) 
+	{
 		String where = KEY_ROWID + "=" + rowId;
 		Cursor c = 	db.query(true, DATABASE_TABLE, ALL_KEYS, 
 						where, null, null, null, null, null);
-		if (c != null) {
+		if (c != null) 
+		{
 			c.moveToFirst();
 		}
 		return c;
 	}
 	
 	// Return the list of invoices associated with a specific customer
-	public Cursor getCustomerInvoice(long rowId) {
+	public Cursor getCustomerInvoice(long rowId) 
+	{
 		String where = KEY_CUSTOMER + "=" + rowId;
 		Cursor c = 	db.query(true, DATABASE_TABLE, ALL_KEYS, 
 				where, null, null, null, null, null);
-		if (c != null) {
+		if (c != null) 
+		{
 			c.moveToFirst();
 		}
 		return c;
@@ -161,7 +175,8 @@ public class InvoiceAdapter {
 	
 	// Change an existing row to be equal to new data.
 	public boolean updateRow(long rowId, String issuedate, String customer, String dateserviceperformed, 
-			String priceservice, String servicedesc, String amountdue, String status) { 
+			String priceservice, String servicedesc, String amountdue, String status) 
+	{ 
 		
 		String where = KEY_ROWID + "=" + rowId;
 
@@ -196,16 +211,19 @@ public class InvoiceAdapter {
 	 */
 	private static class DatabaseHelper extends SQLiteOpenHelper
 	{
-		DatabaseHelper(Context context) {
+		DatabaseHelper(Context context) 
+		{
 			super(context, DBAdapter.DATABASE_NAME, null, DBAdapter.DATABASE_VERSION);
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase _db) {
+		public void onCreate(SQLiteDatabase _db) 
+		{
 		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) {
+		public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) 
+		{
 		}
 	}
 }

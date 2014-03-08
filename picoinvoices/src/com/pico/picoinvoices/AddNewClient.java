@@ -7,33 +7,39 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddNewClient extends Activity {
+public class AddNewClient extends Activity 
+{
 	ClientAdapter myDb;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_new_client);
 		openDB();
 	}
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_new_client, menu);
 		return true;
 	}
 	
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() 
+	{
 		super.onDestroy();
 		
 		closeDB();
 	}
-	private void openDB() {
+	private void openDB() 
+	{
 		myDb = new ClientAdapter(this);
 		myDb.open();
 	}
-	private void closeDB() {
+	private void closeDB() 
+	{
 		myDb.close();
 	}
 
@@ -61,9 +67,6 @@ public class AddNewClient extends Activity {
 		myDb.insertRow(fname_txt, lname_txt, address_txt, phone_txt, email_txt);
 		
 		Intent intent = new Intent(this, ClientList.class);
-//		EditText editText = (EditText) findViewById(R.id.edit_message);
-//		String message = editText.getText().toString();
-//		intent.putExtra(EXTRA_MESSAGE, message);
 		startActivity(intent);
 	}
 	public void onClick_cancelAdd(View v)

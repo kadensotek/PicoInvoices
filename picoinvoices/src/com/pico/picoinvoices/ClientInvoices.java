@@ -13,7 +13,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ClientInvoices extends Activity {
+public class ClientInvoices extends Activity 
+{
 
 	InvoiceAdapter myDb = null;
 	long customer_ID = 0;
@@ -24,7 +25,8 @@ public class ClientInvoices extends Activity {
 	String customer_phone = "";
 	String customer_email = "";
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_invoices);
 		
@@ -42,13 +44,15 @@ public class ClientInvoices extends Activity {
 		refresh();
 	}
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.client_invoices, menu);
 		return true;
 	}
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() 
+	{
 		super.onDestroy();
 		
 		closeDB();
@@ -78,7 +82,8 @@ public class ClientInvoices extends Activity {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void populateListView() {
+	private void populateListView()
+	{
 		Cursor cursor = myDb.getCustomerInvoice(customer_ID);							//Create the list of items
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};

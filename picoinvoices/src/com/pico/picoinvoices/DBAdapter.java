@@ -5,7 +5,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBAdapter {
+public class DBAdapter 
+{
 
     public static final String DATABASE_NAME = "picoinvoices"; //$NON-NLS-1$
 

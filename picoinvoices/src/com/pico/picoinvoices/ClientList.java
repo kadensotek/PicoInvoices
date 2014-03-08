@@ -19,11 +19,13 @@ import android.widget.Toast;
  * 
  */
 
-public class ClientList extends Activity {
+public class ClientList extends Activity 
+{
 
 	ClientAdapter myDb;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_list);
 		
@@ -38,7 +40,8 @@ public class ClientList extends Activity {
 		return true;
 	}
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy()
+	{
 		super.onDestroy();
 		
 		closeDB();
