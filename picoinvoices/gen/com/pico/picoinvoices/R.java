@@ -24,18 +24,19 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001a;
-        public static final int activity_client_invoices_btnAddInvoice=0x7f08000f;
+        public static final int action_settings=0x7f08001b;
+        public static final int activity_client_invoices_btnAddInvoice=0x7f080010;
+        public static final int add_new_invoice_txtInfo=0x7f08000d;
         public static final int btn_addNew_add=0x7f08000c;
         public static final int btn_addNew_cancel=0x7f08000b;
-        public static final int client_add=0x7f080011;
-        public static final int client_invoices_listView=0x7f08000d;
-        public static final int client_invoices_txtClientName=0x7f08000e;
-        public static final int client_listView=0x7f080010;
-        public static final int home_btnToClients=0x7f080012;
-        public static final int invoice_listview_layout_template_txtDate=0x7f080017;
-        public static final int invoice_listview_layout_template_txtInvoiceNumber=0x7f080018;
-        public static final int invoice_listview_layout_template_txtStatus=0x7f080019;
+        public static final int client_add=0x7f080012;
+        public static final int client_invoices_listView=0x7f08000e;
+        public static final int client_invoices_txtClientName=0x7f08000f;
+        public static final int client_listView=0x7f080011;
+        public static final int home_btnToClients=0x7f080013;
+        public static final int invoice_listview_layout_template_txtDate=0x7f080018;
+        public static final int invoice_listview_layout_template_txtInvoiceNumber=0x7f080019;
+        public static final int invoice_listview_layout_template_txtStatus=0x7f08001a;
         public static final int lbl_addNew_address=0x7f080006;
         public static final int lbl_addNew_email=0x7f08000a;
         public static final int lbl_addNew_fname=0x7f080001;
@@ -47,32 +48,35 @@ public final class R {
         public static final int txt_addNew_fname=0x7f080002;
         public static final int txt_addNew_lname=0x7f080003;
         public static final int txt_addNew_phone=0x7f080007;
-        public static final int txt_clientFName=0x7f080014;
-        public static final int txt_clientLName=0x7f080016;
-        public static final int txt_clientPendingInvoices=0x7f080013;
-        public static final int txt_dbID=0x7f080015;
+        public static final int txt_clientFName=0x7f080015;
+        public static final int txt_clientLName=0x7f080017;
+        public static final int txt_clientPendingInvoices=0x7f080014;
+        public static final int txt_dbID=0x7f080016;
     }
     public static final class layout {
         public static final int activity_add_new_client=0x7f030000;
-        public static final int activity_client_invoices=0x7f030001;
-        public static final int activity_client_list=0x7f030002;
-        public static final int activity_home=0x7f030003;
-        public static final int activity_show_detailed_invoice=0x7f030004;
-        public static final int client_name=0x7f030005;
-        public static final int invoice_listview_layout_template=0x7f030006;
+        public static final int activity_add_new_invoice=0x7f030001;
+        public static final int activity_client_invoices=0x7f030002;
+        public static final int activity_client_list=0x7f030003;
+        public static final int activity_home=0x7f030004;
+        public static final int activity_show_detailed_invoice=0x7f030005;
+        public static final int client_name=0x7f030006;
+        public static final int invoice_listview_layout_template=0x7f030007;
     }
     public static final class menu {
         public static final int add_new_client=0x7f070000;
-        public static final int client_invoices=0x7f070001;
-        public static final int client_list=0x7f070002;
-        public static final int home=0x7f070003;
-        public static final int show_detailed_invoice=0x7f070004;
+        public static final int add_new_invoice=0x7f070001;
+        public static final int client_invoices=0x7f070002;
+        public static final int client_list=0x7f070003;
+        public static final int home=0x7f070004;
+        public static final int show_detailed_invoice=0x7f070005;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050002;
         public static final int title_activity_add_new_client=0x7f050003;
+        public static final int title_activity_add_new_invoice=0x7f050007;
         public static final int title_activity_client_invoices=0x7f050004;
         public static final int title_activity_home=0x7f050005;
         public static final int title_activity_show_detailed_invoice=0x7f050006;

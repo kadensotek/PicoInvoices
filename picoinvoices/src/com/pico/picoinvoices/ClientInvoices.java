@@ -1,8 +1,7 @@
 package com.pico.picoinvoices;
 
-import java.util.Date;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,16 +14,17 @@ import android.widget.Toast;
 
 public class ClientInvoices extends Activity {
 
-	InvoiceAdapter myDb = null;
-	long customer_ID = 0;
-	String custoemr_fname = "";
-	String customer_fname = "";
-	String customer_lname = "";
-	String customer_address = "";
-	String customer_phone = "";
-	String customer_email = "";
+	private InvoiceAdapter myDb = null;
+	private long customer_ID = 0;
+	private String customer_fname = "";
+	private String customer_lname = "";
+	private String customer_address = "";
+	private String customer_phone = "";
+	private String customer_email = "";
+	private int INSERT_ID = Menu.FIRST;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_invoices);
 		
@@ -42,13 +42,16 @@ public class ClientInvoices extends Activity {
 		refresh();
 	}
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.client_invoices, menu);
-		return true;
+	        boolean result = super.onCreateOptionsMenu(menu);
+	        menu.add(0, INSERT_ID, 0, "Add New");
+	        return result;
 	}
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() 
+	{
 		super.onDestroy();
 		
 		closeDB();
@@ -78,12 +81,14 @@ public class ClientInvoices extends Activity {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void populateListView() {
+	private void populateListView() 
+	{
 		Cursor cursor = myDb.getCustomerInvoice(customer_ID);							//Create the list of items
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, 
 				R.id.invoice_listview_layout_template_txtStatus};
+	
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.invoice_listview_layout_template, cursor, client_name_list , ints);
 		
 		
@@ -100,9 +105,6 @@ public class ClientInvoices extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-				
-				
-
 				Cursor cursor = myDb.getRow(idInDB);
 				if (cursor.moveToFirst())
 				{
@@ -122,10 +124,8 @@ public class ClientInvoices extends Activity {
 				else 
 					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
 				cursor.close();
-				
 			}
 		});
-		
 	}
 	
 	
@@ -134,16 +134,14 @@ public class ClientInvoices extends Activity {
 	 */
 	public void onClick_AddInvoice(View v)
 	{
-		String issuedate = new Date().toString();
-		Long customer = customer_ID;
-		String dateserviceperformed = new Date().toString();
-		String servicedesc = "Snow plowing";
-		String status = "Pending";
-		String priceservice = "$350";
-		String amountdue = "$350";
-		myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, servicedesc, amountdue, status);
-		
-		refresh();
+		Intent goToInvoices = new Intent(this, AddNewInvoice.class);
+		goToInvoices.putExtra("customerID", customer_ID);
+		goToInvoices.putExtra("fname", customer_fname);
+		goToInvoices.putExtra("lname", customer_lname);
+		goToInvoices.putExtra("address", customer_address);
+		goToInvoices.putExtra("phone", customer_phone);
+		goToInvoices.putExtra("email", customer_email);
+		startActivity(goToInvoices);
 	}
 
 }
