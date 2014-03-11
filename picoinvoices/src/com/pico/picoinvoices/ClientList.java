@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+
 /*
  * Steps to using the DB
  * 1. Instantiate the DB Adapter
@@ -40,7 +41,11 @@ public class ClientList extends Activity
 		return true;
 	}
 	@Override
+<<<<<<< HEAD
 	protected void onDestroy() 
+=======
+	protected void onDestroy()
+>>>>>>> d29360a61d29711889f8f278783e7621b022288f
 	{
 		super.onDestroy();
 		
@@ -181,4 +186,5 @@ public class ClientList extends Activity
 //		return myList;
 //	}
 	
+
 }
