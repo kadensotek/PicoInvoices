@@ -41,7 +41,11 @@ public class ClientList extends Activity
 		return true;
 	}
 	@Override
+<<<<<<< HEAD
+	protected void onDestroy() 
+=======
 	protected void onDestroy()
+>>>>>>> d29360a61d29711889f8f278783e7621b022288f
 	{
 		super.onDestroy();
 		
@@ -76,7 +80,8 @@ public class ClientList extends Activity
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void populateListView() {
+	private void populateListView() 
+	{
 		Cursor cursor = myDb.getAllRows(); 								//Create the list of items
 //		ArrayList<String> names = getRecordSet(cursor);
 //		
@@ -87,6 +92,7 @@ public class ClientList extends Activity
 //		
 		String[] client_name_list = new String[]{ClientAdapter.KEY_ROWID, ClientAdapter.KEY_FNAME, ClientAdapter.KEY_LNAME};
 		int[] ints = new int[] {R.id.txt_dbID, R.id.txt_clientFName, R.id.txt_clientLName};
+		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.client_name, cursor,client_name_list , ints);
 		
 		ListView list = (ListView) findViewById(R.id.client_listView);
@@ -114,8 +120,8 @@ public class ClientList extends Activity
 					String email = cursor.getString(ClientAdapter.COL_EMAIL);
 					
 					Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
-					goToInvoices.putExtra("fname", fname);
 					goToInvoices.putExtra("customerID", idDB);
+					goToInvoices.putExtra("fname", fname);
 					goToInvoices.putExtra("lname", lname);
 					goToInvoices.putExtra("address", address);
 					goToInvoices.putExtra("phone", phone);
