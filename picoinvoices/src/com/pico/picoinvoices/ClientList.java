@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
+
 /*
  * Steps to using the DB
  * 1. Instantiate the DB Adapter
@@ -19,11 +19,14 @@ import android.widget.Toast;
  * 
  */
 
-public class ClientList extends Activity {
+public class ClientList extends Activity 
+{
 
 	ClientAdapter myDb;
+	public static long CLIENT_ID = 0;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_list);
 		
@@ -38,14 +41,11 @@ public class ClientList extends Activity {
 		return true;
 	}
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy()
+	{
 		super.onDestroy();
-		
 		closeDB();
 	}
-	
-	
-	
 	
 	/*
 	 * 	Database maintenance functions
@@ -60,8 +60,6 @@ public class ClientList extends Activity {
 		myDb.open();
 	}
 	
-	
-	
 	/*
 	 * 	refresh functions
 	 */
@@ -72,17 +70,13 @@ public class ClientList extends Activity {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void populateListView() {
+	private void populateListView() 
+	{
 		Cursor cursor = myDb.getAllRows(); 								//Create the list of items
-//		ArrayList<String> names = getRecordSet(cursor);
-//		
-//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(		//Build the adapter
-//				this,						//Context for adapter 
-//				R.layout.client_textview, 	//Layout to use
-//				names);						//List of items to use
-//		
+		
 		String[] client_name_list = new String[]{ClientAdapter.KEY_ROWID, ClientAdapter.KEY_FNAME, ClientAdapter.KEY_LNAME};
 		int[] ints = new int[] {R.id.txt_dbID, R.id.txt_clientFName, R.id.txt_clientLName};
+		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.client_name, cursor,client_name_list , ints);
 		
 		ListView list = (ListView) findViewById(R.id.client_listView);
@@ -99,35 +93,24 @@ public class ClientList extends Activity {
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
 				
-				Cursor cursor = myDb.getRow(idInDB);
-				if (cursor.moveToFirst())
-				{
-					long idDB = cursor.getLong(ClientAdapter.COL_ROWID);
-					String fname = cursor.getString(ClientAdapter.COL_FNAME);
-					String lname = cursor.getString(ClientAdapter.COL_LNAME);
-					String address = cursor.getString(ClientAdapter.COL_ADDRESS);
-					String phone = cursor.getString(ClientAdapter.COL_PHONE);
-					String email = cursor.getString(ClientAdapter.COL_EMAIL);
-					
+//				Cursor cursor = myDb.getRow(idInDB);
+//				if (cursor.moveToFirst())
+//				{
+//					long idDB = cursor.getLong(ClientAdapter.COL_ROWID);
+//					
 					Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
-					goToInvoices.putExtra("fname", fname);
-					goToInvoices.putExtra("customerID", idDB);
-					goToInvoices.putExtra("lname", lname);
-					goToInvoices.putExtra("address", address);
-					goToInvoices.putExtra("phone", phone);
-					goToInvoices.putExtra("email", email);
+					CLIENT_ID = idInDB;
+					System.out.println(CLIENT_ID);
 					startActivity(goToInvoices);
-				}
-				else 
-					Toast.makeText(ClientList.this, "failed to load"+idInDB, Toast.LENGTH_SHORT).show();
-				cursor.close();
+//				}
+//				else 
+//					Toast.makeText(ClientList.this, "failed to load"+idInDB, Toast.LENGTH_SHORT).show();
+//				cursor.close();
 				
 			}
 		});
 		
 	}
-	
-	
 	
 	/*
 	 * 	onClickListeners are implemented here
@@ -144,36 +127,4 @@ public class ClientList extends Activity {
 		refresh();
 	}
 
-	
-	
-	
-	/*
-	 * 	display an entire record set to the screen
-	 */
-//	private ArrayList<String> getRecordSet(Cursor cursor) 
-//	{
-//		ArrayList<String> myList = new ArrayList<String>();
-//		//popluate the message from the cursor
-//		
-//		//reset cursor to start to check for data
-//		if(cursor.moveToFirst())
-//		{
-//			do
-//			{
-//				//process the data:
-//				int id  = cursor.getInt(DBAdapter.COL_ROWID);
-//				String fname  = cursor.getString(DBAdapter.COL_FNAME);
-//				String lname = cursor.getString(DBAdapter.COL_LNAME);
-//				String address = cursor.getString(DBAdapter.COL_ADDRESS);
-//				String phone = cursor.getString(DBAdapter.COL_PHONE);
-//				String email = cursor.getString(DBAdapter.COL_EMAIL);
-//				
-//				//append data to the message
-//				myList.add(id + "" + fname +" "+lname);
-//			}while(cursor.moveToNext());
-//		}
-//		cursor.close();
-//		return myList;
-//	}
-	
 }

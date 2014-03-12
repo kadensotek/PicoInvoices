@@ -3,6 +3,7 @@ package com.pico.picoinvoices;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,47 +14,51 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ClientInvoices extends Activity {
 
-	InvoiceAdapter myDb = null;
-	long customer_ID = 0;
-	String custoemr_fname = "";
-	String customer_fname = "";
-	String customer_lname = "";
-	String customer_address = "";
-	String customer_phone = "";
-	String customer_email = "";
+public class ClientInvoices extends Activity 
+{
+
+	private InvoiceAdapter myDb = null;
+	public static long INVOICE_ID = 0;
+	private static long CLIENT_ID = ClientList.CLIENT_ID;
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_invoices);
-		
-		Bundle extras = getIntent().getExtras(); 
-		customer_ID = extras.getLong("customerID");
-		customer_fname = extras.getString("fname");
-		customer_lname = extras.getString("lname");
-		customer_address = extras.getString("address");
-		customer_phone = extras.getString("phone");
-		customer_email = extras.getString("email");
-
-		TextView customerName = (TextView) findViewById(R.id.client_invoices_txtClientName);
-		customerName.setText(customer_fname);
 		openDB();
-		refresh();
+        refresh();
+		
+		TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
+		String name = getClientName();
+		System.out.println(name);
+		textView.setText(name);
+		
+		
 	}
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.client_invoices, menu);
-		return true;
+	        boolean result = super.onCreateOptionsMenu(menu);
+	        return result;
 	}
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() 
+	{
 		super.onDestroy();
 		
 		closeDB();
 	}
-	
+	@Override
+    protected void onResume() 
+    {
+        super.onResume();
+        
+        openDB();
+        refresh();
+    }
 	/*
 	 * 	Open/close functions for the DB
 	 */
@@ -78,12 +83,14 @@ public class ClientInvoices extends Activity {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void populateListView() {
-		Cursor cursor = myDb.getCustomerInvoice(customer_ID);							//Create the list of items
+	private void populateListView()
+	{
+		Cursor cursor = myDb.getCustomerInvoice(ClientList.CLIENT_ID);							//Create the list of items
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, 
 				R.id.invoice_listview_layout_template_txtStatus};
+	
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.invoice_listview_layout_template, cursor, client_name_list , ints);
 		
 		
@@ -100,32 +107,23 @@ public class ClientInvoices extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-				
-				
-
-				Cursor cursor = myDb.getRow(idInDB);
-				if (cursor.moveToFirst())
-				{
-					long idDB = cursor.getLong(InvoiceAdapter.COL_ROWID);
-					long  customer = cursor.getLong(InvoiceAdapter.COL_CUSTOMER);
-					String issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-					String dateserviceperformed = cursor.getString(InvoiceAdapter.COL_DATESERVICEPERFORMED);
-					String servicedesc = cursor.getString(InvoiceAdapter.COL_SERVICEDESC);
-					String status = cursor.getString(InvoiceAdapter.COL_STATUS);
-					String priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
+			    Intent intent = new Intent (ClientInvoices.this, ShowDetailedInvoice.class);
+			    startActivity(intent);
+//				Cursor cursor = myDb.getRow(idInDB);
+//				if (cursor.moveToFirst())
+//				{
+//					long idDB = cursor.getLong(InvoiceAdapter.COL_ROWID);
 					
-					String message = "Rowid: " + idDB + "\n" + customer +"\n" + issuedate +"\n"+ dateserviceperformed + "\n" + 
-							servicedesc + "\n" + status + "\n" + priceservice + "Contact Info: " + customer_fname + " " +customer_lname
-							+"\n" + customer_address + "\n" + customer_phone + "\n" + customer_email;
-					Toast.makeText(ClientInvoices.this, message, Toast.LENGTH_LONG).show();
-				}
-				else 
-					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
-				cursor.close();
-				
+					Intent intent1 = new Intent(ClientInvoices.this, ShowDetailedInvoice.class);
+                    INVOICE_ID = idInDB;
+                    
+                    startActivity(intent1);
+//				}
+//				else 
+//					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
+//				cursor.close();
 			}
 		});
-		
 	}
 	
 	
@@ -134,16 +132,40 @@ public class ClientInvoices extends Activity {
 	 */
 	public void onClick_AddInvoice(View v)
 	{
-		String issuedate = new Date().toString();
-		Long customer = customer_ID;
-		String dateserviceperformed = new Date().toString();
-		String servicedesc = "Snow plowing";
-		String status = "Pending";
-		String priceservice = "$350";
-		String amountdue = "$350";
-		myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, servicedesc, amountdue, status);
-		
-		refresh();
+	    String issuedate = String.valueOf(new Date());
+	    String customer = Long.toString(CLIENT_ID);
+	    String dateserviceperformed = String.valueOf(new Date());
+	    String priceservice = "300";
+	    String service = "Mowing";
+	    String servicedesc = "Front/back yard";
+	    String amountdue = "100";
+	    String status = "pending";
+	    
+	    myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
+	    refresh();
+//	    Intent goToInvoices = new Intent(this, AddNewInvoice.class);
+//		goToInvoices.putExtra("customerID", customer_ID);
+//		goToInvoices.putExtra("fname", customer_fname);
+//		goToInvoices.putExtra("lname", customer_lname);
+//		goToInvoices.putExtra("address", customer_address);
+//		goToInvoices.putExtra("phone", customer_phone);
+//		goToInvoices.putExtra("email", customer_email);
+//		startActivity(goToInvoices);
 	}
-
+	
+	private String getClientName()
+	{
+	    String name = "";
+	    Cursor cursor = myDb.query(new String[] {Long.toString(CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
+	    if (cursor.moveToFirst())
+        {
+            name+=cursor.getString(ClientAdapter.COL_FNAME);
+            name+=" ";
+            name+=cursor.getString(ClientAdapter.COL_LNAME);
+        }
+        else 
+            Toast.makeText(ClientInvoices.this, "failed to load", Toast.LENGTH_SHORT).show();
+        cursor.close();
+	    return name;
+	}
 }
