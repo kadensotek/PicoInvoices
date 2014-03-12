@@ -9,10 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-<<<<<<< HEAD
-=======
-import android.widget.Toast;
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 
 /*
  * Steps to using the DB
@@ -45,15 +41,7 @@ public class ClientList extends Activity
 		return true;
 	}
 	@Override
-<<<<<<< HEAD
 	protected void onDestroy()
-=======
-<<<<<<< HEAD
-	protected void onDestroy() 
-=======
-	protected void onDestroy()
->>>>>>> d29360a61d29711889f8f278783e7621b022288f
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 	{
 		super.onDestroy();
 		closeDB();
@@ -111,17 +99,14 @@ public class ClientList extends Activity
 //					long idDB = cursor.getLong(ClientAdapter.COL_ROWID);
 //					
 					Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
-<<<<<<< HEAD
 					CLIENT_ID = idInDB;
 					System.out.println(CLIENT_ID);
-=======
-					goToInvoices.putExtra("customerID", idDB);
-					goToInvoices.putExtra("fname", fname);
-					goToInvoices.putExtra("lname", lname);
-					goToInvoices.putExtra("address", address);
-					goToInvoices.putExtra("phone", phone);
-					goToInvoices.putExtra("email", email);
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
+//					goToInvoices.putExtra("customerID", idDB);
+//					goToInvoices.putExtra("fname", fname);
+//					goToInvoices.putExtra("lname", lname);
+//					goToInvoices.putExtra("address", address);
+//					goToInvoices.putExtra("phone", phone);
+//					goToInvoices.putExtra("email", email);
 					startActivity(goToInvoices);
 //				}
 //				else 
@@ -148,40 +133,8 @@ public class ClientList extends Activity
 		refresh();
 	}
 
-<<<<<<< HEAD
-=======
 	
 	
-	
-	/*
-	 * 	display an entire record set to the screen
-	 */
-//	private ArrayList<String> getRecordSet(Cursor cursor) 
-//	{
-//		ArrayList<String> myList = new ArrayList<String>();
-//		//popluate the message from the cursor
-//		
-//		//reset cursor to start to check for data
-//		if(cursor.moveToFirst())
-//		{
-//			do
-//			{
-//				//process the data:
-//				int id  = cursor.getInt(DBAdapter.COL_ROWID);
-//				String fname  = cursor.getString(DBAdapter.COL_FNAME);
-//				String lname = cursor.getString(DBAdapter.COL_LNAME);
-//				String address = cursor.getString(DBAdapter.COL_ADDRESS);
-//				String phone = cursor.getString(DBAdapter.COL_PHONE);
-//				String email = cursor.getString(DBAdapter.COL_EMAIL);
-//				
-//				//append data to the message
-//				myList.add(id + "" + fname +" "+lname);
-//			}while(cursor.moveToNext());
-//		}
-//		cursor.close();
-//		return myList;
-//	}
 	
 
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 }

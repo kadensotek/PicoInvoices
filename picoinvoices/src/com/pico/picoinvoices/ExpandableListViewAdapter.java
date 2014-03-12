@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.pico.picoinvoices;
 
 import java.util.ArrayList;
@@ -149,7 +148,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
     }
 
 }
-=======
+
 //package com.pico.picoinvoices;
 //
 //import java.util.HashMap;
@@ -271,4 +270,3 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
 //		return true;
 //	}
 //}
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab

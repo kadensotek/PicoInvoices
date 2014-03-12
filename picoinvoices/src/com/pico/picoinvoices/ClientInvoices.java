@@ -1,5 +1,7 @@
 package com.pico.picoinvoices;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,11 +19,9 @@ public class ClientInvoices extends Activity
 {
 
 	private InvoiceAdapter myDb = null;
-<<<<<<< HEAD
 	public static long INVOICE_ID = 0;
 	private static long CLIENT_ID = ClientList.CLIENT_ID;
 	
-=======
 	private long customer_ID = 0;
 	private String customer_fname = "";
 	private String customer_lname = "";
@@ -29,7 +29,6 @@ public class ClientInvoices extends Activity
 	private String customer_phone = "";
 	private String customer_email = "";
 	private int INSERT_ID = Menu.FIRST;
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -50,10 +49,7 @@ public class ClientInvoices extends Activity
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 	        boolean result = super.onCreateOptionsMenu(menu);
-<<<<<<< HEAD
-=======
 	        menu.add(0, INSERT_ID, 0, "Add New");
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 	        return result;
 	}
 	@Override
@@ -97,11 +93,7 @@ public class ClientInvoices extends Activity
 	@SuppressWarnings("deprecation")
 	private void populateListView()
 	{
-<<<<<<< HEAD
 		Cursor cursor = myDb.getCustomerInvoice(ClientList.CLIENT_ID);							//Create the list of items
-=======
-		Cursor cursor = myDb.getCustomerInvoice(customer_ID);							//Create the list of items
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, 
@@ -123,7 +115,6 @@ public class ClientInvoices extends Activity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-<<<<<<< HEAD
 			    Intent intent = new Intent (ClientInvoices.this, ShowDetailedInvoice.class);
 			    startActivity(intent);
 //				Cursor cursor = myDb.getRow(idInDB);
@@ -139,7 +130,6 @@ public class ClientInvoices extends Activity
 //				else 
 //					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
 //				cursor.close();
-=======
 				Cursor cursor = myDb.getRow(idInDB);
 				if (cursor.moveToFirst())
 				{
@@ -159,7 +149,6 @@ public class ClientInvoices extends Activity
 				else 
 					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
 				cursor.close();
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 			}
 		});
 	}
@@ -170,7 +159,6 @@ public class ClientInvoices extends Activity
 	 */
 	public void onClick_AddInvoice(View v)
 	{
-<<<<<<< HEAD
 	    String issuedate = String.valueOf(new Date());
 	    String customer = Long.toString(CLIENT_ID);
 	    String dateserviceperformed = String.valueOf(new Date());
@@ -206,15 +194,13 @@ public class ClientInvoices extends Activity
             Toast.makeText(ClientInvoices.this, "failed to load", Toast.LENGTH_SHORT).show();
         cursor.close();
 	    return name;
-=======
-		Intent goToInvoices = new Intent(this, AddNewInvoice.class);
-		goToInvoices.putExtra("customerID", customer_ID);
-		goToInvoices.putExtra("fname", customer_fname);
-		goToInvoices.putExtra("lname", customer_lname);
-		goToInvoices.putExtra("address", customer_address);
-		goToInvoices.putExtra("phone", customer_phone);
-		goToInvoices.putExtra("email", customer_email);
-		startActivity(goToInvoices);
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
+//		Intent goToInvoices = new Intent(this, AddNewInvoice.class);
+//		goToInvoices.putExtra("customerID", customer_ID);
+//		goToInvoices.putExtra("fname", customer_fname);
+//		goToInvoices.putExtra("lname", customer_lname);
+//		goToInvoices.putExtra("address", customer_address);
+//		goToInvoices.putExtra("phone", customer_phone);
+//		goToInvoices.putExtra("email", customer_email);
+//		startActivity(goToInvoices);
 	}
 }

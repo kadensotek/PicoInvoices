@@ -10,15 +10,10 @@ public class DBAdapter
 
     public static final String DATABASE_NAME = "picoinvoices"; //$NON-NLS-1$
 
-<<<<<<< HEAD
     public static final int DATABASE_VERSION = 10;
 
     static final String CREATE_TABLE_INVOICE = "create table "
-=======
-    public static final int DATABASE_VERSION = 3;
 
-    private static final String CREATE_TABLE_INVOICE = "create table "
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
             + InvoiceAdapter.DATABASE_TABLE
             + " ("
             + InvoiceAdapter.KEY_ROWID
@@ -40,7 +35,6 @@ public class DBAdapter
             + InvoiceAdapter.KEY_CUSTOMER + " integer not null, "
             + InvoiceAdapter.KEY_DATESERVICEPERFORMED + " string not null, "
             + InvoiceAdapter.KEY_PRICESERVICE + " string not null, "
-<<<<<<< HEAD
             + InvoiceAdapter.KEY_SERVICE + " string not null, "
             + InvoiceAdapter.KEY_SERVICEDESC + " string not null,  "
             + InvoiceAdapter.KEY_AMOUNTDUE + " string not null, "
@@ -49,18 +43,7 @@ public class DBAdapter
             + ");";
 
      static final String CREATE_TABLE_CLIENT = "create table "
-=======
-            + InvoiceAdapter.KEY_SERVICEDESC + " string not null,  "
-            + InvoiceAdapter.KEY_AMOUNTDUE + " string not null, "
-            + InvoiceAdapter.KEY_STATUS + " string not null, " + "FOREIGN KEY("
-            + InvoiceAdapter.KEY_CUSTOMER + ") REFERENCES "
-            + ClientAdapter.DATABASE_TABLE + "(" + ClientAdapter.KEY_ROWID
-            + ")"
 
-            + ");";
-
-    private static final String CREATE_TABLE_CLIENT = "create table "
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
             + ClientAdapter.DATABASE_TABLE
             + " ("
             + ClientAdapter.KEY_ROWID
@@ -119,7 +102,6 @@ public class DBAdapter
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
-<<<<<<< HEAD
             System.out.printf("Upgrading db...");
          
             
@@ -129,9 +111,7 @@ public class DBAdapter
             
             // Recreate new database:
             onCreate(db);
-=======
             // Adding any table mods to this guy here
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
         }
     }
 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.pico.picoinvoices;
 
 import java.util.ArrayList;
@@ -139,7 +138,6 @@ public class ShowDetailedInvoice extends ExpandableListActivity
         
     }
 }
-=======
 //package com.pico.picoinvoices;
 //
 //import java.util.ArrayList;
@@ -218,4 +216,3 @@ public class ShowDetailedInvoice extends ExpandableListActivity
 //        listDataChild.put(listDataHeader.get(2), comingSoon);
 //    }
 //}
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab

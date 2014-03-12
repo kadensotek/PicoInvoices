@@ -42,22 +42,14 @@ public class InvoiceAdapter
     public static final int COL_CUSTOMER = 2;
     public static final int COL_DATESERVICEPERFORMED = 3;
     public static final int COL_PRICESERVICE = 4;
-<<<<<<< HEAD
     public static final int COL_SERVICE = 5;
     public static final int COL_SERVICEDESC = 6;
     public static final int COL_AMOUNTDUE = 7;
     public static final int COL_STATUS = 8;
 
-    public static final String[] ALL_KEYS = new String[] { KEY_ROWID,
-            KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DATESERVICEPERFORMED, KEY_SERVICE,
-=======
-    public static final int COL_SERVICEDESC = 5;
-    public static final int COL_AMOUNTDUE = 6;
-    public static final int COL_STATUS = 7;
 
     public static final String[] ALL_KEYS = new String[] { KEY_ROWID,
             KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DATESERVICEPERFORMED,
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
             KEY_PRICESERVICE, KEY_SERVICEDESC, KEY_AMOUNTDUE, KEY_STATUS };
 
     // DB info: it's name, and the table we are using (just one).
@@ -67,11 +59,7 @@ public class InvoiceAdapter
     private final Context context;
 
     private DatabaseHelper myDBHelper;
-<<<<<<< HEAD
     private static SQLiteDatabase db;
-=======
-    private SQLiteDatabase db;
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 
     // ///////////////////////////////////////////////////////////////////
     // Public methods:
@@ -97,13 +85,8 @@ public class InvoiceAdapter
     }
 
     // Add a new set of values to the database.
-<<<<<<< HEAD
     public long insertRow(String issuedate, String customer,
             String dateserviceperformed, String priceservice, String service,
-=======
-    public long insertRow(String issuedate, Long customer,
-            String dateserviceperformed, String priceservice,
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
             String servicedesc, String amountdue, String status)
     {
         /*
@@ -117,19 +100,12 @@ public class InvoiceAdapter
         initialValues.put(KEY_CUSTOMER, customer);
         initialValues.put(KEY_DATESERVICEPERFORMED, dateserviceperformed);
         initialValues.put(KEY_PRICESERVICE, priceservice);
-<<<<<<< HEAD
         initialValues.put(KEY_SERVICE, service);
         initialValues.put(KEY_SERVICEDESC, servicedesc);
         initialValues.put(KEY_AMOUNTDUE, amountdue);
         initialValues.put(KEY_STATUS, status);
         
         System.out.println("Inserting...");
-=======
-        initialValues.put(KEY_SERVICEDESC, servicedesc);
-        initialValues.put(KEY_AMOUNTDUE, amountdue);
-        initialValues.put(KEY_STATUS, status);
-
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
         // Insert it into the database.
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -193,7 +169,6 @@ public class InvoiceAdapter
         }
         return c;
     }
-<<<<<<< HEAD
     
     public Cursor query(String[] q, String table)
     {
@@ -204,8 +179,6 @@ public class InvoiceAdapter
         }
         return c;
     }
-=======
->>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 
 //    public ArrayList<?> getCustomerContact(long customer)
 //    {
