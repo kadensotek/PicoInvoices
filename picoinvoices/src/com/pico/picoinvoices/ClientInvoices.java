@@ -121,7 +121,7 @@ public class ClientInvoices extends Activity
 					String priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
 					
 					String message = "Rowid: " + idDB + "\n" + customer +"\n" + issuedate +"\n"+ dateserviceperformed + "\n" + 
-							servicedesc + "\n" + status + "\n" + priceservice + "Contact Info: " + customer_fname + " " +customer_lname
+							servicedesc + "\n" + status + "\n" + priceservice + "\nContact Info: " + customer_fname + " " +customer_lname
 							+"\n" + customer_address + "\n" + customer_phone + "\n" + customer_email;
 					Toast.makeText(ClientInvoices.this, message, Toast.LENGTH_LONG).show();
 				}
