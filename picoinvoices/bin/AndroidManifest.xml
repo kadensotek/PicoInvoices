@@ -46,6 +46,10 @@
             android:name="com.pico.picoinvoices.AddNewInvoice"
             android:label="@string/title_activity_add_new_invoice" >
         </activity>
+        <activity
+            android:name="com.pico.picoinvoices.AddNewInvoice"
+            android:label="@string/title_activity_add_new_invoice" >
+        </activity>
     </application>
 
 </manifest>

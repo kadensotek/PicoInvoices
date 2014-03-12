@@ -121,8 +121,18 @@ public class ClientAdapter
 		String where = null;
 		Cursor c = 	db.query(true, DATABASE_TABLE, ALL_KEYS, 
 							where, null, null, null, null, null);
+<<<<<<< HEAD
 		if (c != null) 
 		{
+=======
+<<<<<<< HEAD
+		
+		if (c != null) {
+=======
+		if (c != null) 
+		{
+>>>>>>> d29360a61d29711889f8f278783e7621b022288f
+>>>>>>> b78ad611cf4d378f58f0354984cd91df4c2925ab
 			c.moveToFirst();
 		}
 		return c;
