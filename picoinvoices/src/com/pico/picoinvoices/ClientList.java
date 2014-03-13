@@ -100,7 +100,7 @@ public class ClientList extends Activity
 //					
 					Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
 					CLIENT_ID = idInDB;
-					System.out.println(CLIENT_ID);
+					System.out.println(idInDB);
 //					goToInvoices.putExtra("customerID", idDB);
 //					goToInvoices.putExtra("fname", fname);
 //					goToInvoices.putExtra("lname", lname);

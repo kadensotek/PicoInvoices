@@ -20,20 +20,21 @@ public class ClientInvoices extends Activity
 
 	private InvoiceAdapter myDb = null;
 	public static long INVOICE_ID = 0;
-	private static long CLIENT_ID = ClientList.CLIENT_ID;
 	
-	private long customer_ID = 0;
-	private String customer_fname = "";
-	private String customer_lname = "";
-	private String customer_address = "";
-	private String customer_phone = "";
-	private String customer_email = "";
-	private int INSERT_ID = Menu.FIRST;
+//	private long customer_ID = 0;
+//	private String customer_fname = "";
+//	private String customer_lname = "";
+//	private String customer_address = "";
+//	private String customer_phone = "";
+//	private String customer_email = "";
+//	private int INSERT_ID = Menu.FIRST;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_invoices);
+		
+		
 		openDB();
         refresh();
 		
@@ -49,7 +50,6 @@ public class ClientInvoices extends Activity
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 	        boolean result = super.onCreateOptionsMenu(menu);
-	        menu.add(0, INSERT_ID, 0, "Add New");
 	        return result;
 	}
 	@Override
@@ -66,6 +66,10 @@ public class ClientInvoices extends Activity
         
         openDB();
         refresh();
+        TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
+        String name = getClientName();
+        System.out.println(name);
+        textView.setText(name);
     }
 	/*
 	 * 	Open/close functions for the DB
@@ -115,40 +119,11 @@ public class ClientInvoices extends Activity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-			    Intent intent = new Intent (ClientInvoices.this, ShowDetailedInvoice.class);
-			    startActivity(intent);
-//				Cursor cursor = myDb.getRow(idInDB);
-//				if (cursor.moveToFirst())
-//				{
-//					long idDB = cursor.getLong(InvoiceAdapter.COL_ROWID);
 					
 					Intent intent1 = new Intent(ClientInvoices.this, ShowDetailedInvoice.class);
                     INVOICE_ID = idInDB;
-                    
+                    System.out.println(idInDB);
                     startActivity(intent1);
-//				}
-//				else 
-//					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
-//				cursor.close();
-				Cursor cursor = myDb.getRow(idInDB);
-				if (cursor.moveToFirst())
-				{
-					long idDB = cursor.getLong(InvoiceAdapter.COL_ROWID);
-					long  customer = cursor.getLong(InvoiceAdapter.COL_CUSTOMER);
-					String issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-					String dateserviceperformed = cursor.getString(InvoiceAdapter.COL_DATESERVICEPERFORMED);
-					String servicedesc = cursor.getString(InvoiceAdapter.COL_SERVICEDESC);
-					String status = cursor.getString(InvoiceAdapter.COL_STATUS);
-					String priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
-					
-					String message = "Rowid: " + idDB + "\n" + customer +"\n" + issuedate +"\n"+ dateserviceperformed + "\n" + 
-							servicedesc + "\n" + status + "\n" + priceservice + "\nContact Info: " + customer_fname + " " +customer_lname
-							+"\n" + customer_address + "\n" + customer_phone + "\n" + customer_email;
-					Toast.makeText(ClientInvoices.this, message, Toast.LENGTH_LONG).show();
-				}
-				else 
-					Toast.makeText(ClientInvoices.this, "failed to load "+idInDB, Toast.LENGTH_SHORT).show();
-				cursor.close();
 			}
 		});
 	}
@@ -160,7 +135,7 @@ public class ClientInvoices extends Activity
 	public void onClick_AddInvoice(View v)
 	{
 	    String issuedate = String.valueOf(new Date());
-	    String customer = Long.toString(CLIENT_ID);
+	    String customer = Long.toString(ClientList.CLIENT_ID);
 	    String dateserviceperformed = String.valueOf(new Date());
 	    String priceservice = "300";
 	    String service = "Mowing";
@@ -183,7 +158,7 @@ public class ClientInvoices extends Activity
 	private String getClientName()
 	{
 	    String name = "";
-	    Cursor cursor = myDb.query(new String[] {Long.toString(CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
+	    Cursor cursor = myDb.query(new String[] {Long.toString(ClientList.CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
 	    if (cursor.moveToFirst())
         {
             name+=cursor.getString(ClientAdapter.COL_FNAME);

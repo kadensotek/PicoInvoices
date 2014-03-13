@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#99D6D6"
+    android:background="#FFF1D4"
     android:clickable="true"
     android:orientation="vertical"
     tools:context=".MainActivity" >
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="@string/hello_world"
-            android:textColor="#1919A3"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
