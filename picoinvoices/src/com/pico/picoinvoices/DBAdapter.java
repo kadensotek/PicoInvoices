@@ -10,9 +10,10 @@ public class DBAdapter
 
     public static final String DATABASE_NAME = "picoinvoices"; //$NON-NLS-1$
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 10;
 
-    private static final String CREATE_TABLE_INVOICE = "create table "
+    static final String CREATE_TABLE_INVOICE = "create table "
+
             + InvoiceAdapter.DATABASE_TABLE
             + " ("
             + InvoiceAdapter.KEY_ROWID
@@ -34,16 +35,15 @@ public class DBAdapter
             + InvoiceAdapter.KEY_CUSTOMER + " integer not null, "
             + InvoiceAdapter.KEY_DATESERVICEPERFORMED + " string not null, "
             + InvoiceAdapter.KEY_PRICESERVICE + " string not null, "
+            + InvoiceAdapter.KEY_SERVICE + " string not null, "
             + InvoiceAdapter.KEY_SERVICEDESC + " string not null,  "
             + InvoiceAdapter.KEY_AMOUNTDUE + " string not null, "
-            + InvoiceAdapter.KEY_STATUS + " string not null, " + "FOREIGN KEY("
-            + InvoiceAdapter.KEY_CUSTOMER + ") REFERENCES "
-            + ClientAdapter.DATABASE_TABLE + "(" + ClientAdapter.KEY_ROWID
-            + ")"
+            + InvoiceAdapter.KEY_STATUS + " string not null "
 
             + ");";
 
-    private static final String CREATE_TABLE_CLIENT = "create table "
+     static final String CREATE_TABLE_CLIENT = "create table "
+
             + ClientAdapter.DATABASE_TABLE
             + " ("
             + ClientAdapter.KEY_ROWID
@@ -102,6 +102,15 @@ public class DBAdapter
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
+            System.out.printf("Upgrading db...");
+         
+            
+            // Destroy old database:
+            db.execSQL("DROP TABLE IF EXISTS " + ClientAdapter.DATABASE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + InvoiceAdapter.DATABASE_TABLE);
+            
+            // Recreate new database:
+            onCreate(db);
             // Adding any table mods to this guy here
         }
     }

@@ -15,15 +15,18 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.pico.picoinvoices.ClientList"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName="com.pico.picoinvoices.Home" >
         </activity>
         <activity
             android:name="com.pico.picoinvoices.AddNewClient"
-            android:label="@string/title_activity_add_new_client" >
+            android:label="@string/title_activity_add_new_client"
+            android:parentActivityName="com.pico.picoinvoices.ClientList" >
         </activity>
         <activity
             android:name="com.pico.picoinvoices.ClientInvoices"
-            android:label="@string/title_activity_client_invoices" >
+            android:label="@string/title_activity_client_invoices"
+            android:parentActivityName="com.pico.picoinvoices.ClientList" >
         </activity>
         <activity
             android:name="com.pico.picoinvoices.Home"
@@ -36,7 +39,12 @@
         </activity>
         <activity
             android:name="com.pico.picoinvoices.ShowDetailedInvoice"
-            android:label="@string/title_activity_show_detailed_invoice" >
+            android:label="@string/title_activity_show_detailed_invoice"
+            android:parentActivityName="com.pico.picoinvoices.ClientInvoices"  >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.AddNewInvoice"
+            android:label="@string/title_activity_add_new_invoice" >
         </activity>
         <activity
             android:name="com.pico.picoinvoices.AddNewInvoice"

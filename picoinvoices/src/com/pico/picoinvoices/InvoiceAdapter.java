@@ -3,8 +3,6 @@
 // TODO: Change the package to match your project.
 package com.pico.picoinvoices;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -44,9 +42,11 @@ public class InvoiceAdapter
     public static final int COL_CUSTOMER = 2;
     public static final int COL_DATESERVICEPERFORMED = 3;
     public static final int COL_PRICESERVICE = 4;
-    public static final int COL_SERVICEDESC = 5;
-    public static final int COL_AMOUNTDUE = 6;
-    public static final int COL_STATUS = 7;
+    public static final int COL_SERVICE = 5;
+    public static final int COL_SERVICEDESC = 6;
+    public static final int COL_AMOUNTDUE = 7;
+    public static final int COL_STATUS = 8;
+
 
     public static final String[] ALL_KEYS = new String[] { KEY_ROWID,
             KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DATESERVICEPERFORMED,
@@ -59,7 +59,7 @@ public class InvoiceAdapter
     private final Context context;
 
     private DatabaseHelper myDBHelper;
-    private SQLiteDatabase db;
+    private static SQLiteDatabase db;
 
     // ///////////////////////////////////////////////////////////////////
     // Public methods:
@@ -85,8 +85,8 @@ public class InvoiceAdapter
     }
 
     // Add a new set of values to the database.
-    public long insertRow(String issuedate, Long customer,
-            String dateserviceperformed, String priceservice,
+    public long insertRow(String issuedate, String customer,
+            String dateserviceperformed, String priceservice, String service,
             String servicedesc, String amountdue, String status)
     {
         /*
@@ -100,10 +100,12 @@ public class InvoiceAdapter
         initialValues.put(KEY_CUSTOMER, customer);
         initialValues.put(KEY_DATESERVICEPERFORMED, dateserviceperformed);
         initialValues.put(KEY_PRICESERVICE, priceservice);
+        initialValues.put(KEY_SERVICE, service);
         initialValues.put(KEY_SERVICEDESC, servicedesc);
         initialValues.put(KEY_AMOUNTDUE, amountdue);
         initialValues.put(KEY_STATUS, status);
-
+        
+        System.out.println("Inserting...");
         // Insert it into the database.
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -167,15 +169,25 @@ public class InvoiceAdapter
         }
         return c;
     }
-
-    public ArrayList<?> getCustomerContact(long customer)
+    
+    public Cursor query(String[] q, String table)
     {
-        Cursor mCursor = db.rawQuery("SELECT * FROM Table1, Table2 "
-                + "WHERE Table1.id = Table2.id_table1 "
-                + "GROUP BY Table1.data1", null);
-
-        return null;
+        Cursor c = db.rawQuery("SELECT * FROM "+table+" WHERE _id = ?", q);
+        if (c!=null)
+        {
+            c.moveToFirst();
+        }
+        return c;
     }
+
+//    public ArrayList<?> getCustomerContact(long customer)
+//    {
+//        Cursor mCursor = db.rawQuery("SELECT * FROM Table1, Table2 "
+//                + "WHERE Table1.id = Table2.id_table1 "
+//                + "GROUP BY Table1.data1", null);
+//
+//        return null;
+//    }
 
     // Change an existing row to be equal to new data.
     public boolean updateRow(long rowId, String issuedate, String customer,
