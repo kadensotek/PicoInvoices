@@ -41,8 +41,11 @@ public class ClientList extends Activity
 		return true;
 	}
 	@Override
+<<<<<<< HEAD
 	protected void onDestroy() 
-
+=======
+	protected void onDestroy()
+>>>>>>> d29360a61d29711889f8f278783e7621b022288f
 	{
 		super.onDestroy();
 		

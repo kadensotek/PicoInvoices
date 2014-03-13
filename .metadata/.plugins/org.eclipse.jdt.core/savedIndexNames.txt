@@ -1,4 +1,3 @@
 INDEX VERSION 1.126+C:\Users\mredmond\Documents\GitHub\PicoInvoices\.metadata\.plugins\org.eclipse.jdt.core
-630251707.index
 4007603691.index
 3182016619.index

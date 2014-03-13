@@ -83,7 +83,11 @@ public class ClientInvoices extends Activity
 	}
 	
 	@SuppressWarnings("deprecation")
+<<<<<<< HEAD
+	private void populateListView() 
+=======
 	private void populateListView()
+>>>>>>> d29360a61d29711889f8f278783e7621b022288f
 	{
 		Cursor cursor = myDb.getCustomerInvoice(customer_ID);							//Create the list of items
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
