@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class ClientInvoices extends Activity 
+public class Settings extends Activity 
 {
 
 	private InvoiceAdapter myDb = null;
@@ -95,7 +95,7 @@ public class ClientInvoices extends Activity
 	@SuppressWarnings("deprecation")
 	private void populateListView()
 	{
-		Cursor cursor = myDb.getCustomerInvoice(ClientList.CLIENT_ID);							//Create the list of items
+		Cursor cursor = myDb.querySort2(new String[]{"hello"},"customer", "invoices");							//Create the list of items
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, 
@@ -118,7 +118,7 @@ public class ClientInvoices extends Activity
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
 					
-					Intent intent1 = new Intent(ClientInvoices.this, ShowDetailedInvoice.class);
+					Intent intent1 = new Intent(Settings.this, ShowDetailedInvoice.class);
                     INVOICE_ID = idInDB;
                     startActivity(intent1);
 			}
@@ -134,11 +134,11 @@ public class ClientInvoices extends Activity
 	    String issuedate = String.valueOf(new Date());
 	    String customer = Long.toString(ClientList.CLIENT_ID);
 	    String dateserviceperformed = String.valueOf(new Date());
-	    String priceservice = "400";
+	    String priceservice = "300";
 	    String service = "Mowing";
 	    String servicedesc = "Front/back yard";
 	    String amountdue = "100";
-	    String status = "paid";
+	    String status = "pending";
 	    
 	    myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
 	    refresh();
@@ -163,7 +163,7 @@ public class ClientInvoices extends Activity
             name+=cursor.getString(ClientAdapter.COL_LNAME);
         }
         else 
-            Toast.makeText(ClientInvoices.this, "failed to load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Settings.this, "failed to load", Toast.LENGTH_SHORT).show();
         cursor.close();
 	    return name;
 //		Intent goToInvoices = new Intent(this, AddNewInvoice.class);

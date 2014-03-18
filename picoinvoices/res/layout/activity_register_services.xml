@@ -6,36 +6,34 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ClientList" >
-
-    <ListView
-        android:id="@+id/client_listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/client_add"
-        android:clickable="true" >
-
-    </ListView>
+    tools:context=".RegisterServices" >
 
     <Button
-        android:id="@+id/client_add"
+        android:id="@+id/registerService_AddNewService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:minWidth="80dip"
-        android:onClick="onClick_AddRecord"
+        android:minWidth="80dp"
+        android:onClick="onClick_AddNewService"
         android:text="Add" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/client_add"
-        android:layout_alignBottom="@+id/client_add"
-        android:layout_alignLeft="@+id/client_listView"
-        android:text="Client List"
+        android:layout_alignBaseline="@+id/registerService_AddNewService"
+        android:layout_alignBottom="@+id/registerService_AddNewService"
+        android:layout_alignParentLeft="true"
+        android:text="Services"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/registerService_serviceListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/registerService_AddNewService"
+        android:layout_below="@+id/registerService_AddNewService" >
+    </ListView>
 
 </RelativeLayout>

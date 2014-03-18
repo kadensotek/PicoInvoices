@@ -56,4 +56,19 @@ public class Home extends Activity
 		Intent intent = new Intent(this, ClientList.class);
 		startActivity(intent);
 	}
+	public void onClick_toSettings(View v)
+    {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+    }
+	public void onClick_toManageInvoices(View v)
+    {
+        Intent intent = new Intent(this, ManageInvoices.class);
+        startActivity(intent);
+    }
+	public void onClick_toServices(View v)
+    {
+        Intent intent = new Intent(this, RegisterServices.class);
+        startActivity(intent);
+    }
 }

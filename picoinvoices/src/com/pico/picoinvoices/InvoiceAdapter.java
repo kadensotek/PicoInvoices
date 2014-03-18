@@ -179,6 +179,24 @@ public class InvoiceAdapter
         }
         return c;
     }
+    public Cursor querySort(String[] q, String order, String table)
+    {
+        Cursor c = db.rawQuery("SELECT * FROM " + table +" ORDER BY ? ASC", q);
+        if (c!=null)
+        {
+            c.moveToFirst();
+        }
+        return c;
+    }
+    public Cursor querySort2(String[] q, String order, String table)
+    {
+        Cursor c = db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, q[0] +" DESC");
+        if (c!=null)
+        {
+            c.moveToFirst();
+        }
+        return c;
+    }
 
 //    public ArrayList<?> getCustomerContact(long customer)
 //    {
