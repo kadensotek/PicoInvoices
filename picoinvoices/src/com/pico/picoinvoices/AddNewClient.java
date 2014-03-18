@@ -33,6 +33,12 @@ public class AddNewClient extends Activity
 		
 		closeDB();
 	}
+	@Override
+    protected void onPause() 
+    {
+        super.onPause();
+        closeDB();
+    }
 	private void openDB() 
 	{
 		myDb = new ClientAdapter(this);

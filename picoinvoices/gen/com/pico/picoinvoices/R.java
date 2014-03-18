@@ -24,39 +24,41 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080020;
         public static final int activity_client_invoices_btnAddInvoice=0x7f080010;
         public static final int add_new_invoice_txtInfo=0x7f08000d;
-        public static final int btn_addNew_add=0x7f08000c;
-        public static final int btn_addNew_cancel=0x7f08000b;
-        public static final int child_view_editText=0x7f080015;
-        public static final int child_view_label=0x7f080014;
+        public static final int btn_addNew_add=0x7f08000a;
+        public static final int btn_addNew_cancel=0x7f080009;
+        public static final int button1=0x7f080016;
         public static final int client_add=0x7f080012;
         public static final int client_invoices_listView=0x7f08000e;
         public static final int client_invoices_txtClientName=0x7f08000f;
         public static final int client_listView=0x7f080011;
+        public static final int delete=0x7f080018;
+        public static final int expandableListView1=0x7f080015;
         public static final int home_btnToClients=0x7f080013;
-        public static final int invoice_detail_txtContent=0x7f08001a;
-        public static final int invoice_detail_txtView=0x7f08001b;
-        public static final int invoice_listview_layout_template_txtDate=0x7f08001c;
-        public static final int invoice_listview_layout_template_txtInvoiceNumber=0x7f08001d;
-        public static final int invoice_listview_layout_template_txtStatus=0x7f08001e;
+        public static final int invoice_detail_txtContent=0x7f08001d;
+        public static final int invoice_detail_txtView=0x7f08001e;
+        public static final int invoice_listview_layout_template_txtDate=0x7f08001f;
+        public static final int invoice_listview_layout_template_txtInvoiceNumber=0x7f080020;
+        public static final int invoice_listview_layout_template_txtStatus=0x7f080021;
+        public static final int laptop=0x7f080017;
         public static final int lbl_addNew_address=0x7f080006;
-        public static final int lbl_addNew_email=0x7f08000a;
+        public static final int lbl_addNew_email=0x7f08000c;
         public static final int lbl_addNew_fname=0x7f080001;
         public static final int lbl_addNew_lname=0x7f080004;
         public static final int lbl_addNew_phone=0x7f080008;
         public static final int lbl_addNew_title=0x7f080000;
-        public static final int textViewGroupName=0x7f08001f;
+        public static final int parent_view_btnButton=0x7f080022;
+        public static final int relativeLayout1=0x7f080014;
         public static final int txt_addNew_address=0x7f080005;
-        public static final int txt_addNew_email=0x7f080009;
+        public static final int txt_addNew_email=0x7f08000b;
         public static final int txt_addNew_fname=0x7f080002;
         public static final int txt_addNew_lname=0x7f080003;
         public static final int txt_addNew_phone=0x7f080007;
-        public static final int txt_clientFName=0x7f080017;
-        public static final int txt_clientLName=0x7f080019;
-        public static final int txt_clientPendingInvoices=0x7f080016;
-        public static final int txt_dbID=0x7f080018;
+        public static final int txt_clientFName=0x7f08001a;
+        public static final int txt_clientLName=0x7f08001c;
+        public static final int txt_clientPendingInvoices=0x7f080019;
+        public static final int txt_dbID=0x7f08001b;
     }
     public static final class layout {
         public static final int activity_add_new_client=0x7f030000;
@@ -70,6 +72,7 @@ public final class R {
         public static final int invoice_detail=0x7f030008;
         public static final int invoice_listview_layout_template=0x7f030009;
         public static final int parent_view=0x7f03000a;
+        public static final int parent_view_button=0x7f03000b;
     }
     public static final class menu {
         public static final int add_new_client=0x7f070000;

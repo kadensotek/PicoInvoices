@@ -190,8 +190,4 @@ public class ClientAdapter
 		{
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> be40cae6bd3f2703507f8e7920aa0123aa386267

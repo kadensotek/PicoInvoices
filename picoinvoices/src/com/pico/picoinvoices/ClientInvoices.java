@@ -40,7 +40,6 @@ public class ClientInvoices extends Activity
 		
 		TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
 		String name = getClientName();
-		System.out.println(name);
 		textView.setText(name);
 		
 		
@@ -68,7 +67,6 @@ public class ClientInvoices extends Activity
         refresh();
         TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
         String name = getClientName();
-        System.out.println(name);
         textView.setText(name);
     }
 	/*
@@ -122,7 +120,6 @@ public class ClientInvoices extends Activity
 					
 					Intent intent1 = new Intent(ClientInvoices.this, ShowDetailedInvoice.class);
                     INVOICE_ID = idInDB;
-                    System.out.println(idInDB);
                     startActivity(intent1);
 			}
 		});

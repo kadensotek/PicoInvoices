@@ -41,12 +41,8 @@ public class ClientList extends Activity
 		return true;
 	}
 	@Override
-<<<<<<< HEAD
-	protected void onDestroy() 
 
-=======
 	protected void onDestroy()
->>>>>>> be40cae6bd3f2703507f8e7920aa0123aa386267
 	{
 		super.onDestroy();
 		closeDB();
@@ -105,7 +101,6 @@ public class ClientList extends Activity
 //					
 					Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
 					CLIENT_ID = idInDB;
-					System.out.println(idInDB);
 //					goToInvoices.putExtra("customerID", idDB);
 //					goToInvoices.putExtra("fname", fname);
 //					goToInvoices.putExtra("lname", lname);

@@ -1,15 +1,17 @@
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textViewGroupName"
-    android:layout_width="wrap_content"
-    android:layout_height="100dp"
-    android:layout_marginLeft="5dp"
-    android:background="#B2B0AC"
-    android:gravity="center_vertical"
-    android:padding="10dp"
-    android:text="@string/hello_world"
-    android:textColor="#FFFFFF"
-    android:textSelectHandleLeft="@string/hello_world"
-    android:textSize="18dp"
-    android:textStyle="bold" />
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D4D2D2"
+    android:orientation="vertical"
+    android:padding="10dp" >
  
+    <TextView
+        android:id="@+id/laptop"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="#D4D2D2"
+        android:minHeight="50dp"
+        android:paddingLeft="25dp" />
+	
+</LinearLayout>
