@@ -24,7 +24,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08002b;
+        public static final int action_settings=0x7f08002c;
         public static final int activity_client_invoices_btnAddInvoice=0x7f080011;
         public static final int add_new_invoice_txtInfo=0x7f08000d;
         public static final int btn_addNew_add=0x7f08000a;
@@ -43,6 +43,7 @@ public final class R {
         public static final int imageView1=0x7f080014;
         public static final int invoice_detail_txtContent=0x7f080026;
         public static final int invoice_detail_txtView=0x7f080027;
+        public static final int invoice_listview_layout_template_CustomerID=0x7f08002b;
         public static final int invoice_listview_layout_template_txtDate=0x7f080028;
         public static final int invoice_listview_layout_template_txtInvoiceNumber=0x7f080029;
         public static final int invoice_listview_layout_template_txtStatus=0x7f08002a;
@@ -53,13 +54,13 @@ public final class R {
         public static final int lbl_addNew_lname=0x7f080004;
         public static final int lbl_addNew_phone=0x7f080008;
         public static final int lbl_addNew_title=0x7f080000;
+        public static final int manageInvoices=0x7f08000e;
         public static final int manageInvoices_listView=0x7f08001b;
-        public static final int parent_view_btnButton=0x7f08002c;
+        public static final int parent_view_btnButton=0x7f08002d;
         public static final int registerService_AddNewService=0x7f08001c;
         public static final int registerService_serviceListView=0x7f08001d;
         public static final int relativeLayout1=0x7f08001e;
         public static final int spinner2=0x7f080019;
-        public static final int textView1=0x7f08000e;
         public static final int txt_addNew_address=0x7f080005;
         public static final int txt_addNew_email=0x7f08000b;
         public static final int txt_addNew_fname=0x7f080002;

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ManageInvoices extends Activity
@@ -45,9 +46,13 @@ public class ManageInvoices extends Activity
         openDB();
     }
     
-    /*
-     *  Database maintenance functions
-     */
+    
+    
+    ////////////////////////////////////////////////////////
+    /////*
+    //// *  Database maintenance functions
+    //// */
+    ////////////////////////////////////////////////////////
     private void closeDB() 
     {
         myDb.close();
@@ -58,9 +63,13 @@ public class ManageInvoices extends Activity
         myDb.open();
     }
     
-    /*
-     *  refresh functions
-     */
+    
+    
+    ////////////////////////////////////////////////////////
+    //////*
+    ///// *  refresh functions
+    ///// */
+    ///////////////////////////////////////////////////////
     private void refresh()
     {
         populateListView();
@@ -70,18 +79,14 @@ public class ManageInvoices extends Activity
     @SuppressWarnings("deprecation")
     private void populateListView() 
     {
-        toggleOrder++;
-        String order = "";
-        if (toggleOrder%2 == 0)
-            order = "ASC";
-        else
-            order = "DESC";
         
-        Cursor cursor = myDb.querySort2(new String[] {SpinnerAdapter.sort},order, InvoiceAdapter.DATABASE_TABLE);                              //Create the list of items
-        
-        String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};
-        int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, 
-                R.id.invoice_listview_layout_template_txtStatus};
+        Cursor cursor = myDb.querySort2(new String[] {SpinnerAdapter.sort}, InvoiceAdapter.DATABASE_TABLE);                              //Create the list of items
+//        Cursor cursor = myDb.getCustomerInvoice(1);
+
+        //  String array to use as a map for which db rows should be mapped to which element in the template layout
+        String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS, InvoiceAdapter.KEY_CUSTOMER};
+        int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, R.id.invoice_listview_layout_template_txtStatus, R.id.invoice_listview_layout_template_CustomerID};
+    
         
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.invoice_listview_layout_template, cursor,client_name_list , ints);
         
@@ -98,32 +103,25 @@ public class ManageInvoices extends Activity
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
             {
-                
-//              Cursor cursor = myDb.getRow(idInDB);
-//              if (cursor.moveToFirst())
-//              {
-//                  long idDB = cursor.getLong(ClientAdapter.COL_ROWID);
-//                  
-                    Intent goToInvoices = new Intent(ManageInvoices.this, ClientInvoices.class);
-                    CLIENT_ID = idInDB;
-//                  goToInvoices.putExtra("customerID", idDB);
-//                  goToInvoices.putExtra("fname", fname);
-//                  goToInvoices.putExtra("lname", lname);
-//                  goToInvoices.putExtra("address", address);
-//                  goToInvoices.putExtra("phone", phone);
-//                  goToInvoices.putExtra("email", email);
-                    startActivity(goToInvoices);
-//              }
-//              else 
-//                  Toast.makeText(ClientList.this, "failed to load"+idInDB, Toast.LENGTH_SHORT).show();
-//              cursor.close();
-                
+                    TextView textView = (TextView) findViewById(R.id.invoice_listview_layout_template_CustomerID);
+                    String customerID = (String) textView.getText();
+                    
+                    Intent intent1 = new Intent(ManageInvoices.this, ShowDetailedInvoice.class);
+                    intent1.putExtra("InvoiceID", Long.toString(idInDB));
+                    intent1.putExtra("CustomerID", customerID);
+                    
+                    System.out.println(customerID);
+                    startActivity(intent1);
             }
         });
-        
     }
-
-    // add items into spinner dynamically
+    
+    
+    ////////////////////////////////////////////////////////
+    /////*
+    //// * add items into spinner dynamically
+    //// *
+    ////////////////////////////////////////////////////////
     public void addItemsOnSpinner()
     {
 
@@ -143,8 +141,11 @@ public class ManageInvoices extends Activity
         spinner2.setOnItemSelectedListener(new SpinnerAdapter());
     }
     
-    
-    //Use an inner class so that I can access the Invoice Adapter.
+    ////////////////////////////////////////////////////////
+    /////*
+    //// * Use an inner class so that I can access the Invoice Adapter.
+    //// *
+    ////////////////////////////////////////////////////////
     public void onClick_SortInvoices(View v)
     {
         refresh();

@@ -188,7 +188,7 @@ public class InvoiceAdapter
         }
         return c;
     }
-    public Cursor querySort2(String[] q, String order, String table)
+    public Cursor querySort2(String[] q, String table)
     {
         Cursor c = db.query(DATABASE_TABLE, ALL_KEYS, null, null, null, null, q[0] +" DESC");
         if (c!=null)

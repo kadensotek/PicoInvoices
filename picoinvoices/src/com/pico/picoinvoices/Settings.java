@@ -95,7 +95,7 @@ public class Settings extends Activity
 	@SuppressWarnings("deprecation")
 	private void populateListView()
 	{
-		Cursor cursor = myDb.querySort2(new String[]{"hello"},"customer", "invoices");							//Create the list of items
+		Cursor cursor = myDb.getAllRows();							//Create the list of items
 		//	String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, 
