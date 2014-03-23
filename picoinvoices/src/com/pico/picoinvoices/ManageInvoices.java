@@ -11,25 +11,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ManageInvoices extends Activity
 {
 
     private Spinner spinner2;
     private InvoiceAdapter myDb;
-    public static long CLIENT_ID = 0;
-    private int toggleOrder = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_invoices);
-        openDB();
         addItemsOnSpinner();
         addListenerOnSpinnerItemSelection();
         refresh();
@@ -72,27 +67,31 @@ public class ManageInvoices extends Activity
     ///////////////////////////////////////////////////////
     private void refresh()
     {
+        openDB();
         populateListView();
         registerClickCallback();
+        closeDB();
     }
     
-    @SuppressWarnings("deprecation")
     private void populateListView() 
     {
+        openDB();
         
-        Cursor cursor = myDb.querySort2(new String[] {SpinnerAdapter.sort}, InvoiceAdapter.DATABASE_TABLE);                              //Create the list of items
-//        Cursor cursor = myDb.getCustomerInvoice(1);
+        //Create the list of items
+        Cursor cursor = myDb.querySort2(new String[] {SpinnerAdapter.sort}, InvoiceAdapter.DATABASE_TABLE);                              
 
         //  String array to use as a map for which db rows should be mapped to which element in the template layout
+        //  client_name_list corresponds to the database columns that should be mapped to the corresponding xml element as specified in ints. NOTE: this mappings are 
+        //      done on directly (ie: InvoiceAdapter.KEY_ROWID maps to R.id.invoice_listview_layout_template_txtInvoiceNumber) 
         String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS, InvoiceAdapter.KEY_CUSTOMER};
         int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, R.id.invoice_listview_layout_template_txtStatus, R.id.invoice_listview_layout_template_CustomerID};
     
-        
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.invoice_listview_layout_template, cursor,client_name_list , ints);
+        //  Create the adapter that will bind the data from the DB to the listview
+        ListViewAdapter adapter = new ListViewAdapter(this, R.layout.invoice_listview_layout_template, cursor,client_name_list , ints, 0);
         
         ListView list = (ListView) findViewById(R.id.manageInvoices_listView);
         list.setAdapter(adapter);
-        
+        closeDB();
     }
     
     private void registerClickCallback() 
@@ -103,9 +102,12 @@ public class ManageInvoices extends Activity
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
             {
-                    TextView textView = (TextView) findViewById(R.id.invoice_listview_layout_template_CustomerID);
-                    String customerID = (String) textView.getText();
+                    //  Note that the viewClicked needs to be specified here so that the selected item in the list will be used - not just the first in the lists
+                    //  Instead of passing the client's id number from activity to activity, the clientID will be coupled with the invoice directly
+                    TextView textView = (TextView) viewClicked.findViewById(R.id.invoice_listview_layout_template_CustomerID);
+                    String customerID = textView.getText().toString();
                     
+                    //  Now use the intent to send the information to the final activity - ShowDetailedInvoice)
                     Intent intent1 = new Intent(ManageInvoices.this, ShowDetailedInvoice.class);
                     intent1.putExtra("InvoiceID", Long.toString(idInDB));
                     intent1.putExtra("CustomerID", customerID);

@@ -101,7 +101,7 @@ public class ShowDetailedInvoice extends Activity
             email = cursor.getString(ClientAdapter.COL_EMAIL);
             phone = cursor.getString(ClientAdapter.COL_PHONE);
         } else
-            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor",
+            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for customerId " + customerID,
                     Toast.LENGTH_SHORT).show();
 
         // Populate invoice specific information
@@ -116,7 +116,7 @@ public class ShowDetailedInvoice extends Activity
             amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
             status = cursor.getString(InvoiceAdapter.COL_STATUS);
         } else
-            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor",
+            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for invoiceID " + invoiceID,
                     Toast.LENGTH_SHORT).show();
         cursor.close();
 

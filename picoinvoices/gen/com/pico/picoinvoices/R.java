@@ -34,6 +34,7 @@ public final class R {
         public static final int client_invoices_listView=0x7f08000f;
         public static final int client_invoices_txtClientName=0x7f080010;
         public static final int client_listView=0x7f080012;
+        public static final int client_name_CustomerID=0x7f080024;
         public static final int delete=0x7f080021;
         public static final int expandableListView1=0x7f08001f;
         public static final int home_btnToClients=0x7f080015;
@@ -69,7 +70,6 @@ public final class R {
         public static final int txt_clientFName=0x7f080023;
         public static final int txt_clientLName=0x7f080025;
         public static final int txt_clientPendingInvoices=0x7f080022;
-        public static final int txt_dbID=0x7f080024;
     }
     public static final class layout {
         public static final int activity_add_new_client=0x7f030000;
@@ -87,7 +87,6 @@ public final class R {
         public static final int invoice_detail=0x7f03000c;
         public static final int invoice_listview_layout_template=0x7f03000d;
         public static final int parent_view=0x7f03000e;
-        public static final int parent_view_button=0x7f03000f;
     }
     public static final class menu {
         public static final int add_new=0x7f070000;

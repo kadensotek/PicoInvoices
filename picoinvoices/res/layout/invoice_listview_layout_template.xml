@@ -38,6 +38,6 @@
         android:layout_alignParentTop="true"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </RelativeLayout>

@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 /*
  * Steps to using the DB
@@ -23,14 +22,14 @@ public class ClientList extends Activity
 {
 
 	ClientAdapter myDb;
-	public static long CLIENT_ID = 0;
+	//this variable is used to select the correct user in ClientInvoices
+	public static long CLIENT_ID = 0;                  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_list);
 		
-		openDB();
 		refresh();
 	}
 	@Override
@@ -41,13 +40,27 @@ public class ClientList extends Activity
 		return true;
 	}
 	@Override
-
 	protected void onDestroy()
 	{
 		super.onDestroy();
 		closeDB();
+		System.out.println("Destroyed..");
 	}
 	
+	@Override
+    protected void onResume()
+    {
+        super.onResume();
+        refresh();
+        System.out.println("Resumed..");
+    }
+	@Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        refresh();
+        System.out.println("Restarted..");
+    }
 	/*
 	 * 	Database maintenance functions
 	 */
@@ -66,22 +79,25 @@ public class ClientList extends Activity
 	 */
 	private void refresh()
 	{
-		populateListView();
+		openDB();
+	    populateListView();
 		registerClickCallback();
+		closeDB();
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void populateListView() 
 	{
-		Cursor cursor = myDb.getAllRows(); 								//Create the list of items
+		openDB();
+	    Cursor cursor = myDb.getAllRows(); 								//Create the list of items
 		
 		String[] client_name_list = new String[]{ClientAdapter.KEY_ROWID, ClientAdapter.KEY_FNAME, ClientAdapter.KEY_LNAME};
-		int[] ints = new int[] {R.id.txt_dbID, R.id.txt_clientFName, R.id.txt_clientLName};
+		int[] ints = new int[] {R.id.client_name_CustomerID, R.id.txt_clientFName, R.id.txt_clientLName};
 		
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.client_name, cursor,client_name_list , ints);
+		ListViewAdapter adapter = new ListViewAdapter(this, R.layout.client_name, cursor,client_name_list , ints, 0);
 		
 		ListView list = (ListView) findViewById(R.id.client_listView);
 		list.setAdapter(adapter);
+		closeDB();
 		
 	}
 	
@@ -93,29 +109,11 @@ public class ClientList extends Activity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-				
-//				Cursor cursor = myDb.getRow(idInDB);
-//				if (cursor.moveToFirst())
-//				{
-//					long idDB = cursor.getLong(ClientAdapter.COL_ROWID);
-//					
-					Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
-					CLIENT_ID = idInDB;
-//					goToInvoices.putExtra("customerID", idDB);
-//					goToInvoices.putExtra("fname", fname);
-//					goToInvoices.putExtra("lname", lname);
-//					goToInvoices.putExtra("address", address);
-//					goToInvoices.putExtra("phone", phone);
-//					goToInvoices.putExtra("email", email);
-					startActivity(goToInvoices);
-//				}
-//				else 
-//					Toast.makeText(ClientList.this, "failed to load"+idInDB, Toast.LENGTH_SHORT).show();
-//				cursor.close();
-				
+				Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
+				CLIENT_ID = idInDB;
+				startActivity(goToInvoices);
 			}
 		});
-		
 	}
 	
 	/*

@@ -1,6 +1,8 @@
 package com.pico.picoinvoices;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +12,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,6 @@ public class ClientInvoices extends Activity
 		setContentView(R.layout.activity_client_invoices);
 		
 		
-		openDB();
         refresh();
 		
 		TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
@@ -51,11 +51,17 @@ public class ClientInvoices extends Activity
 		closeDB();
 	}
 	@Override
+	protected void onRestart() {
+	    super.onRestart();
+        refresh();
+        TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
+        String name = getClientName();
+        textView.setText(name);
+	}
+	@Override
     protected void onResume() 
     {
         super.onResume();
-        
-        openDB();
         refresh();
         TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
         String name = getClientName();
@@ -79,14 +85,15 @@ public class ClientInvoices extends Activity
 	 */
 	private void refresh()
 	{
-		
+		openDB();
 		populateListView();
 		registerClickCallback();
+		closeDB();
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void populateListView()
 	{
+	    openDB();
 	    //Create the list of items
 	    Cursor cursor = myDb.getCustomerInvoice(ClientList.CLIENT_ID);							
 		
@@ -94,11 +101,12 @@ public class ClientInvoices extends Activity
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS, InvoiceAdapter.KEY_CUSTOMER};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, R.id.invoice_listview_layout_template_txtStatus, R.id.invoice_listview_layout_template_CustomerID};
 	
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.invoice_listview_layout_template, cursor, client_name_list , ints);
+		ListViewAdapter adapter = new ListViewAdapter(this, R.layout.invoice_listview_layout_template, cursor, client_name_list , ints, 0);
 		
 		
 		ListView list = (ListView) findViewById(R.id.client_invoices_listView);
 		list.setAdapter(adapter);
+		closeDB();
 		
 	}
 	
@@ -110,7 +118,7 @@ public class ClientInvoices extends Activity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-					TextView textView = (TextView) findViewById(R.id.invoice_listview_layout_template_CustomerID);
+					TextView textView = (TextView) viewClicked.findViewById(R.id.invoice_listview_layout_template_CustomerID);
 					customerID = (String) textView.getText();
 					Intent intent1 = new Intent(ClientInvoices.this, ShowDetailedInvoice.class);
 					intent1.putExtra("InvoiceID", Long.toString(idInDB));
@@ -127,9 +135,10 @@ public class ClientInvoices extends Activity
 	 */
 	public void onClick_AddInvoice(View v)
 	{
-	    String issuedate = String.valueOf(new Date());
+	    openDB();
+	    String issuedate = getDateTime();
 	    String customer = Long.toString(ClientList.CLIENT_ID);
-	    String dateserviceperformed = String.valueOf(new Date());
+	    String dateserviceperformed = getDateTime();
 	    String priceservice = "400";
 	    String service = "Mowing";
 	    String servicedesc = "Front/back yard";
@@ -137,11 +146,18 @@ public class ClientInvoices extends Activity
 	    String status = "paid";
 	    
 	    myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
+	    closeDB();
 	    refresh();
 	}
-	
+	private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+	}
 	private String getClientName()
 	{
+	    openDB();
 	    String name = "";
 	    Cursor cursor = myDb.query(new String[] {Long.toString(ClientList.CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
 	    if (cursor.moveToFirst())
@@ -153,6 +169,7 @@ public class ClientInvoices extends Activity
         else 
             Toast.makeText(ClientInvoices.this, "failed to load", Toast.LENGTH_SHORT).show();
         cursor.close();
+        closeDB();
 	    return name;
 	}
 }

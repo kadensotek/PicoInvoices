@@ -1,8 +1,7 @@
 package com.pico.picoinvoices;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -56,7 +55,7 @@ public class AddNewClient extends Activity
 	public void onClick_addUser(View v)
 	{
 		EditText fname = (EditText) findViewById(R.id.txt_addNew_fname);
-		String fname_txt = fname.getText().toString();
+		String fname_txt = fname.getText().toString().trim() + " ";
 		
 		EditText lname = (EditText) findViewById(R.id.txt_addNew_lname);
 		String lname_txt = lname.getText().toString();
@@ -72,16 +71,13 @@ public class AddNewClient extends Activity
 		
 		myDb.insertRow(fname_txt, lname_txt, address_txt, phone_txt, email_txt);
 		
-		Intent intent = new Intent(this, ClientList.class);
-		startActivity(intent);
+		//Call finish() to prevent the flow of activities from accessing this activity from the backstack
+		finish();
+		
 	}
 	public void onClick_cancelAdd(View v)
 	{
-		Intent intent = new Intent(this, ClientList.class);
-//		EditText editText = (EditText) findViewById(R.id.edit_message);
-//		String message = editText.getText().toString();
-//		intent.putExtra(EXTRA_MESSAGE, message);
-		startActivity(intent);
+		finish();
 	}
 	
 }
