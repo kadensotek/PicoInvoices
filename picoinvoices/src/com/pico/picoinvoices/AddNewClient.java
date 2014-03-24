@@ -69,7 +69,7 @@ public class AddNewClient extends Activity
 		EditText email = (EditText) findViewById(R.id.txt_addNew_email);
 		String email_txt = email.getText().toString();
 		
-		myDb.insertRow(fname_txt, lname_txt, address_txt, phone_txt, email_txt);
+		myDb.insertRow(fname_txt, lname_txt, address_txt, phone_txt, email_txt, "Wegmans Lawn Care");
 		
 		//Call finish() to prevent the flow of activities from accessing this activity from the backstack
 		finish();

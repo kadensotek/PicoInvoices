@@ -22,6 +22,11 @@ public class ClientInvoices extends Activity
 	private InvoiceAdapter myDb = null;
 	String customerID = "";
 	
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Activity lifecycle functions
+    /////*
+    ////////////////////////////////////////////////////////
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -67,9 +72,12 @@ public class ClientInvoices extends Activity
         String name = getClientName();
         textView.setText(name);
     }
-	/*
-	 * 	Open/close functions for the DB
-	 */
+	
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Database open/close
+    /////*
+    ////////////////////////////////////////////////////////
 	private void closeDB() 
 	{
 		myDb.close();
@@ -80,9 +88,11 @@ public class ClientInvoices extends Activity
 		myDb.open();
 	}
 	
-	/*
-	 * 	refresh functions
-	 */
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Refresh functions
+    /////*
+    ////////////////////////////////////////////////////////
 	private void refresh()
 	{
 		openDB();
@@ -129,10 +139,40 @@ public class ClientInvoices extends Activity
 		});
 	}
 	
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Utility functions 
+    /////*
+    ////////////////////////////////////////////////////////
+	private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+    private String getClientName()
+    {
+        openDB();
+        String name = "";
+        Cursor cursor = myDb.query(new String[] {Long.toString(ClientList.CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
+        if (cursor.moveToFirst())
+        {
+            name+=cursor.getString(ClientAdapter.COL_FNAME);
+            name+=" ";
+            name+=cursor.getString(ClientAdapter.COL_LNAME);
+        }
+        else 
+            Toast.makeText(ClientInvoices.this, "failed to load", Toast.LENGTH_SHORT).show();
+        cursor.close();
+        closeDB();
+        return name;
+    }
 	
-	/*
-	 * 	onClickListeners are implemented here
-	 */
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  OnClick listener for adding an invoice as described in the xml
+    /////*
+    ////////////////////////////////////////////////////////
 	public void onClick_AddInvoice(View v)
 	{
 	    openDB();
@@ -149,27 +189,5 @@ public class ClientInvoices extends Activity
 	    closeDB();
 	    refresh();
 	}
-	private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-	}
-	private String getClientName()
-	{
-	    openDB();
-	    String name = "";
-	    Cursor cursor = myDb.query(new String[] {Long.toString(ClientList.CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
-	    if (cursor.moveToFirst())
-        {
-            name+=cursor.getString(ClientAdapter.COL_FNAME);
-            name+=" ";
-            name+=cursor.getString(ClientAdapter.COL_LNAME);
-        }
-        else 
-            Toast.makeText(ClientInvoices.this, "failed to load", Toast.LENGTH_SHORT).show();
-        cursor.close();
-        closeDB();
-	    return name;
-	}
+	
 }

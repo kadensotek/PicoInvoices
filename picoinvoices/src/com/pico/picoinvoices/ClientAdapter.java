@@ -31,6 +31,7 @@ public class ClientAdapter
 	public static final String KEY_ADDRESS = "address";
 	public static final String KEY_PHONE = "phone";
 	public static final String KEY_EMAIL = "email";
+	public static final String KEY_BUSINESS = "business";
 	
 	// TODO: Setup your field numbers here (0 = KEY_ROWID, 1=...)
 	public static final int COL_FNAME = 1;
@@ -38,9 +39,10 @@ public class ClientAdapter
 	public static final int COL_ADDRESS = 3;
 	public static final int COL_PHONE = 4;
 	public static final int COL_EMAIL = 5;
+	public static final int COL_BUSINESS = 6;
 
 	
-	public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_FNAME, KEY_LNAME, KEY_ADDRESS, KEY_PHONE, KEY_EMAIL};
+	public static final String[] ALL_KEYS = new String[] {KEY_ROWID, KEY_FNAME, KEY_LNAME, KEY_ADDRESS, KEY_PHONE, KEY_EMAIL, KEY_BUSINESS};
 	
 	// DB info: it's name, and the table we are using (just one).
 	public static final String DATABASE_TABLE = "contactInfo";
@@ -75,7 +77,7 @@ public class ClientAdapter
 	}
 	
 	// Add a new set of values to the database.
-	public long insertRow(String fname, String lname, String address, String phone, String email) 
+	public long insertRow(String fname, String lname, String address, String phone, String email, String business) 
 	{
 		/*
 		 * CHANGE 3:
@@ -89,6 +91,7 @@ public class ClientAdapter
 		initialValues.put(KEY_ADDRESS, address);
 		initialValues.put(KEY_PHONE, phone);
 		initialValues.put(KEY_EMAIL, email);
+		initialValues.put(KEY_BUSINESS, business);
 		
 		// Insert it into the database.
 		return db.insert(DATABASE_TABLE, null, initialValues);
@@ -142,7 +145,7 @@ public class ClientAdapter
 	}
 	
 	// Change an existing row to be equal to new data.
-	public boolean updateRow(long rowId, String fname, String lname, String address, String phone, String email)
+	public boolean updateRow(long rowId, String fname, String lname, String address, String phone, String email, String business)
 	{
 		String where = KEY_ROWID + "=" + rowId;
 
@@ -158,6 +161,8 @@ public class ClientAdapter
 		newValues.put(KEY_ADDRESS, address);
 		newValues.put(KEY_PHONE, phone);
 		newValues.put(KEY_EMAIL, email);
+		newValues.put(KEY_BUSINESS, business);
+		
 		
 		// Insert it into the database.
 		return db.update(DATABASE_TABLE, newValues, where, null) != 0;

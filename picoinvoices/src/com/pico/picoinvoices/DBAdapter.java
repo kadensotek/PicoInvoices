@@ -10,7 +10,7 @@ public class DBAdapter
 
     public static final String DATABASE_NAME = "picoinvoices"; //$NON-NLS-1$
 
-    public static final int DATABASE_VERSION = 11;
+    public static final int DATABASE_VERSION = 12;
 
     static final String CREATE_TABLE_INVOICE = "create table "
 
@@ -65,11 +65,37 @@ public class DBAdapter
             + ClientAdapter.KEY_LNAME + " string not null, "
             + ClientAdapter.KEY_ADDRESS + " string not null, "
             + ClientAdapter.KEY_PHONE + " string not null, "
-            + ClientAdapter.KEY_EMAIL + " string not null "
+            + ClientAdapter.KEY_EMAIL + " string not null, "
+            + ClientAdapter.KEY_BUSINESS + " string not null "
 
             // Rest of creation:
             + ");";
+     
+     static final String CREATE_TABLE_SERVICES = "create table "
 
+            + RegisterServicesAdapter.DATABASE_TABLE
+            + " ("
+            + RegisterServicesAdapter.KEY_ROWID
+            + " integer primary key autoincrement, "
+
+            /*
+             * CHANGE 2:
+             */
+            // TODO: Place your fields here!
+            // + KEY_{...} + " {type} not null"
+            // - Key is the column name you created above.
+            // - {type} is one of: text, integer, real, blob
+            // (http://www.sqlite.org/datatype3.html)
+            // - "not null" means it is a required field (must be given a
+            // value).
+            // NOTE: All must be comma separated (end of line!) Last one must
+            // have NO comma!!
+            + RegisterServicesAdapter.KEY_NAME + " string not null, "
+            + RegisterServicesAdapter.KEY_RATE + " string not null, "
+            + RegisterServicesAdapter.KEY_TYPE + " string "
+
+            // Rest of creation:
+            + ");";
     private final Context context;
     private DatabaseHelper DBHelper;
     public SQLiteDatabase db;
@@ -97,6 +123,7 @@ public class DBAdapter
         {
             db.execSQL(CREATE_TABLE_INVOICE);
             db.execSQL(CREATE_TABLE_CLIENT);
+            db.execSQL(CREATE_TABLE_SERVICES);
         }
 
         @Override
@@ -108,6 +135,7 @@ public class DBAdapter
             // Destroy old database:
             db.execSQL("DROP TABLE IF EXISTS " + ClientAdapter.DATABASE_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + InvoiceAdapter.DATABASE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + RegisterServicesAdapter.DATABASE_TABLE);
             
             // Recreate new database:
             onCreate(db);

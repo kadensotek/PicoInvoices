@@ -85,9 +85,7 @@ public class InvoiceAdapter
     }
 
     // Add a new set of values to the database.
-    public long insertRow(String issuedate, String customer,
-            String dateserviceperformed, String priceservice, String service,
-            String servicedesc, String amountdue, String status)
+    public long insertRow(String issuedate, String customer,String dateserviceperformed, String priceservice, String service,String servicedesc, String amountdue, String status)
     {
         /*
          * CHANGE 3:

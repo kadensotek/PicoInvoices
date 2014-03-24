@@ -19,7 +19,12 @@ public class ManageInvoices extends Activity
 
     private Spinner spinner2;
     private InvoiceAdapter myDb;
-
+    
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Activity lifecycle functions
+    /////*
+    ////////////////////////////////////////////////////////
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -29,12 +34,17 @@ public class ManageInvoices extends Activity
         addListenerOnSpinnerItemSelection();
         refresh();
     }
-
+    
+    //Handles onDestroy events
+    @Override
     protected void onDestroy()
     {
         super.onDestroy();
         closeDB();
     }
+    
+    //Handles onResume events
+    @Override
     protected void onResume()
     {
         super.onResume();
@@ -45,8 +55,8 @@ public class ManageInvoices extends Activity
     
     ////////////////////////////////////////////////////////
     /////*
-    //// *  Database maintenance functions
-    //// */
+    /////*  Database maintenance functions
+    /////*
     ////////////////////////////////////////////////////////
     private void closeDB() 
     {
@@ -61,10 +71,10 @@ public class ManageInvoices extends Activity
     
     
     ////////////////////////////////////////////////////////
-    //////*
-    ///// *  refresh functions
-    ///// */
-    ///////////////////////////////////////////////////////
+    /////*
+    /////*  Refresh functions
+    /////*
+    ////////////////////////////////////////////////////////
     private void refresh()
     {
         openDB();
@@ -121,8 +131,8 @@ public class ManageInvoices extends Activity
     
     ////////////////////////////////////////////////////////
     /////*
-    //// * add items into spinner dynamically
-    //// *
+    /////* add items into spinner dynamically
+    /////*
     ////////////////////////////////////////////////////////
     public void addItemsOnSpinner()
     {
@@ -145,8 +155,8 @@ public class ManageInvoices extends Activity
     
     ////////////////////////////////////////////////////////
     /////*
-    //// * Use an inner class so that I can access the Invoice Adapter.
-    //// *
+    /////*  On_Click method that was specified in the XML properties
+    /////*
     ////////////////////////////////////////////////////////
     public void onClick_SortInvoices(View v)
     {

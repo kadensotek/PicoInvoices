@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;registerService_serviceListView&apos; in &apos;com.pico.picoinvoices.R.id&apos; to &apos;service_ListView&apos;&#x0D;&#x0A;- Original project: &apos;picoinvoices&apos;&#x0D;&#x0A;- Original element: &apos;com.pico.picoinvoices.R.id.registerService_serviceListView&apos;&#x0D;&#x0A;- Renamed element: &apos;com.pico.picoinvoices.R.id.service_ListView&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="true" description="Rename field &apos;registerService_serviceListView&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/gen&lt;com.pico.picoinvoices{R.java[R[id^registerService_serviceListView" name="service_ListView" references="true" setter="false" stamp="1395698127871" textual="false" version="1.0"/>
+</session>

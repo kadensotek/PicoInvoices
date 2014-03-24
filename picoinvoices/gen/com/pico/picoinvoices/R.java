@@ -24,7 +24,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08002c;
+        public static final int action_settings=0x7f08002f;
         public static final int activity_client_invoices_btnAddInvoice=0x7f080011;
         public static final int add_new_invoice_txtInfo=0x7f08000d;
         public static final int btn_addNew_add=0x7f08000a;
@@ -57,10 +57,13 @@ public final class R {
         public static final int lbl_addNew_title=0x7f080000;
         public static final int manageInvoices=0x7f08000e;
         public static final int manageInvoices_listView=0x7f08001b;
-        public static final int parent_view_btnButton=0x7f08002d;
+        public static final int parent_view_btnButton=0x7f080030;
         public static final int registerService_AddNewService=0x7f08001c;
-        public static final int registerService_serviceListView=0x7f08001d;
         public static final int relativeLayout1=0x7f08001e;
+        public static final int service_Rate=0x7f08002e;
+        public static final int service_Type=0x7f08002d;
+        public static final int services_Name=0x7f08002c;
+        public static final int services_listView=0x7f08001d;
         public static final int spinner2=0x7f080019;
         public static final int txt_addNew_address=0x7f080005;
         public static final int txt_addNew_email=0x7f08000b;
@@ -87,6 +90,7 @@ public final class R {
         public static final int invoice_detail=0x7f03000c;
         public static final int invoice_listview_layout_template=0x7f03000d;
         public static final int parent_view=0x7f03000e;
+        public static final int service_layout_template=0x7f03000f;
     }
     public static final class menu {
         public static final int add_new=0x7f070000;
