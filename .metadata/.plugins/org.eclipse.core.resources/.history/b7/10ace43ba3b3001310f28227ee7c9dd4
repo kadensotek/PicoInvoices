@@ -214,7 +214,7 @@ public class ClientInvoices extends Activity
 	    String dateserviceperformed = getDateTime();
 	    String priceservice = getPrice();
 	    String service = getName();
-	    String servicedesc = getType();
+	    String servicedesc = "Front/back yard";
 	    String amountdue = getPrice();
 	    String status = getStatus();
 	    

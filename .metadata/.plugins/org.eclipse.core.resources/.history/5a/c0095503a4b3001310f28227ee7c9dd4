@@ -29,7 +29,7 @@ public class ListViewAdapter extends SimpleCursorAdapter
             TextView textView = (TextView) view.findViewById(R.id.invoice_listview_layout_template_txtStatus);
             String customerID = textView.getText().toString();
             System.out.println(customerID);
-            if (customerID.equals("Paid"))
+            if (customerID.equals("paid"))
             {
                 textView.setTextColor(Color.rgb(200,0,0));
             }

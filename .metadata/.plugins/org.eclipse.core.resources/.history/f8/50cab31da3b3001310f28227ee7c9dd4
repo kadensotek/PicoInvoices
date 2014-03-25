@@ -200,9 +200,9 @@ public class ClientInvoices extends Activity
         return value;
     }
     private String getStatus() {
-        String[] types = new String[] {"Open", "Pending", "Paid"};
+        String[] types = new String[] {"Open", "Pending", "Paid"};};
         Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(3);
+        int rand = randomGenerator.nextInt(8);
         
         return types[rand];
     }
@@ -212,9 +212,9 @@ public class ClientInvoices extends Activity
 	    String issuedate = getDateTime();
 	    String customer = Long.toString(ClientList.CLIENT_ID);
 	    String dateserviceperformed = getDateTime();
-	    String priceservice = getPrice();
-	    String service = getName();
-	    String servicedesc = getType();
+	    String priceservice = "400";
+	    String service = "Mowing";
+	    String servicedesc = "Front/back yard";
 	    String amountdue = getPrice();
 	    String status = getStatus();
 	    

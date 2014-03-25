@@ -3,7 +3,6 @@ package com.pico.picoinvoices;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -174,49 +173,17 @@ public class ClientInvoices extends Activity
     /////*  OnClick listener for adding an invoice as described in the xml
     /////*
     ////////////////////////////////////////////////////////
-    private String getType()
-    {
-        String[] types = new String[] {"Education", "Packaging", "Construction", "Insurance", "Finance", "Repair", "Installation", "Advertising", "Business Management", "Medical Services",
-                "Legal Services"};
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(11);
-        
-        return types[rand];
-        
-    }
-    private String getName()
-    {
-        String[] types = new String[] {"Lawn Mow", "Spring Cleanup", "Mulch", "Trim", "Clean Gutters", "Plow Driveway", "Weed", "Hedge Clipping"};
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(8);
-        
-        return types[rand];
-    }
-    private String getPrice() {
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(100) + 20;
-        String value = Integer.toString(rand);
-        
-        return value;
-    }
-    private String getStatus() {
-        String[] types = new String[] {"Open", "Pending", "Paid"};
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(3);
-        
-        return types[rand];
-    }
 	public void onClick_AddInvoice(View v)
 	{
 	    openDB();
 	    String issuedate = getDateTime();
 	    String customer = Long.toString(ClientList.CLIENT_ID);
 	    String dateserviceperformed = getDateTime();
-	    String priceservice = getPrice();
-	    String service = getName();
-	    String servicedesc = getType();
-	    String amountdue = getPrice();
-	    String status = getStatus();
+	    String priceservice = "400";
+	    String service = "Mowing";
+	    String servicedesc = "Front/back yard";
+	    String amountdue = "100";
+	    String status = "paid";
 	    
 	    myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
 	    closeDB();
