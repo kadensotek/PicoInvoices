@@ -13,7 +13,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/manageInvoices"
-	    android:layout_toLeftOf="@+id/button1" />
+	    android:layout_toLeftOf="@+id/addNewInvoice_newServiceButton" />
 
 	<TextView
 	    android:id="@+id/manageInvoices"
@@ -33,7 +33,7 @@
 	</ListView>
 
 	<Button
-	    android:id="@+id/button1"
+	    android:id="@+id/addNewInvoice_newServiceButton"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignBottom="@+id/spinner2"

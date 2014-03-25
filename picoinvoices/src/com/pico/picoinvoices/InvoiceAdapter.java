@@ -141,6 +141,18 @@ public class InvoiceAdapter
         }
         return c;
     }
+    // Return all data from any database.
+    public Cursor getAllRows(String db_name, String[] db_keys)
+    {
+        String where = null;
+        Cursor c = db.query(true, db_name, db_keys, where, null, null,
+                null, null, null);
+        if (c != null)
+        {
+            c.moveToFirst();
+        }
+        return c;
+    }
 
     // Get a specific row (by rowId)
     public Cursor getRow(long rowId)
@@ -195,6 +207,7 @@ public class InvoiceAdapter
         }
         return c;
     }
+   
 
 //    public ArrayList<?> getCustomerContact(long customer)
 //    {

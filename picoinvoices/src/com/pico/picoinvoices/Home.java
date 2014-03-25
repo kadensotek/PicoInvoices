@@ -58,7 +58,7 @@ public class Home extends Activity
 	}
 	public void onClick_toSettings(View v)
     {
-        Intent intent = new Intent(this, Settings.class);
+        Intent intent = new Intent(this, AddNewInvoice.class);
         startActivity(intent);
     }
 	public void onClick_toManageInvoices(View v)
