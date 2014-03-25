@@ -3,4 +3,8 @@
 <fullyQualifiedTypeName name="com.example.myfirstapp.R.id"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="android.widget.SimpleCursorAdapter"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.RegisterServicesAdapter"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.R.id"/>
 </qualifiedTypeNameHistroy>

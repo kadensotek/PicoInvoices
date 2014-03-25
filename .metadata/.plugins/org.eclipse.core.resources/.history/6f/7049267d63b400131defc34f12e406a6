@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class AddNewInvoice extends Activity
 {
@@ -179,13 +179,7 @@ public class AddNewInvoice extends Activity
 
     private void moveButtons(View v)
     {
-        RelativeLayout view = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_home, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, nextBelowID);
-        view.addView(null, params);
-        
+        TextView view = (TextView) getLayoutInflater().inflate(R.layout.activity_home, null);
     }
 
     //  function for generating a random ID for the viewId. This is done so that devices on SDK < 17 can support this functionality

@@ -3,6 +3,7 @@ package com.pico.picoinvoices;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.layout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.database.Cursor;
@@ -179,11 +180,11 @@ public class AddNewInvoice extends Activity
 
     private void moveButtons(View v)
     {
-        RelativeLayout view = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_home, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, nextBelowID);
+        LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_home, null);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.HORIZONTAL);
         view.addView(null, params);
         
     }

@@ -2,6 +2,7 @@ package com.pico.picoinvoices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
@@ -21,14 +21,8 @@ public class AddNewInvoice extends Activity
     private InvoiceAdapter myDb = null;
     private Spinner customerSpinner = null, serviceSpinner = null;
     private int nextBelowID = R.id.addNewInvoice_rateInput;
-    private static int value=1;
     private ArrayList<Integer> rIdStore = new ArrayList<Integer>();
 
-    // //////////////////////////////////////////////////////
-    // ///*
-    // ///* Activity Lifecycle functions
-    // ///*
-    // //////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -127,11 +121,11 @@ public class AddNewInvoice extends Activity
     {
         openDB();
         ArrayList<String> list = new ArrayList<String>();
-        Cursor cursor = myDb.getAllRows(ClientAdapter.DATABASE_TABLE,ClientAdapter.ALL_KEYS);
+        Cursor cursor = myDb.getAllRows(ClientAdapter.DATABASE_TABLE,
+                ClientAdapter.ALL_KEYS);
         cursor.moveToFirst();
         do
         {
-            //only allow one of each instance into the dropdown
             if (list.contains(cursor.getString(ClientAdapter.COL_FNAME) + " "
                     + cursor.getString(ClientAdapter.COL_LNAME)))
             {
@@ -174,27 +168,29 @@ public class AddNewInvoice extends Activity
         // information from the elements, we can find the elements again.
         rIdStore.add(newID);
         addItemsOnSpinner(serviceSpinner, newID, "services");
-        moveButtons(v);
-    }
-
-    private void moveButtons(View v)
-    {
-        RelativeLayout view = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_home, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, nextBelowID);
-        view.addView(null, params);
-        
     }
 
     //  function for generating a random ID for the viewId. This is done so that devices on SDK < 17 can support this functionality
     @SuppressLint("NewApi")
     public static int generateViewId()
     {
+        AtomicInteger sNextGeneratedId = new AtomicInteger(1);
         if (Build.VERSION.SDK_INT < 17)
         {
-            return value++;
+            for (;;)
+            {
+                final int result = sNextGeneratedId.get();
+                // aapt-generated IDs have the high byte nonzero; clamp to the
+                // range under that.
+                int newValue = result + 1;
+                if (newValue > 0x00FFFFFF)
+                    newValue = 1; // Roll over to 1, not 0.
+                if (sNextGeneratedId.compareAndSet(result, newValue))
+                {
+                    System.out.println("Generate ViewID: " + result);
+                    return result;
+                }
+            }
         } else
         {
             return View.generateViewId();
