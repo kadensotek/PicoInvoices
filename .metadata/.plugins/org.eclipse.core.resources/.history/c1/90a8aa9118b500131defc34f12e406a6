@@ -14,7 +14,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
         {
             
             sort = parent.getItemAtPosition(pos).toString();
-            
             System.out.println(sort);
         }
 
@@ -24,6 +23,3 @@ import android.widget.AdapterView.OnItemSelectedListener;
             // TODO Auto-generated method stub
         }
     }
-
-    
-    //REMOVE THE SPINNER ADAPTER, IT IS NOT NEEDED!

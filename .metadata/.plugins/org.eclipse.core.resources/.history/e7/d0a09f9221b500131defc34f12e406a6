@@ -19,7 +19,7 @@ public class ManageInvoices extends Activity
 
     private Spinner spinner;
     private InvoiceAdapter myDb;
-    private String sort = "customer";
+    private String sort = "";
 
     // //////////////////////////////////////////////////////
     // ///*
@@ -177,7 +177,6 @@ public class ManageInvoices extends Activity
                     long id)
             {
                 sort = parent.getItemAtPosition(pos).toString();
-                refresh();
             }
 
             public void onNothingSelected(AdapterView<?> adapterView)

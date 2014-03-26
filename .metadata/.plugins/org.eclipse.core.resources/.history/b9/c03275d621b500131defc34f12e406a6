@@ -19,7 +19,7 @@ public class ManageInvoices extends Activity
 
     private Spinner spinner;
     private InvoiceAdapter myDb;
-    private String sort = "customer";
+    private String sort = "";
 
     // //////////////////////////////////////////////////////
     // ///*
