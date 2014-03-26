@@ -1,129 +1,134 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AddNewClient" >
+    android:orientation="horizontal" >
 
-     <TextView
-         android:id="@+id/lbl_addNew_title"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:text="Add New Client"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
-     
-    <TextView
-        android:id="@+id/lbl_addNew_fname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lbl_addNew_title"
-        android:layout_marginTop="18dp"
-        android:text="First Name:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/txt_addNew_fname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lbl_addNew_fname"
-        android:ems="10"
-        android:inputType="textPersonName" />
+        <RelativeLayout
+            android:id="@+id/addNewInvoiceLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="462dp" >
+	     <TextView
+	         android:id="@+id/lbl_addNew_title"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignParentTop="true"
+	         android:layout_centerHorizontal="true"
+	         android:text="Add New Client"
+	         android:textAppearance="?android:attr/textAppearanceLarge" />
+	     
+	    <TextView
+	        android:id="@+id/lbl_addNew_fname"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lbl_addNew_title"
+	        android:layout_marginTop="18dp"
+	        android:text="First Name:"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <EditText
+	        android:id="@+id/txt_addNew_fname"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lbl_addNew_fname"
+	        android:ems="10"
+	        android:inputType="textPersonName" />
+	
+	      <EditText
+	          android:id="@+id/txt_addNew_lname"
+	          android:layout_width="match_parent"
+	          android:layout_height="wrap_content"
+	          android:layout_below="@+id/lbl_addNew_lname"
+	          android:ems="10"
+	          android:inputType="textPersonName" />
+	    
+	     <EditText
+	         android:id="@+id/txt_addNew_address"
+	         android:layout_width="match_parent"
+	         android:layout_height="wrap_content"
+	         android:layout_below="@+id/lbl_addNew_address"
+	         android:ems="10"
+	         android:inputType="textPostalAddress|textCapWords" />
+	    
+	    <EditText
+	        android:id="@+id/txt_addNew_phone"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/lbl_addNew_phone"
+	        android:ems="10"
+	        android:inputType="phone" />
+	
+	    <Button
+	        android:id="@+id/btn_addNew_cancel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/lbl_addNew_title"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginBottom="41dp"
+	        android:minWidth="80dip"
+	        android:onClick="onClick_cancelAdd"
+	        android:text="Cancel" />
+	
+	    <EditText
+	        android:id="@+id/txt_addNew_email"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/lbl_addNew_email"
+	        android:layout_below="@+id/lbl_addNew_email"
+	        android:ems="10"
+	        android:inputType="textEmailAddress"
+	        />
+	
+	    <TextView
+	        android:id="@+id/lbl_addNew_lname"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignRight="@+id/lbl_addNew_fname"
+	        android:layout_below="@+id/txt_addNew_fname"
+	        android:text="Last Name:"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <TextView
+	        android:id="@+id/lbl_addNew_address"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/txt_addNew_lname"
+	        android:layout_below="@+id/txt_addNew_lname"
+	        android:text="Address:"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <TextView
+	        android:id="@+id/lbl_addNew_phone"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/txt_addNew_address"
+	        android:layout_below="@+id/txt_addNew_address"
+	        android:text="Phone Number:"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <TextView
+	        android:id="@+id/lbl_addNew_email"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/lbl_addNew_lname"
+	        android:layout_below="@+id/txt_addNew_phone"
+	        android:text="Email:"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-      <EditText
-          android:id="@+id/txt_addNew_lname"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/lbl_addNew_lname"
-          android:ems="10"
-          android:inputType="textPersonName" />
-    
-     <EditText
-         android:id="@+id/txt_addNew_address"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/lbl_addNew_address"
-         android:ems="10"
-         android:inputType="textPostalAddress|textCapWords" />
-    
-    <EditText
-        android:id="@+id/txt_addNew_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lbl_addNew_phone"
-        android:ems="10"
-        android:inputType="phone" />
-
-    <Button
-        android:id="@+id/btn_addNew_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lbl_addNew_title"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="41dp"
-        android:minWidth="80dip"
-        android:onClick="onClick_cancelAdd"
-        android:text="Cancel" />
-   
-    <Button
-        android:id="@+id/btn_addNew_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_addNew_cancel"
-        android:layout_alignBottom="@+id/btn_addNew_cancel"
-        android:layout_toRightOf="@+id/btn_addNew_cancel"
-        android:minWidth="80dip"
-        android:onClick="onClick_addUser"
-        android:text="Add" />
-
-    <EditText
-        android:id="@+id/txt_addNew_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lbl_addNew_email"
-        android:layout_below="@+id/lbl_addNew_email"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:nextFocusForward="@id/btn_addNew_add" />
-
-    <TextView
-        android:id="@+id/lbl_addNew_lname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/lbl_addNew_fname"
-        android:layout_below="@+id/txt_addNew_fname"
-        android:text="Last Name:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/lbl_addNew_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_addNew_lname"
-        android:layout_below="@+id/txt_addNew_lname"
-        android:text="Address:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/lbl_addNew_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_addNew_address"
-        android:layout_below="@+id/txt_addNew_address"
-        android:text="Phone Number:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/lbl_addNew_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lbl_addNew_lname"
-        android:layout_below="@+id/txt_addNew_phone"
-        android:text="Email:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-</RelativeLayout>
+	    <Button
+	        android:id="@+id/btn_addNew_add"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginLeft="14dp"
+	        android:layout_toRightOf="@+id/btn_addNew_cancel"
+	        android:minWidth="80dip"
+	        android:onClick="onClick_addUser"
+	        android:text="Add" />
+	
+	</RelativeLayout>
+	</ScrollView>
+	</RelativeLayout>

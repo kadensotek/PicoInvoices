@@ -38,6 +38,8 @@ public class AddNewClient extends Activity
         super.onPause();
         closeDB();
     }
+	
+	
 	private void openDB() 
 	{
 		myDb = new ClientAdapter(this);

@@ -26,7 +26,7 @@ public final class R {
     public static final class id {
         public static final int action_settings=0x7f080038;
         public static final int activity_client_invoices_btnAddInvoice=0x7f08001b;
-        public static final int addNewInvoiceLayout=0x7f08000d;
+        public static final int addNewInvoiceLayout=0x7f080000;
         public static final int addNewInvoice_customerSpinner=0x7f08000f;
         public static final int addNewInvoice_lblCustomer=0x7f08000e;
         public static final int addNewInvoice_lblService=0x7f080010;
@@ -34,8 +34,8 @@ public final class R {
         public static final int addNewInvoice_newServiceButton=0x7f080013;
         public static final int addNewInvoice_rateInput=0x7f080012;
         public static final int addNewInvoice_serviceSpinner=0x7f080011;
-        public static final int btn_addNew_add=0x7f08000a;
-        public static final int btn_addNew_cancel=0x7f080009;
+        public static final int btn_addNew_add=0x7f08000d;
+        public static final int btn_addNew_cancel=0x7f08000a;
         public static final int button1=0x7f080017;
         public static final int button2=0x7f080016;
         public static final int buttonContainer=0x7f080015;
@@ -58,12 +58,12 @@ public final class R {
         public static final int invoice_listview_layout_template_txtInvoiceNumber=0x7f080032;
         public static final int invoice_listview_layout_template_txtStatus=0x7f080033;
         public static final int laptop=0x7f080029;
-        public static final int lbl_addNew_address=0x7f080006;
+        public static final int lbl_addNew_address=0x7f080007;
         public static final int lbl_addNew_email=0x7f08000c;
-        public static final int lbl_addNew_fname=0x7f080001;
-        public static final int lbl_addNew_lname=0x7f080004;
-        public static final int lbl_addNew_phone=0x7f080008;
-        public static final int lbl_addNew_title=0x7f080000;
+        public static final int lbl_addNew_fname=0x7f080002;
+        public static final int lbl_addNew_lname=0x7f080005;
+        public static final int lbl_addNew_phone=0x7f080009;
+        public static final int lbl_addNew_title=0x7f080001;
         public static final int manageInvoices=0x7f080018;
         public static final int manageInvoices_listView=0x7f080024;
         public static final int parent_view_btnButton=0x7f080039;
@@ -74,11 +74,11 @@ public final class R {
         public static final int services_Name=0x7f080035;
         public static final int services_listView=0x7f080026;
         public static final int spinner2=0x7f080023;
-        public static final int txt_addNew_address=0x7f080005;
+        public static final int txt_addNew_address=0x7f080006;
         public static final int txt_addNew_email=0x7f08000b;
-        public static final int txt_addNew_fname=0x7f080002;
-        public static final int txt_addNew_lname=0x7f080003;
-        public static final int txt_addNew_phone=0x7f080007;
+        public static final int txt_addNew_fname=0x7f080003;
+        public static final int txt_addNew_lname=0x7f080004;
+        public static final int txt_addNew_phone=0x7f080008;
         public static final int txt_clientFName=0x7f08002c;
         public static final int txt_clientLName=0x7f08002e;
         public static final int txt_clientPendingInvoices=0x7f08002b;
