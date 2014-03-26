@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -153,6 +154,28 @@ public class AddNewInvoice extends Activity
     /////*  OnClick listener for a new dynamic service
     /////*
     ////////////////////////////////////////////////////////
+    public void onClick_removeServiceDyn(View v)
+    {
+        if(rIdStore.size() > 0)
+        {
+            RelativeLayout layout = (RelativeLayout) findViewById(R.id.addNewInvoiceLayout);
+            int size = rIdStore.size() - 1;
+            System.out.println(size);
+            View view = (View) findViewById(rIdStore.get(size));
+            layout.removeView(view);
+            if(rIdStore.size() > 1)
+            {
+                rIdStore.remove(size);
+                nextBelowID = rIdStore.get(size-1);
+            }
+            else
+            {
+                rIdStore.remove(0);
+                nextBelowID = R.id.addNewInvoice_rateInput;
+            }
+            moveButtons();
+        }
+    }
     public void onClick_addServiceDyn(View v)
     {
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.addNewInvoiceLayout);
@@ -168,37 +191,40 @@ public class AddNewInvoice extends Activity
         // assign the generated ViewID to the new spinner created
         t.setId(newID);
         nextBelowID = newID;
-        System.out.println(" OnClick" + nextBelowID);
         
-        // The newID is added to the list so that when retrieving the
+        rIdStore.add(nextBelowID);
+        System.out.println("Current index " + (rIdStore.size()-1));
+        // The newID is added to the list so that when retrieving thenew
         // information from the elements, we can find the elements again.
-        rIdStore.add(newID);
         addItemsOnSpinner(serviceSpinner, newID, "services");
-        moveButtons(v);
+        moveButtons();
     }
 
-    private void moveButtons(View v)
+    private void moveButtons()
     {
-        RelativeLayout view = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_home, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, nextBelowID);
-        view.addView(null, params);
+        LinearLayout cancel = (LinearLayout) findViewById(R.id.buttonContainer);
+        
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        p.addRule(RelativeLayout.BELOW, nextBelowID);
+        cancel.setLayoutParams(p);
+        cancel.setLayoutParams(p);
         
     }
-
+    
     //  function for generating a random ID for the viewId. This is done so that devices on SDK < 17 can support this functionality
     @SuppressLint("NewApi")
     public static int generateViewId()
     {
         if (Build.VERSION.SDK_INT < 17)
         {
-            return value++;
+            int v = value;
+            value++;
+            return v;
         } else
         {
             return View.generateViewId();
         }
     }
-
+    
 }
