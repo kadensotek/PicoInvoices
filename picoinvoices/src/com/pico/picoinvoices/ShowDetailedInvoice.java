@@ -19,10 +19,10 @@ import android.widget.Toast;
 public class ShowDetailedInvoice extends Activity
 {
 
-    List<String> groupList;
-    List<String> childList;
-    Map<String, List<String>> invoice;
-    ExpandableListView expListView;
+    private List<String> groupList;
+    private List<String> childList;
+    private Map<String, List<String>> invoice;
+    private ExpandableListView expListView;
     private InvoiceAdapter myDb = null;
     private String invoiceID ,customerID = "";
     private String fname, lname, address, email, phone;

@@ -11,18 +11,7 @@
 	<Spinner
 	    android:id="@+id/spinner2"
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/manageInvoices"
-	    android:layout_toLeftOf="@+id/addNewInvoice_newServiceButton" />
-
-	<TextView
-	    android:id="@+id/manageInvoices"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentTop="true"
-	    android:text="Manage Invoices"
-	    android:textAppearance="?android:attr/textAppearanceLarge" />
+	    android:layout_height="wrap_content" />
 
 	<ListView
 	    android:id="@+id/manageInvoices_listView"
@@ -31,15 +20,5 @@
 	    android:layout_alignLeft="@+id/spinner2"
 	    android:layout_below="@+id/spinner2" >
 	</ListView>
-
-	<Button
-	    android:id="@+id/addNewInvoice_newServiceButton"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/spinner2"
-	    android:layout_alignParentRight="true"
-	    android:layout_alignTop="@+id/spinner2"
-	    android:onClick="onClick_SortInvoices"
-	    android:text="Sort" />
     
 </RelativeLayout>

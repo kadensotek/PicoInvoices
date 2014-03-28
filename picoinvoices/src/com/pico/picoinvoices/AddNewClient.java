@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 public class AddNewClient extends Activity 
@@ -15,6 +16,7 @@ public class AddNewClient extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_new_client);
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		openDB();
 	}
 	@Override

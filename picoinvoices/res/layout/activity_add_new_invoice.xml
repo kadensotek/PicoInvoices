@@ -86,6 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="80dp"
+                    android:onClick="onClick_cancelInvoice"
                     android:text="Cancel" />
 
                 <Button
@@ -94,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:maxWidth="80dp"
                     android:minWidth="80dp"
-                    android:onClick="onClick_addServiceDyn"
+                    android:onClick="onClick_addInvoice"
                     android:text="Add" />
 
             </LinearLayout>

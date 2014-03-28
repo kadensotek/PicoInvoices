@@ -33,15 +33,7 @@ public class ClientInvoices extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_invoices);
-		
-		
-        refresh();
-		
-		TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
-		String name = getClientName();
-		textView.setText(name);
-		
-		
+		initialize();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -59,19 +51,13 @@ public class ClientInvoices extends Activity
 	@Override
 	protected void onRestart() {
 	    super.onRestart();
-        refresh();
-        TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
-        String name = getClientName();
-        textView.setText(name);
+	    initialize();
 	}
 	@Override
     protected void onResume() 
     {
         super.onResume();
-        refresh();
-        TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
-        String name = getClientName();
-        textView.setText(name);
+        initialize();
     }
 	
     ////////////////////////////////////////////////////////
@@ -94,6 +80,14 @@ public class ClientInvoices extends Activity
     /////*  Refresh functions
     /////*
     ////////////////////////////////////////////////////////
+	private void initialize()
+	{
+	   
+	   refresh();
+       TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
+       String name = getClientName();
+       textView.setText(name);
+	}
 	private void refresh()
 	{
 		openDB();
@@ -221,6 +215,9 @@ public class ClientInvoices extends Activity
 	    myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
 	    closeDB();
 	    refresh();
+//	    Intent intent = new Intent(this, AddNewInvoice.class);
+//	    intent.putExtra("customerID", customerID);
+//	    startActivity(intent);
 	}
 	
 }
