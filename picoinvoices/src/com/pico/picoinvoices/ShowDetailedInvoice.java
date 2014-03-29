@@ -18,14 +18,14 @@ import android.widget.Toast;
 public class ShowDetailedInvoice extends Activity
 {
 
-    private List<String> groupList;
-    private List<String> childList;
-    private Map<String, List<String>> invoice;
-    private ExpandableListView expListView;
-    private InvoiceAdapter myDb = null;
+    private List<String> _groupList;
+    private List<String> _childList;
+    private Map<String, List<String>> _invoice;
+    private ExpandableListView _expListView;
+    private InvoiceAdapter _myDb = null;
     private SPAdapter _sp = null;
-    private String fname, lname, address, email, phone;
-    private String issuedate, service, dateserviceperformed, priceservice, servicedesc, amountdue, status;
+    private String _fname, _lname, _address, _email, _phone;
+    private String _issuedate, _service, _dateserviceperformed, _priceservice, _servicedesc, _amountdue, _status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,13 +44,13 @@ public class ShowDetailedInvoice extends Activity
 
         createCollection();
 
-        expListView = (ExpandableListView) findViewById(R.id.expandableListView1);
-        final ExpandableListViewAdapter expListAdapter = new ExpandableListViewAdapter(this, groupList, invoice);
-        expListView.setAdapter(expListAdapter);
+        _expListView = (ExpandableListView) findViewById(R.id.expandableListView1);
+        final ExpandableListViewAdapter expListAdapter = new ExpandableListViewAdapter(this, _groupList, _invoice);
+        _expListView.setAdapter(expListAdapter);
 
         // setGroupIndicatorToRight();
 
-        expListView.setOnChildClickListener(new OnChildClickListener()
+        _expListView.setOnChildClickListener(new OnChildClickListener()
         {
 
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -77,39 +77,39 @@ public class ShowDetailedInvoice extends Activity
      */
     private void closeDB() 
     {
-        myDb.close();
+        _myDb.close();
     }
     private void openDB() 
     {
-        myDb = new InvoiceAdapter(this);
-        myDb.open();
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
     }
     private void populateValues()
     {
         // Populate the values for the contact information.
-        Cursor cursor = myDb.query(new String[] { Integer.toString(_sp.getClientID()) },ClientAdapter.DATABASE_TABLE);
+        Cursor cursor = _myDb.query(new String[] { Integer.toString(_sp.getClientID()) },ClientAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
-            fname = cursor.getString(ClientAdapter.COL_FNAME);
-            lname = cursor.getString(ClientAdapter.COL_LNAME);
-            address = cursor.getString(ClientAdapter.COL_ADDRESS);
-            email = cursor.getString(ClientAdapter.COL_EMAIL);
-            phone = cursor.getString(ClientAdapter.COL_PHONE);
+            _fname = cursor.getString(ClientAdapter.COL_FNAME);
+            _lname = cursor.getString(ClientAdapter.COL_LNAME);
+            _address = cursor.getString(ClientAdapter.COL_ADDRESS);
+            _email = cursor.getString(ClientAdapter.COL_EMAIL);
+            _phone = cursor.getString(ClientAdapter.COL_PHONE);
         } else
             Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for customerId " + _sp.getClientID(),
                     Toast.LENGTH_SHORT).show();
 
         // Populate invoice specific information
-        cursor = myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
+        cursor = _myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
-            issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-            service = cursor.getString(InvoiceAdapter.COL_SERVICE);
-            dateserviceperformed = cursor.getString(InvoiceAdapter.COL_DATESERVICEPERFORMED);
-            priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
-            servicedesc = cursor.getString(InvoiceAdapter.COL_SERVICEDESC);
-            amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
-            status = cursor.getString(InvoiceAdapter.COL_STATUS);
+            _issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
+            _service = cursor.getString(InvoiceAdapter.COL_SERVICE);
+            _dateserviceperformed = cursor.getString(InvoiceAdapter.COL_DATESERVICEPERFORMED);
+            _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
+            _servicedesc = cursor.getString(InvoiceAdapter.COL_SERVICEDESC);
+            _amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
+            _status = cursor.getString(InvoiceAdapter.COL_STATUS);
         } else
             Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for invoiceID " + _sp.getInvoiceID(),
                     Toast.LENGTH_SHORT).show();
@@ -119,62 +119,62 @@ public class ShowDetailedInvoice extends Activity
 
     private void createGroupList()
     {
-        groupList = new ArrayList<String>();
-        groupList.add("Contact Info - " + fname + " " + lname);
-        groupList.add("Invoice - Amount Due: $" + amountdue);
+        _groupList = new ArrayList<String>();
+        _groupList.add("Contact Info - " + _fname + " " + _lname);
+        _groupList.add("Invoice - Amount Due: $" + _amountdue);
     }
 
  
     private void createCollection()
     {
         // preparing laptops collection(child)
-        String[] contactInfo = { fname, lname, address, email, phone };
-        String[] invoiceDetail = { issuedate, service, dateserviceperformed, priceservice, servicedesc, amountdue, status };
+        String[] contactInfo = { _fname, _lname, _address, _email, _phone };
+        String[] invoiceDetail = { _issuedate, _service, _dateserviceperformed, _priceservice, _servicedesc, _amountdue, _status };
        
 
-        invoice = new LinkedHashMap<String, List<String>>();
+        _invoice = new LinkedHashMap<String, List<String>>();
 
-        for (String row : groupList)
+        for (String row : _groupList)
         {
-            if (row.equals("Contact Info - " + fname + " " + lname))
+            if (row.equals("Contact Info - " + _fname + " " + _lname))
             {
                 loadChild(contactInfo);
             } 
-            else if (row.equals("Invoice - Amount Due: $" + amountdue))
+            else if (row.equals("Invoice - Amount Due: $" + _amountdue))
                 loadChild(invoiceDetail);
             
 
-            invoice.put(row, childList);
+            _invoice.put(row, _childList);
         }
     }
 
     private void loadChild(String[] invoiceInfo)
     {
-        childList = new ArrayList<String>();
+        _childList = new ArrayList<String>();
         for (String line : invoiceInfo)
-            childList.add(line);
+            _childList.add(line);
     }
 
-    @SuppressWarnings("unused")
-    private void setGroupIndicatorToRight()
-    {
-        /* Get the screen width */
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-
-        expListView.setIndicatorBounds(width - getDipsFromPixel(35), width
-                - getDipsFromPixel(5));
-    }
-
-    // Convert pixel to dip
-    public int getDipsFromPixel(float pixels)
-    {
-        // Get the screen's density scale
-        final float scale = getResources().getDisplayMetrics().density;
-        // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
-    }
+//    @SuppressWarnings("unused")
+//    private void setGroupIndicatorToRight()
+//    {
+//        /* Get the screen width */
+//        DisplayMetrics dm = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(dm);
+//        int width = dm.widthPixels;
+//
+//        _expListView.setIndicatorBounds(width - getDipsFromPixel(35), width
+//                - getDipsFromPixel(5));
+//    }
+//
+//    // Convert pixel to dip
+//    public int getDipsFromPixel(float pixels)
+//    {
+//        // Get the screen's density scale
+//        final float scale = getResources().getDisplayMetrics().density;
+//        // Convert the dps to pixels, based on density scale
+//        return (int) (pixels * scale + 0.5f);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

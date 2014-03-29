@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,22 +28,7 @@ public class RegisterServices extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_services);
-        
         refresh();
-        
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) 
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-            boolean result = super.onCreateOptionsMenu(menu);
-            return result;
-    }
-    @Override
-    protected void onDestroy() 
-    {
-        super.onDestroy();
-        closeDB();
     }
     @Override
     protected void onRestart() {
@@ -55,7 +41,40 @@ public class RegisterServices extends Activity
         super.onResume();
         refresh();
     }
+    @Override
+    protected void onDestroy() 
+    {
+        super.onDestroy();
+        closeDB();
+    }
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Action bar functions
+    /////*
+    ////////////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        //Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.register_services, menu);
+        return true;
+    }
     
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+            System.out.println("Settings selected");
+            return true;
+            case R.id.action_acceptNewInvoice:
+            System.out.println("Added new invoice");
+            return true;
+            default:
+            return super.onOptionsItemSelected(item);
+       }
+    }
+
     ////////////////////////////////////////////////////////
     /////*
     /////*  Database open/close

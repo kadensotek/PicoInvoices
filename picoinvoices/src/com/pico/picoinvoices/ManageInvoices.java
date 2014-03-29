@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,6 +53,35 @@ public class ManageInvoices extends Activity
     {
         super.onResume();
         openDB();
+    }
+    
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Action bar functions
+    /////*
+    ////////////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        //Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.manage_invoices, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                System.out.println("Settings selected");
+                return true;
+            case R.id.action_addInvoice:
+                Intent intent = new Intent(this, AddNewInvoice.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     // //////////////////////////////////////////////////////

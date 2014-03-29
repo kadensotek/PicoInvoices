@@ -14,9 +14,7 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="number"
+        android:paddingBottom="10dp" />
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -48,13 +49,6 @@ public class AddNewInvoice extends Activity
         initialize();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        //Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_new_invoice, menu);
-        return true;
-    }
     private void initialize()
     {
         _sp = new SPAdapter(getApplicationContext());
@@ -69,6 +63,33 @@ public class AddNewInvoice extends Activity
         addItemsOnSpinner(customerSpinner, "customer");
         addItemsOnSpinner(serviceSpinner, "services");
         setSelection();
+    }
+    // //////////////////////////////////////////////////////
+    // ///*
+    // ///* Action Bar functions
+    // ///*
+    // //////////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        //Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.add_new_invoice, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                System.out.println("Settings selected");
+                return true;
+            case R.id.action_acceptNewInvoice:
+                System.out.println("Added new invoice");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     // //////////////////////////////////////////////////////
     // ///*
@@ -136,7 +157,7 @@ public class AddNewInvoice extends Activity
         
         //Create the arraylist to store the services to add to the spinner
         ArrayList<String> list = new ArrayList<String>();
-        list.add("-");
+        list.add("No Service Selected");
         Cursor cursor = _myDb.getAllRows(RegisterServicesAdapter.DATABASE_TABLE,RegisterServicesAdapter.ALL_KEYS);
         cursor.moveToFirst();
         if(cursor != null)
@@ -168,7 +189,7 @@ public class AddNewInvoice extends Activity
         //Open database
         openDB();
         ArrayList<String> list = new ArrayList<String>();
-        list.add("-");
+        list.add("No Client Selected");
         Cursor cursor = _myDb.getAllRows(ClientAdapter.DATABASE_TABLE,ClientAdapter.ALL_KEYS);
         cursor.moveToFirst();
         if (cursor != null)
@@ -195,13 +216,12 @@ public class AddNewInvoice extends Activity
     private void setSelection()
     {
         Spinner spinner = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
-       
         spinner.setSelection(_sp.getClientID());
     }
     
     ////////////////////////////////////////////////////////
     /////*
-    /////*  OnClick listener for a new dynamic service
+    /////*  OnClick listener for accepting/cancelling changes
     /////*
     ////////////////////////////////////////////////////////
     public void onClick_addInvoice(View v)
@@ -233,6 +253,12 @@ public class AddNewInvoice extends Activity
     {
         finish();
     }
+    
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  OnClick listener adding/removing dynamic elements
+    /////*
+    ////////////////////////////////////////////////////////
     public void onClick_removeServiceDyn(View v)
     {
         //Prevent the subtraction button from replying to any subtraction if there are no additional serverices added
@@ -307,6 +333,7 @@ public class AddNewInvoice extends Activity
         //'new service' laytout. This is mapped to by the nextBelowID variable.
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.BELOW, _nextBelowID);
+        p.addRule(RelativeLayout.ALIGN_RIGHT);
         cancel.setLayoutParams(p);
         
     }

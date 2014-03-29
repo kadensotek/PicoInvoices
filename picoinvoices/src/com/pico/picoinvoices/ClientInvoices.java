@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -36,29 +37,51 @@ public class ClientInvoices extends Activity
 		initialize();
 	}
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) 
-	{
-		//Inflate the menu; this adds items to the action bar if it is present.
-        boolean result = super.onCreateOptionsMenu(menu);
-        return result;
-	}
+    protected void onRestart() {
+        super.onRestart();
+        initialize();
+    }
+    @Override
+    protected void onResume() 
+    {
+        super.onResume();
+        initialize();
+    }
 	@Override
 	protected void onDestroy() 
 	{
 		super.onDestroy();
 		closeDB();
 	}
-	@Override
-	protected void onRestart() {
-	    super.onRestart();
-	    initialize();
-	}
-	@Override
-    protected void onResume() 
-    {
-        super.onResume();
-        initialize();
-    }
+	
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Action bar functions
+    /////*
+    ////////////////////////////////////////////////////////
+	 @Override
+	    public boolean onCreateOptionsMenu(Menu menu)
+	    {
+	        //Inflate the menu; this adds items to the action bar if it is present.
+	        getMenuInflater().inflate(R.menu.client_invoices, menu);
+	        return true;
+	    }
+	    
+	    @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+	        // Handle presses on the action bar items
+	        switch (item.getItemId()) {
+	            case R.id.action_settings:
+	                System.out.println("Settings selected");
+	                return true;
+	            case R.id.action_addInvoice:
+	                Intent intent = new Intent(this, AddNewInvoice.class);
+	                startActivity(intent);
+	                return true;
+	            default:
+	                return super.onOptionsItemSelected(item);
+	        }
+	    }
 	
     ////////////////////////////////////////////////////////
     /////*
@@ -200,21 +223,21 @@ public class ClientInvoices extends Activity
     }
 	public void onClick_AddInvoice(View v)
 	{
-//	    openDB();
-//	    String issuedate = getDateTime();
-//	    String customer = Long.toString(_sp.getClientID());
-//	    String dateserviceperformed = getDateTime();
-//	    String priceservice = getPrice();
-//	    String service = getName();
-//	    String servicedesc = getType();
-//	    String amountdue = getPrice();
-//	    String status = getStatus();
-//	    
-//	    _myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
-//	    closeDB();
-//	    refresh();
-	    Intent intent = new Intent(this, AddNewInvoice.class);
-	    startActivity(intent);
+	    openDB();
+	    String issuedate = getDateTime();
+	    String customer = Long.toString(_sp.getClientID());
+	    String dateserviceperformed = getDateTime();
+	    String priceservice = getPrice();
+	    String service = getName();
+	    String servicedesc = getType();
+	    String amountdue = getPrice();
+	    String status = getStatus();
+	    
+	    _myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
+	    closeDB();
+	    refresh();
+//	    Intent intent = new Intent(this, AddNewInvoice.class);
+//        startActivity(intent);
 	}
 	
 }

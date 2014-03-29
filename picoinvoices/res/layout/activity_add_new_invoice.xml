@@ -5,12 +5,15 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true" >
 
         <RelativeLayout
             android:id="@+id/addNewInvoiceLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="462dp" >
+            android:layout_width="wrap_content"
+            android:layout_height="299dp"
+            android:padding="10dp" >
 
             <TextView
                 android:id="@+id/addNewInvoice_lblCustomer"
@@ -52,51 +55,30 @@
                 android:layout_alignRight="@+id/addNewInvoice_lblCustomer"
                 android:layout_below="@+id/addNewInvoice_serviceSpinner"
                 android:ems="10"
-                android:inputType="numberDecimal" />
-
-            <Button
-                android:id="@+id/addNewInvoice_newServiceButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/addNewInvoice_rateInput"
-                android:layout_alignBottom="@+id/addNewInvoice_rateInput"
-                android:layout_alignParentRight="true"
-                android:onClick="onClick_addServiceDyn"
-                android:text="+" />
-
-            <Button
-                android:id="@+id/addNewInvoice_minusServiceButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/addNewInvoice_newServiceButton"
-                android:layout_alignBottom="@+id/addNewInvoice_newServiceButton"
-                android:layout_toLeftOf="@+id/addNewInvoice_newServiceButton"
-                android:onClick="onClick_removeServiceDyn"
-                android:text="-" />
+                android:inputType="numberDecimal"
+                android:paddingBottom="10dp" />
 
             <LinearLayout
                 android:id="@+id/buttonContainer"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/addNewInvoice_newServiceButton" >
+                android:layout_alignLeft="@+id/addNewInvoice_rateInput"
+                android:layout_below="@+id/addNewInvoice_rateInput"
+                android:showDividers="beginning" >
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/addNewInvoice_minusServiceButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="80dp"
-                    android:onClick="onClick_cancelInvoice"
-                    android:text="Cancel" />
+                    android:onClick="onClick_removeServiceDyn"
+                    android:text="-" />
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/addNewInvoice_newServiceButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="80dp"
-                    android:minWidth="80dp"
-                    android:onClick="onClick_addInvoice"
-                    android:text="Add" />
+                    android:onClick="onClick_addServiceDyn"
+                    android:text="+" />
 
             </LinearLayout>
 

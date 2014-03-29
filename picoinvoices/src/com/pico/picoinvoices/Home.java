@@ -3,7 +3,6 @@ package com.pico.picoinvoices;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 public class Home extends Activity
@@ -11,49 +10,74 @@ public class Home extends Activity
 
 	DBAdapter _myDb = null;
 	SPAdapter _sp = null;
-
+	
+	////////////////////////////////////////////////////////
+    /////*
+    /////*  Activity Lifecycle functions
+    /////*
+    ////////////////////////////////////////////////////////
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		_sp = new SPAdapter(getApplicationContext());
-		_sp.saveClientID("0");
-		_sp.saveInvioceID("0");
-		open();
+		initialize();
 	}
-
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home, menu);
-		return true;
-	}
+    protected void onDestroy()
+    {
+        super.onDestroy();
 
+        closeDB();
+    }
 	@Override
-	protected void onDestroy()
+    protected void onResume()
+    {
+        super.onResume();
+        initialize();
+    }
+	
+	private void initialize()
 	{
-		super.onDestroy();
-
-		closeDB();
+	    _sp = new SPAdapter(getApplicationContext());
+        _sp.saveClientID("0");
+        _sp.saveInvioceID("0");
+        openDB();
+        closeDB();
 	}
 
-	/*
-	 * Open/close functions for the DB
-	 */
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu)
+//	{
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.home, menu);
+//		return true;
+//	}
+
+	
+
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Database functions
+    /////*
+    ////////////////////////////////////////////////////////
 	private void closeDB()
 	{
 		_myDb.close();
 	}
 
-	private void open()
+	private void openDB()
 	{
 		_myDb = new DBAdapter(this);
 		_myDb.open();
 
 	}
 
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  OnClick listener for starting new activities
+    /////*
+    ////////////////////////////////////////////////////////
 	public void onClick_ToClients(View v)
 	{
 		Intent intent = new Intent(this, ClientList.class);
