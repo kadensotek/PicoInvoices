@@ -9,14 +9,17 @@ import android.view.View;
 public class Home extends Activity
 {
 
-	DBAdapter myDb = null;
+	DBAdapter _myDb = null;
+	SPAdapter _sp = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-
+		_sp = new SPAdapter(getApplicationContext());
+		_sp.saveClientID("0");
+		_sp.saveInvioceID("0");
 		open();
 	}
 
@@ -41,13 +44,13 @@ public class Home extends Activity
 	 */
 	private void closeDB()
 	{
-		myDb.close();
+		_myDb.close();
 	}
 
 	private void open()
 	{
-		myDb = new DBAdapter(this);
-		myDb.open();
+		_myDb = new DBAdapter(this);
+		_myDb.open();
 
 	}
 

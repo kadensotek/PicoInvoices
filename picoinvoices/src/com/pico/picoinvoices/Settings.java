@@ -19,22 +19,14 @@ public class Settings extends Activity
 {
 
 	private InvoiceAdapter myDb = null;
-	public static long INVOICE_ID = 0;
-	
-//	private long customer_ID = 0;
-//	private String customer_fname = "";
-//	private String customer_lname = "";
-//	private String customer_address = "";
-//	private String customer_phone = "";
-//	private String customer_email = "";
-//	private int INSERT_ID = Menu.FIRST;
+	private SPAdapter _sp = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_invoices);
 		
-		
+		_sp = new SPAdapter(getApplicationContext());
 		openDB();
         refresh();
 		
@@ -119,7 +111,7 @@ public class Settings extends Activity
 			{
 					
 					Intent intent1 = new Intent(Settings.this, ShowDetailedInvoice.class);
-                    INVOICE_ID = idInDB;
+                    _sp.saveInvioceID(Long.toString(idInDB));
                     startActivity(intent1);
 			}
 		});
@@ -132,7 +124,7 @@ public class Settings extends Activity
 	public void onClick_AddInvoice(View v)
 	{
 	    String issuedate = String.valueOf(new Date());
-	    String customer = Long.toString(ClientList.CLIENT_ID);
+	    String customer = Long.toString(_sp.getClientID());
 	    String dateserviceperformed = String.valueOf(new Date());
 	    String priceservice = "300";
 	    String service = "Mowing";
@@ -155,7 +147,7 @@ public class Settings extends Activity
 	private String getClientName()
 	{
 	    String name = "";
-	    Cursor cursor = myDb.query(new String[] {Long.toString(ClientList.CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
+	    Cursor cursor = myDb.query(new String[] {Long.toString(_sp.getClientID())}, ClientAdapter.DATABASE_TABLE);
 	    if (cursor.moveToFirst())
         {
             name+=cursor.getString(ClientAdapter.COL_FNAME);

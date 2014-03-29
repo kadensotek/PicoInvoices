@@ -21,21 +21,29 @@ import android.widget.ListView;
 public class ClientList extends Activity 
 {
 
-	ClientAdapter myDb;
-	//this variable is used to select the correct user in ClientInvoices
-	public static long CLIENT_ID = 0;                  
+	ClientAdapter _myDb = null;
+	SPAdapter _sp = null;
+	
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Activity lifecycle functions
+    /////*
+    ////////////////////////////////////////////////////////
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_list);
 		
+		//initialize SharedPreferences
+		_sp = new SPAdapter(getApplicationContext());
 		refresh();
+		System.out.println(_sp.getClientID());
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
+		//Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.client_list, menu);
 		return true;
 	}
@@ -52,6 +60,7 @@ public class ClientList extends Activity
     {
         super.onResume();
         refresh();
+        System.out.println(_sp.getClientID());
         System.out.println("Resumed..");
     }
 	@Override
@@ -61,78 +70,98 @@ public class ClientList extends Activity
         refresh();
         System.out.println("Restarted..");
     }
-	/*
-	 * 	Database maintenance functions
-	 */
+
+
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Database access functions
+    /////*
+    ////////////////////////////////////////////////////////
 	private void closeDB() 
 	{
-		myDb.close();
+		_myDb.close();
 	}
 	private void openDB() 
 	{
-		myDb = new ClientAdapter(this);
-		myDb.open();
+		_myDb = new ClientAdapter(this);
+		_myDb.open();
 	}
 	
-	/*
-	 * 	refresh functions
-	 */
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Refresh functions
+    /////*
+    ////////////////////////////////////////////////////////
 	private void refresh()
 	{
-		openDB();
+		//Open database
+	    openDB();
+	    
+	    //Create the list of items on in the listview
 	    populateListView();
+	    
+	    //Set the functionality for selecting a given element in the list
 		registerClickCallback();
+		
+		//Close database
 		closeDB();
 	}
 	
 	private void populateListView() 
 	{
-		openDB();
-	    Cursor cursor = myDb.getAllRows(); 								//Create the list of items
+		//Open database
+	    openDB();
+	    //Create the list of items
+	    Cursor cursor = _myDb.getAllRows(); 								
 		
+	    //Create the arrays for mapping DB columns to elements in the listview
 		String[] client_name_list = new String[]{ClientAdapter.KEY_ROWID, ClientAdapter.KEY_FNAME, ClientAdapter.KEY_LNAME};
 		int[] ints = new int[] {R.id.client_name_CustomerID, R.id.txt_clientFName, R.id.txt_clientLName};
 		
+		//Set the custom listviewadapter on the data and view
 		ListViewAdapter adapter = new ListViewAdapter(this, R.layout.client_name, cursor,client_name_list , ints, 0);
-		
 		ListView list = (ListView) findViewById(R.id.client_listView);
 		list.setAdapter(adapter);
+		
+		//Close database
 		closeDB();
 		
 	}
 	
 	private void registerClickCallback() 
 	{
-		ListView list = (ListView) findViewById(R.id.client_listView);
+		//Find listview that was created from populateListView
+	    ListView list = (ListView) findViewById(R.id.client_listView);
+	    
+	    //Set the action for an element selection
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
 		{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-				Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
-				CLIENT_ID = idInDB;
+				//Create intent to send user to ClientInvoices activity
+			    Intent goToInvoices = new Intent(ClientList.this, ClientInvoices.class);
+			    
+			    //Set the value of the CLIENT_ID value in the shared preferences
+			    //This will be used to access which client was selected in subsequent activities (ClientInvoices and ShowDetailedInvoice)
+			    _sp.saveClientID(Long.toString(idInDB));
+			    System.out.println("Client Id (ClientList):" + _sp.getClientID());
+                System.out.println("Invoice Id (ClientList):" + _sp.getInvoiceID());
 				startActivity(goToInvoices);
 			}
 		});
 	}
 	
-	/*
-	 * 	onClickListeners are implemented here
-	 */
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  OnClick Listeners for buttons
+    /////*
+    ////////////////////////////////////////////////////////
 	public void onClick_AddRecord(View v)
 	{
-		Intent intent = new Intent(this, AddNewClient.class);
+		//Create intent to send user to AddNewClient activity
+	    Intent intent = new Intent(this, AddNewClient.class);
 		startActivity(intent);
 	}
-	
-	public void onClick_Clear(View v)
-	{
-		myDb.deleteAll();
-		refresh();
-	}
-
-	
-	
-	
 
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -24,7 +23,7 @@ public class ShowDetailedInvoice extends Activity
     private Map<String, List<String>> invoice;
     private ExpandableListView expListView;
     private InvoiceAdapter myDb = null;
-    private String invoiceID ,customerID = "";
+    private SPAdapter _sp = null;
     private String fname, lname, address, email, phone;
     private String issuedate, service, dateserviceperformed, priceservice, servicedesc, amountdue, status;
 
@@ -33,14 +32,10 @@ public class ShowDetailedInvoice extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_detailed_invoice);
-        
-        //get the invoice id and customer id from the previous activity
-        Intent intent = getIntent();
-        invoiceID = intent.getStringExtra("InvoiceID");
-        customerID = intent.getStringExtra("CustomerID");
-        
-        System.out.println(invoiceID + "  " + customerID);
-        
+                
+        _sp = new SPAdapter(getApplicationContext());
+        System.out.println("Client Id (ShowDetailedInvoices):" + _sp.getClientID());
+        System.out.println("Invoice Id (ShowDetailedInvoices):" + _sp.getInvoiceID());
         openDB();
         
         populateValues();
@@ -92,7 +87,7 @@ public class ShowDetailedInvoice extends Activity
     private void populateValues()
     {
         // Populate the values for the contact information.
-        Cursor cursor = myDb.query(new String[] { customerID },ClientAdapter.DATABASE_TABLE);
+        Cursor cursor = myDb.query(new String[] { Integer.toString(_sp.getClientID()) },ClientAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
             fname = cursor.getString(ClientAdapter.COL_FNAME);
@@ -101,11 +96,11 @@ public class ShowDetailedInvoice extends Activity
             email = cursor.getString(ClientAdapter.COL_EMAIL);
             phone = cursor.getString(ClientAdapter.COL_PHONE);
         } else
-            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for customerId " + customerID,
+            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for customerId " + _sp.getClientID(),
                     Toast.LENGTH_SHORT).show();
 
         // Populate invoice specific information
-        cursor = myDb.query(new String[] { invoiceID },InvoiceAdapter.DATABASE_TABLE);
+        cursor = myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
             issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
@@ -116,7 +111,7 @@ public class ShowDetailedInvoice extends Activity
             amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
             status = cursor.getString(InvoiceAdapter.COL_STATUS);
         } else
-            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for invoiceID " + invoiceID,
+            Toast.makeText(ShowDetailedInvoice.this, "failed to load cursor for invoiceID " + _sp.getInvoiceID(),
                     Toast.LENGTH_SHORT).show();
         cursor.close();
 

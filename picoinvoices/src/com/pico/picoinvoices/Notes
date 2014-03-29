@@ -1,0 +1,3 @@
+Data sharing: create a shared preference for clientId, invoiceId and serviceId (to remove the complexity of creating and passing variables to and from acticities. Instead just set them in the preferences.
+
+

@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,16 +23,17 @@ import android.widget.Spinner;
 public class AddNewInvoice extends Activity
 {
     //Database adpater
-    private InvoiceAdapter myDb = null;
+    private InvoiceAdapter _myDb = null;
+    private SPAdapter _sp = null;
     //Used to track the element to add new elements to
-    private int nextBelowID = R.id.addNewInvoice_rateInput;
-    private  int value=1;
-    private String customerID="0", customerName="0";
+    private int _nextBelowID = R.id.addNewInvoice_rateInput;
+    private  int _value=1;
+    
     //Array lists are used to store the View, Spinner, and EditText that are created dynamically 
     //So they can be referenced for remove and data retrieval 
-    private ArrayList<Integer> rIdStore = new ArrayList<Integer>(), customerId = new ArrayList<Integer>();
-    private ArrayList<Spinner> rIdStore_spinners = new ArrayList<Spinner>();
-    private ArrayList<EditText> rIdStore_editText = new ArrayList<EditText>();
+    private ArrayList<Integer> _rIdStore = new ArrayList<Integer>();
+    private ArrayList<Spinner> _rIdStore_spinners = new ArrayList<Spinner>();
+    private ArrayList<EditText> _rIdStore_editText = new ArrayList<EditText>();
 
     // //////////////////////////////////////////////////////
     // ///*
@@ -51,23 +51,24 @@ public class AddNewInvoice extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add_new_invoice, menu);
         return true;
     }
-    //Create initial spinners and add items to them
     private void initialize()
     {
+        _sp = new SPAdapter(getApplicationContext());
+        //Prevents the keyboard from inflating on Activity startup
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         
-        Intent intent = getIntent();
-        if (intent != null)
-            customerID = intent.getStringExtra("customerID");
+        //Create the original spinners
         Spinner customerSpinner = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
         Spinner serviceSpinner = (Spinner) findViewById(R.id.addNewInvoice_serviceSpinner);
-        // load the services and customers into the proper spinner element
+        
+        //Load the services and customers into the proper spinner element
         addItemsOnSpinner(customerSpinner, "customer");
         addItemsOnSpinner(serviceSpinner, "services");
+        setSelection();
     }
     // //////////////////////////////////////////////////////
     // ///*
@@ -76,13 +77,13 @@ public class AddNewInvoice extends Activity
     // //////////////////////////////////////////////////////
     private void closeDB()
     {
-        myDb.close();
+        _myDb.close();
     }
 
     private void openDB()
     {
-        myDb = new InvoiceAdapter(this);
-        myDb.open();
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
     }
 
     // //////////////////////////////////////////////////////
@@ -93,6 +94,7 @@ public class AddNewInvoice extends Activity
     public void addItemsOnSpinner(Spinner spinner,  String cs)
     {
         List<String> list = null;
+        //Use one function for adding items, send a string to determine which values to use
         if (cs.equals("services"))
         {
             list = getServices();
@@ -100,25 +102,24 @@ public class AddNewInvoice extends Activity
         {
             list = getCustomers();
         }
-
         
+        //Set an adapter on the spinner to map the values to the layout
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
-        
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
     }
 
     public void addListenerOnSpinnerItemSelection(Spinner spinner, int spinnerID)
     {
+        //Get the spinner from the value of the spinnerID that was passed in.
+        //The spinnerID is found from the array list that stores the dynamically created spinners
         spinner = (Spinner) findViewById(spinnerID);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos,
-                    long id)
+            public void onItemSelected(AdapterView<?> parent, View view, int pos,long id)
             {
                 
             }
-
             public void onNothingSelected(AdapterView<?> adapterView)
             {
                 return;
@@ -130,20 +131,21 @@ public class AddNewInvoice extends Activity
     // load into the services spinner
     private ArrayList<String> getServices()
     {
+        //Open database
         openDB();
+        
+        //Create the arraylist to store the services to add to the spinner
         ArrayList<String> list = new ArrayList<String>();
         list.add("-");
-        Cursor cursor = myDb.getAllRows(RegisterServicesAdapter.DATABASE_TABLE,
-                RegisterServicesAdapter.ALL_KEYS);
+        Cursor cursor = _myDb.getAllRows(RegisterServicesAdapter.DATABASE_TABLE,RegisterServicesAdapter.ALL_KEYS);
         cursor.moveToFirst();
         if(cursor != null)
         {
             do
             {
+                //Only add the service if it is not already in the list of services
                 if (list.contains(cursor.getString(RegisterServicesAdapter.COL_NAME)))
-                {
-    
-                } 
+                {} 
                 else
                 {
                     list.add(cursor.getString(RegisterServicesAdapter.COL_NAME));
@@ -151,7 +153,10 @@ public class AddNewInvoice extends Activity
             } while (cursor.moveToNext());
         }
         
+        //Close cursor
         cursor.close();
+        
+        //Close database
         closeDB();
         return list;
     }
@@ -160,49 +165,40 @@ public class AddNewInvoice extends Activity
     // load into the customer spinner
     private ArrayList<String> getCustomers()
     {
+        //Open database
         openDB();
         ArrayList<String> list = new ArrayList<String>();
         list.add("-");
-        Cursor cursor = myDb.getAllRows(ClientAdapter.DATABASE_TABLE,ClientAdapter.ALL_KEYS);
+        Cursor cursor = _myDb.getAllRows(ClientAdapter.DATABASE_TABLE,ClientAdapter.ALL_KEYS);
         cursor.moveToFirst();
         if (cursor != null)
         {
             do
             {
-                //only allow one of each instance into the dropdown
+                //Only allow one of each instance into the dropdown
                 if (list.contains(cursor.getString(ClientAdapter.COL_FNAME) + " " + cursor.getString(ClientAdapter.COL_LNAME)))
-                {
-    
-                } 
+                {} 
                 else
                 {
                     list.add(cursor.getString(ClientAdapter.COL_FNAME) + " " + cursor.getString(ClientAdapter.COL_LNAME));
-                    customerId.add(cursor.getInt(ClientAdapter.COL_ROWID));
-//                    System.out.println(customerID);
-//                    if(cursor.getLong(ClientAdapter.COL_ROWID) == Integer.parseInt(customerID) )
-//                    {
-//                        customerName = cursor.getString(ClientAdapter.COL_FNAME) + " " + cursor.getString(ClientAdapter.COL_LNAME);
-//                        setSelection();
-//                    }
                 }
     
             } while (cursor.moveToNext());
         }
+        //Close cursor
         cursor.close();
+        
+        //Close database
         closeDB();
         return list;
     }
     private void setSelection()
     {
         Spinner spinner = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
-        
-        ArrayAdapter myAdap = (ArrayAdapter) spinner.getAdapter(); //cast to an ArrayAdapter
-
-        int spinnerPosition = myAdap.getPosition(customerName);
-
-        //set the default according to value
-        spinner.setSelection(spinnerPosition);
+       
+        spinner.setSelection(_sp.getClientID());
     }
+    
     ////////////////////////////////////////////////////////
     /////*
     /////*  OnClick listener for a new dynamic service
@@ -220,14 +216,14 @@ public class AddNewInvoice extends Activity
         EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
         rates = rates + et.getText().toString() + "||";
         
-        for(int i = 0; i < rIdStore_spinners.size(); i++)
+        for(int i = 0; i < _rIdStore_spinners.size(); i++)
         {
-            Spinner s2 = rIdStore_spinners.get(i);
+            Spinner s2 = _rIdStore_spinners.get(i);
             services = services + s2.getSelectedItem().toString() + "||";
         }
-        for(int i = 0; i < rIdStore_editText.size(); i++)
+        for(int i = 0; i < _rIdStore_editText.size(); i++)
         {
-            EditText et2 = rIdStore_editText.get(i);
+            EditText et2 = _rIdStore_editText.get(i);
             rates = rates + et2.getText().toString() + "||";
         }
         
@@ -237,87 +233,92 @@ public class AddNewInvoice extends Activity
     {
         finish();
     }
-    // remove the last element from the list
     public void onClick_removeServiceDyn(View v)
     {
-        //  prevent the subtraction button from replying to any subtraction if there are no additional serverices added
-        if(rIdStore.size() > 0)
+        //Prevent the subtraction button from replying to any subtraction if there are no additional serverices added
+        if(_rIdStore.size() > 0)
         {
-            //  This relative view references the internal relativelayout view inside scroll view
+            //This relative view references the internal relativelayout view inside scroll view
             RelativeLayout layout = (RelativeLayout) findViewById(R.id.addNewInvoiceLayout);
-            int size = rIdStore.size() - 1;
+            int size = _rIdStore.size() - 1;
             
-            //  Use the ArrayList of stored, newly added spinners to retrieve as a 'View' and remove them from last to first
-            View view = (View) findViewById(rIdStore.get(size));
+            //Use the ArrayList of stored, newly added spinners to retrieve as a 'View' and remove them from last to first
+            View view = (View) findViewById(_rIdStore.get(size));
             layout.removeView(view);
-            if(rIdStore.size() > 1)
+            if(_rIdStore.size() > 1)
             {
-                rIdStore.remove(size);
-                nextBelowID = rIdStore.get(size-1);
+                _rIdStore.remove(size);
+                _nextBelowID = _rIdStore.get(size-1);
             }
             
-            //  This else is used to set the default spinner view to the original view so that the add/cancel buttons are flush 
+            //This else is used to set the default spinner view to the original view so that the add/cancel buttons are flush 
             else
             {
-                rIdStore.remove(0);
-                nextBelowID = R.id.addNewInvoice_rateInput;
+                _rIdStore.remove(0);
+                _nextBelowID = R.id.addNewInvoice_rateInput;
             }
             moveButtons();
         }
     }
-    
-    //  Add new services to the view
     public void onClick_addServiceDyn(View v)
     {
+        //Create a relativelayout that corresponds to an inner relative layout of the activity
+        //Inner is used so that the view can be housed inside of a scroll view
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.addNewInvoiceLayout);
+        
+        //Inflate a layout already defined that contains a spinner and an edittext
         View l = LayoutInflater.from(getBaseContext()).inflate(R.layout.service_rows, null);
         int newID = generateViewId();
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, nextBelowID);
+        //Set the layout rules for the new service_rows layout and add it to the activity layout
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, _nextBelowID);
         layout.addView(l, params);
 
-        // assign the generated ViewID to the new spinner created
+        //Assign the generated ViewID to the new spinner created
         l.setId(newID);
-        nextBelowID = newID;
-        //Add the element to the arraylist so they can be removed in the future
-        rIdStore.add(nextBelowID);
         
-        // Create new EditText and Spinner that corresponds to the newly created elements in the new layout.
-        // This is done because by default the values are R.id.serviceRow_edit and R.id.serviceRow_spinner
+        //Update the nextBelowID so that any new layouts added know which layout to attach to
+        _nextBelowID = newID;
+        
+        //Add the element to the arraylist so they can be removed in the future
+        _rIdStore.add(_nextBelowID);
+        
+        //Create new EditText and Spinner that corresponds to the newly created elements in the new layout.
+        //This is done because by default the values are R.id.serviceRow_edit and R.id.serviceRow_spinner
         EditText et = (EditText) findViewById(R.id.serviceRow_edit);
         et.setId(generateViewId());
-        rIdStore_editText.add(et);
+        _rIdStore_editText.add(et);
         
         Spinner s = (Spinner) findViewById(R.id.serviceRow_spinner);
         s.setId(generateViewId());
-        rIdStore_spinners.add(s);
+        _rIdStore_spinners.add(s);
         addItemsOnSpinner(s, "services");
+        
+        //Align the 
         moveButtons();
     }
-
-    //  Reorganize the buttons so align with the last entry
     private void moveButtons()
     {
+        //Create a linearlayout that corresponds to the container that holds the 'Add' and 'Cancel' buttons
         LinearLayout cancel = (LinearLayout) findViewById(R.id.buttonContainer);
         
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.BELOW, nextBelowID);
+        //Programmically set the layout of the button container to redraw itself to the bottom of the newest 
+        //'new service' laytout. This is mapped to by the nextBelowID variable.
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        p.addRule(RelativeLayout.BELOW, _nextBelowID);
         cancel.setLayoutParams(p);
         
     }
-    
-    //  function for generating a random ID for the viewId. This is done so that devices on SDK < 17 can support this functionality
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public int generateViewId()
     {
+        //This is used to generate a unique layout for the newly created elements
+        //Older versions of Android do not support generateViewID() therefore a makeshift version of 'id' is used
         if (Build.VERSION.SDK_INT < 17)
         {
-            int v = value;
-            value++;
+            int v = _value;
+            _value++;
             return v;
         } else
         {

@@ -69,8 +69,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
                         {
                             public void onClick(DialogInterface dialog, int id)
                             {
-                                List<String> child = invoice
-                                        .get(content.get(groupPosition));
+                                List<String> child = invoice.get(content.get(groupPosition));
                                 child.remove(childPosition);
                                 notifyDataSetChanged();
                             }

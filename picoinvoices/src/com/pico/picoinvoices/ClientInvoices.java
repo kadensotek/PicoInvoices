@@ -20,8 +20,8 @@ import android.widget.Toast;
 public class ClientInvoices extends Activity 
 {
 
-	private InvoiceAdapter myDb = null;
-	String customerID = "";
+	private InvoiceAdapter _myDb = null;
+	private SPAdapter _sp = null;
 	
     ////////////////////////////////////////////////////////
     /////*
@@ -38,9 +38,9 @@ public class ClientInvoices extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-	        boolean result = super.onCreateOptionsMenu(menu);
-	        return result;
+		//Inflate the menu; this adds items to the action bar if it is present.
+        boolean result = super.onCreateOptionsMenu(menu);
+        return result;
 	}
 	@Override
 	protected void onDestroy() 
@@ -67,12 +67,12 @@ public class ClientInvoices extends Activity
     ////////////////////////////////////////////////////////
 	private void closeDB() 
 	{
-		myDb.close();
+		_myDb.close();
 	}
 	private void openDB() 
 	{
-		myDb = new InvoiceAdapter(this);
-		myDb.open();
+		_myDb = new InvoiceAdapter(this);
+		_myDb.open();
 	}
 	
     ////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ public class ClientInvoices extends Activity
     ////////////////////////////////////////////////////////
 	private void initialize()
 	{
-	   
+	   _sp = new SPAdapter(getApplicationContext());
 	   refresh();
        TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
        String name = getClientName();
@@ -100,17 +100,16 @@ public class ClientInvoices extends Activity
 	{
 	    openDB();
 	    //Create the list of items
-	    Cursor cursor = myDb.getCustomerInvoice(ClientList.CLIENT_ID);							
+	    Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());							
 		
-		//	String array to use as a map for which db rows should be mapped to which element in the template layout
+		//String array to use as a map for which db rows should be mapped to which element in the template layout
 		String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS, InvoiceAdapter.KEY_CUSTOMER};
 		int[] ints = new int[] {R.id.invoice_listview_layout_template_txtInvoiceNumber, R.id.invoice_listview_layout_template_txtDate, R.id.invoice_listview_layout_template_txtStatus, R.id.invoice_listview_layout_template_CustomerID};
 	
 		ListViewAdapter adapter = new ListViewAdapter(this, R.layout.invoice_listview_layout_template, cursor, client_name_list , ints, 0);
-		
-		
 		ListView list = (ListView) findViewById(R.id.client_invoices_listView);
 		list.setAdapter(adapter);
+		
 		closeDB();
 		
 	}
@@ -123,12 +122,11 @@ public class ClientInvoices extends Activity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
 			{
-					TextView textView = (TextView) viewClicked.findViewById(R.id.invoice_listview_layout_template_CustomerID);
-					customerID = (String) textView.getText();
 					Intent intent1 = new Intent(ClientInvoices.this, ShowDetailedInvoice.class);
-					intent1.putExtra("InvoiceID", Long.toString(idInDB));
-					intent1.putExtra("CustomerID", customerID);
-					 System.out.println(customerID);
+					//Update the value of the invoiceID so that ShowDetailedInvoice will display the correct invoice
+					_sp.saveInvioceID(Long.toString(idInDB));
+					System.out.println("Client Id (ClientInvoices):" + _sp.getClientID());
+					System.out.println("Invoice Id (ClientInvoices):" + _sp.getInvoiceID());
                     startActivity(intent1);
 			}
 		});
@@ -149,7 +147,7 @@ public class ClientInvoices extends Activity
     {
         openDB();
         String name = "";
-        Cursor cursor = myDb.query(new String[] {Long.toString(ClientList.CLIENT_ID)}, ClientAdapter.DATABASE_TABLE);
+        Cursor cursor = _myDb.query(new String[] {Long.toString(_sp.getClientID())}, ClientAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
             name+=cursor.getString(ClientAdapter.COL_FNAME);
@@ -202,22 +200,21 @@ public class ClientInvoices extends Activity
     }
 	public void onClick_AddInvoice(View v)
 	{
-	    openDB();
-	    String issuedate = getDateTime();
-	    String customer = Long.toString(ClientList.CLIENT_ID);
-	    String dateserviceperformed = getDateTime();
-	    String priceservice = getPrice();
-	    String service = getName();
-	    String servicedesc = getType();
-	    String amountdue = getPrice();
-	    String status = getStatus();
-	    
-	    myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
-	    closeDB();
-	    refresh();
-//	    Intent intent = new Intent(this, AddNewInvoice.class);
-//	    intent.putExtra("customerID", customerID);
-//	    startActivity(intent);
+//	    openDB();
+//	    String issuedate = getDateTime();
+//	    String customer = Long.toString(_sp.getClientID());
+//	    String dateserviceperformed = getDateTime();
+//	    String priceservice = getPrice();
+//	    String service = getName();
+//	    String servicedesc = getType();
+//	    String amountdue = getPrice();
+//	    String status = getStatus();
+//	    
+//	    _myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
+//	    closeDB();
+//	    refresh();
+	    Intent intent = new Intent(this, AddNewInvoice.class);
+	    startActivity(intent);
 	}
 	
 }

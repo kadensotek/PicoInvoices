@@ -19,6 +19,7 @@ public class ManageInvoices extends Activity
 
     private Spinner spinner;
     private InvoiceAdapter myDb;
+    private SPAdapter _sp = null;
     private String sort = "customer";
 
     // //////////////////////////////////////////////////////
@@ -31,6 +32,7 @@ public class ManageInvoices extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_invoices);
+        _sp = new SPAdapter(getApplicationContext());
         addItemsOnSpinner();
         refresh();
     }
@@ -136,10 +138,8 @@ public class ManageInvoices extends Activity
 
                 // Now use the intent to send the information to the final
                 // activity - ShowDetailedInvoice)
-                Intent intent1 = new Intent(ManageInvoices.this,
-                        ShowDetailedInvoice.class);
-                intent1.putExtra("InvoiceID", Long.toString(idInDB));
-                intent1.putExtra("CustomerID", customerID);
+                Intent intent1 = new Intent(ManageInvoices.this,ShowDetailedInvoice.class);
+                _sp.saveClientID(customerID);
 
                 System.out.println(customerID);
                 startActivity(intent1);
