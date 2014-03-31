@@ -79,9 +79,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="onClick_addServiceDyn"
                     android:text="+" />
-
             </LinearLayout>
-
         </RelativeLayout>
     </ScrollView>
 

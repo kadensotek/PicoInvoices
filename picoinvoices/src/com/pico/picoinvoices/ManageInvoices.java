@@ -193,8 +193,7 @@ public class ManageInvoices extends Activity
         list.add(InvoiceAdapter.KEY_STATUS);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         addListenerOnSpinnerItemSelection(spinner);
     }
@@ -207,6 +206,7 @@ public class ManageInvoices extends Activity
             public void onItemSelected(AdapterView<?> parent, View view, int pos,
                     long id)
             {
+                System.out.println("You selected: " + pos);
                 sort = parent.getItemAtPosition(pos).toString();
                 refresh();
             }

@@ -33,6 +33,7 @@ public class AddNewInvoice extends Activity
     //Array lists are used to store the View, Spinner, and EditText that are created dynamically 
     //So they can be referenced for remove and data retrieval 
     private ArrayList<Integer> _rIdStore = new ArrayList<Integer>();
+    private ArrayList<Integer> _serviceID = new ArrayList<Integer>();
     private ArrayList<Spinner> _rIdStore_spinners = new ArrayList<Spinner>();
     private ArrayList<EditText> _rIdStore_editText = new ArrayList<EditText>();
 
@@ -62,6 +63,10 @@ public class AddNewInvoice extends Activity
         //Load the services and customers into the proper spinner element
         addItemsOnSpinner(customerSpinner, "customer");
         addItemsOnSpinner(serviceSpinner, "services");
+        
+        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_customerSpinner);
+        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_serviceSpinner);
+        
         setSelection();
     }
     // //////////////////////////////////////////////////////
@@ -130,17 +135,23 @@ public class AddNewInvoice extends Activity
         spinner.setAdapter(dataAdapter);
     }
 
-    public void addListenerOnSpinnerItemSelection(Spinner spinner, int spinnerID)
+    public void addListenerOnSpinnerItemSelection(int spinnerID)
     {
         //Get the spinner from the value of the spinnerID that was passed in.
         //The spinnerID is found from the array list that stores the dynamically created spinners
-        spinner = (Spinner) findViewById(spinnerID);
+        Spinner spinner = (Spinner) findViewById(spinnerID);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos,long id)
+            public void onItemSelected(AdapterView<?> parent, View view, int pos,
+                    long id)
             {
-                
+                if(pos > 0)
+                {
+                System.out.println("You selected: " + pos);
+                System.out.println("Value in serviceID" + _serviceID.get(pos-1));
+                }
             }
+
             public void onNothingSelected(AdapterView<?> adapterView)
             {
                 return;
@@ -158,7 +169,7 @@ public class AddNewInvoice extends Activity
         //Create the arraylist to store the services to add to the spinner
         ArrayList<String> list = new ArrayList<String>();
         list.add("No Service Selected");
-        Cursor cursor = _myDb.getAllRows(RegisterServicesAdapter.DATABASE_TABLE,RegisterServicesAdapter.ALL_KEYS);
+        Cursor cursor = _myDb.getAllRows(RegisterServicesAdapter.DATABASE_TABLE, RegisterServicesAdapter.ALL_KEYS);
         cursor.moveToFirst();
         if(cursor != null)
         {
@@ -170,6 +181,8 @@ public class AddNewInvoice extends Activity
                 else
                 {
                     list.add(cursor.getString(RegisterServicesAdapter.COL_NAME));
+                    //Add the service 
+                    _serviceID.add(cursor.getInt(RegisterServicesAdapter.COL_ROWID));
                 }
             } while (cursor.moveToNext());
         }
@@ -317,9 +330,11 @@ public class AddNewInvoice extends Activity
         _rIdStore_editText.add(et);
         
         Spinner s = (Spinner) findViewById(R.id.serviceRow_spinner);
-        s.setId(generateViewId());
+        int id = generateViewId();
+        s.setId(id);
         _rIdStore_spinners.add(s);
         addItemsOnSpinner(s, "services");
+        addListenerOnSpinnerItemSelection(id);
         
         //Align the 
         moveButtons();
@@ -333,7 +348,6 @@ public class AddNewInvoice extends Activity
         //'new service' laytout. This is mapped to by the nextBelowID variable.
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.BELOW, _nextBelowID);
-        p.addRule(RelativeLayout.ALIGN_RIGHT);
         cancel.setLayoutParams(p);
         
     }

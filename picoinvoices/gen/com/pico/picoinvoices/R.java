@@ -27,10 +27,10 @@ public final class R {
         public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
-        public static final int action_acceptNewInvoice=0x7f08003b;
-        public static final int action_addClient=0x7f08003d;
-        public static final int action_addInvoice=0x7f08003c;
-        public static final int action_settings=0x7f08003a;
+        public static final int action_acceptNewInvoice=0x7f08003e;
+        public static final int action_addClient=0x7f080040;
+        public static final int action_addInvoice=0x7f08003f;
+        public static final int action_settings=0x7f08003d;
         public static final int activity_client_invoices_btnAddInvoice=0x7f080019;
         public static final int addNewInvoiceLayout=0x7f080000;
         public static final int addNewInvoice_customerSpinner=0x7f08000f;
@@ -81,6 +81,9 @@ public final class R {
         public static final int services_Name=0x7f080035;
         public static final int services_listView=0x7f080024;
         public static final int spinner2=0x7f080021;
+        public static final int spinnerText1=0x7f08003a;
+        public static final int spinnerText2=0x7f08003b;
+        public static final int textView1=0x7f08003c;
         public static final int txt_addNew_address=0x7f080006;
         public static final int txt_addNew_email=0x7f08000b;
         public static final int txt_addNew_fname=0x7f080003;
@@ -109,6 +112,7 @@ public final class R {
         public static final int scrollview=0x7f03000f;
         public static final int service_layout_template=0x7f030010;
         public static final int service_rows=0x7f030011;
+        public static final int spinner_text_layout=0x7f030012;
     }
     public static final class menu {
         public static final int add_new=0x7f070000;
