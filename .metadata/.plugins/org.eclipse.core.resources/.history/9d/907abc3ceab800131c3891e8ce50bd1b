@@ -170,10 +170,9 @@ public class AddNewInvoice extends Activity
         ArrayList<String> list = new ArrayList<String>();
         list.add("No Service Selected");
         Cursor cursor = _myDb.getAllRows(RegisterServicesAdapter.DATABASE_TABLE, RegisterServicesAdapter.ALL_KEYS);
-        
+        cursor.moveToFirst();
         if(cursor != null)
         {
-            cursor.moveToFirst();
             do
             {
                 //Only add the service if it is not already in the list of services
@@ -186,10 +185,6 @@ public class AddNewInvoice extends Activity
                     _serviceID.add(cursor.getInt(RegisterServicesAdapter.COL_ROWID));
                 }
             } while (cursor.moveToNext());
-        }
-        else
-        {
-            System.out.println("No servuces");
         }
         
         //Close cursor

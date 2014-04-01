@@ -40,7 +40,6 @@ public class ClientList extends Activity
 		_sp = new SPAdapter(getApplicationContext());
 		refresh();
 		System.out.println(_sp.getClientID());
-		 System.out.println("Created..");
 	}
 	@Override
 	protected void onDestroy()

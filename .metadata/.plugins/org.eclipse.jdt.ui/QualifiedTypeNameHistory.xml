@@ -6,5 +6,7 @@
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="android.widget.SimpleCursorAdapter"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.RegisterServicesAdapter"/>
+<fullyQualifiedTypeName name="android.R.layout"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.R"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.R.id"/>
 </qualifiedTypeNameHistroy>

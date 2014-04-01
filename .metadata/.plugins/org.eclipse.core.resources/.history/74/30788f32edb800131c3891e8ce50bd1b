@@ -172,7 +172,6 @@ public class ManageInvoices extends Activity
                 Intent intent1 = new Intent(ManageInvoices.this,ShowDetailedInvoice.class);
                 _sp.saveClientID(customerID);
                 _sp.saveInvioceID(Long.toString(idInDB));
-           
 
                 System.out.println(customerID);
                 startActivity(intent1);

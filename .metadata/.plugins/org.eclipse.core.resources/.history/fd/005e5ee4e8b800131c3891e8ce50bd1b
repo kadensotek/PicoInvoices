@@ -99,10 +99,9 @@ public class Settings extends Activity
      */
     private void refresh()
     {
-        openDB();
+
         populateListView();
         registerClickCallback();
-        closeDB();
     }
 
     @SuppressWarnings("deprecation")
