@@ -1,6 +1,7 @@
 package com.pico.picoinvoices;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -165,7 +166,8 @@ public class Settings extends Activity
     //TODO Implement exporting database
     public void onClick_toExport(View v)
     {
-        // Intent intent = new Intent(this, ExportDB.class);
-        // startActivity(intent);
+        System.out.println("Export database selected.");
+        Intent intent = new Intent(this, ExportDB.class);
+        startActivity(intent);
     }
 }

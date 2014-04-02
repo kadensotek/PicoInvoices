@@ -1,3 +1,6 @@
+package com.pico.picoinvoices;
+
+import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -8,7 +11,7 @@ public class SpinnerAdapter extends Activity
 {
 ArrayList<String> name = new ArrayList<String>();
 ArrayList<String> age = new ArrayList<String>();
-
+/*
 @Override
 public void onCreate(Bundle savedInstanceState)
 {
@@ -57,4 +60,5 @@ sub.setText(age.get(position));
 return row;
 }
 }
+*/
 }
