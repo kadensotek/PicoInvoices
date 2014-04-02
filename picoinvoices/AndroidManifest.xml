@@ -72,7 +72,12 @@
         <activity
             android:name="com.pico.picoinvoices.ExportDB"
             android:label="ExportDB"
-            android:parentActivityName="com.pico.picoinvoices.ExportDB" >
+            android:parentActivityName="com.pico.picoinvoices.Settings" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ImportDB"
+            android:label="ImportDB"
+            android:parentActivityName="com.pico.picoinvoices.Settings" >
         </activity>
         
     </application>
