@@ -159,8 +159,8 @@ public class Settings extends Activity
    //TODO Implement importing database
     public void onClick_toImport(View v)
     {
-        // Intent intent = new Intent(this, ImportDB.class);
-        // startActivity(intent);
+         Intent intent = new Intent(this, ImportDB.class);
+         startActivity(intent);
     }
 
     //TODO Implement exporting database
