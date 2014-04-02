@@ -80,7 +80,7 @@ public class ExportDB extends Activity
     /////*  OnClick listener for starting new activities
     /////*
     ////////////////////////////////////////////////////////
-    public void onClick_ToExportXML(View v)
+    public void onClick_ToExport(View v)
     {
 //        Intent intent = new Intent(this, ExportXML.class);
 //        startActivity(intent);

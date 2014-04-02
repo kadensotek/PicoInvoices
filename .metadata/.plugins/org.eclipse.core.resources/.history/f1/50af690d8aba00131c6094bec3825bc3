@@ -45,7 +45,7 @@ public class ExportDB extends Activity
         _sp.saveClientID("0");
         _sp.saveInvioceID("0");
         openDB();
-//        closeDB();
+        closeDB();
     }
 
 //  @Override
