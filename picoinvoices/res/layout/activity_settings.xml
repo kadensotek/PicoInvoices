@@ -29,7 +29,7 @@
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginTop="89dp"
 	        android:minHeight="80dp"
-	        android:onClick="onClick_ToUserData"
+	        android:onClick="onClick_toUserData"
 	        android:text="Edit User Information" />
         
         <Button
@@ -38,7 +38,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
 	        android:minHeight="80dp"
-	        android:onClick="onClick_ToImport"
+	        android:onClick="onClick_toImport"
 	        android:text="Import Database" />
         
         <Button
@@ -47,7 +47,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
 	        android:minHeight="80dp"
-	        android:onClick="onClick_ToExport"
+	        android:onClick="onClick_toExport"
 	        android:text="Export Database" />
     </LinearLayout>
 
