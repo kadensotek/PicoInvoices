@@ -1,8 +1,11 @@
 package com.pico.picoinvoices;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class SpinnerAdapter extends Activity
 {
