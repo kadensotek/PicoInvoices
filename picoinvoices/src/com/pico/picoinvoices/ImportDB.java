@@ -1,7 +1,10 @@
 package com.pico.picoinvoices;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.content.Intent;
+=======
+>>>>>>> 692159ae306fdb1d95439b4562458a046c332e76
 import android.os.Bundle;
 import android.view.View;
 

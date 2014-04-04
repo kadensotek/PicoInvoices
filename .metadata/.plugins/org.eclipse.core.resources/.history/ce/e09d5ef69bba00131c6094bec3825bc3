@@ -11,7 +11,7 @@ public class Settings extends Activity
 {
 
     private InvoiceAdapter myDb = null;
-//    private SPAdapter _sp = null;
+    private SPAdapter _sp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -106,6 +106,7 @@ public class Settings extends Activity
         closeDB();
     }
 
+    @SuppressWarnings("deprecation")
     private void populateListView()
     {
      /*   Cursor cursor = myDb.getAllRows(); // Create the list of items
