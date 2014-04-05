@@ -1,7 +1,11 @@
 package com.pico.picoinvoices;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -40,6 +44,8 @@ public class AddNewInvoice extends Activity
     private ArrayList<EditText> _rIdStore_editText = new ArrayList<EditText>();
 
     private ArrayList<String> _serviceID = new ArrayList<String>();
+    private ArrayList<String> _customerID = new ArrayList<String>();
+    
 
     // //////////////////////////////////////////////////////
     // ///*
@@ -69,8 +75,9 @@ public class AddNewInvoice extends Activity
         addItemsOnSpinner(customerSpinner, "customer");
         addItemsOnSpinner(serviceSpinner, "services");
 
-        // addListenerOnSpinnerItemSelection(R.id.addNewInvoice_customerSpinner);
-        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_serviceSpinner);
+        //addListeners to the spinners
+//        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_customerSpinner);
+//        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_serviceSpinner);
 
         setSelection();
     }
@@ -98,7 +105,7 @@ public class AddNewInvoice extends Activity
                 System.out.println("Settings selected");
                 return true;
             case R.id.action_acceptNewInvoice:
-                System.out.println("Added new invoice");
+                onClick_addInvoice();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -134,9 +141,15 @@ public class AddNewInvoice extends Activity
         if (cs.equals("services"))
         {
             list = getServices();
+            MyAdapter dataAdapter = new MyAdapter(this,
+                    R.layout.spinner_text_layout, list, _serviceID);
+            spinner.setAdapter(dataAdapter);
         } else
         {
             list = getCustomers();
+            MyAdapter dataAdapter = new MyAdapter(this,
+                    R.layout.spinner_text_layout, list, _customerID);
+            spinner.setAdapter(dataAdapter);
         }
 
         // Set an adapter on the spinner to map the values to the layout
@@ -145,9 +158,7 @@ public class AddNewInvoice extends Activity
         // list);
         // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        MyAdapter dataAdapter = new MyAdapter(this,
-                R.layout.spinner_text_layout, list);
-        spinner.setAdapter(dataAdapter);
+       
     }
 
     public void addListenerOnSpinnerItemSelection(int spinnerID)
@@ -245,6 +256,7 @@ public class AddNewInvoice extends Activity
                 {
                     list.add(cursor.getString(ClientAdapter.COL_FNAME) + " "
                             + cursor.getString(ClientAdapter.COL_LNAME));
+                    _customerID.add(cursor.getString(ClientAdapter.COL_ROWID));
                 }
 
             } while (cursor.moveToNext());
@@ -268,37 +280,68 @@ public class AddNewInvoice extends Activity
     // ///* OnClick listener for accepting/cancelling changes
     // ///*
     // //////////////////////////////////////////////////////
-    public void onClick_addInvoice(View v)
+    public void onClick_addInvoice()
     {
         String services = "";
         String rates = "";
 
         // Makes sure that the original edittext and spinner are added as well
         Spinner s = (Spinner) findViewById(R.id.addNewInvoice_serviceSpinner);
-        services = services + s.getSelectedItem().toString() + "||";
+        TextView tv = (TextView) s.findViewById(R.id.spinnerText2);
+        services = services + tv.getText().toString() + "-";
 
         EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
-        rates = rates + et.getText().toString() + "||";
+        rates = rates + et.getText().toString() + "-";
 
         for (int i = 0; i < _rIdStore_spinners.size(); i++)
         {
             Spinner s2 = _rIdStore_spinners.get(i);
-            services = services + s2.getSelectedItem().toString() + "||";
+            TextView tv2 = (TextView) s2.findViewById(R.id.spinnerText2);
+            services = services + tv2.getText().toString() + "-";
         }
         for (int i = 0; i < _rIdStore_editText.size(); i++)
         {
             EditText et2 = _rIdStore_editText.get(i);
-            rates = rates + et2.getText().toString() + "||";
+            rates = rates + et2.getText().toString() + "-";
         }
-
-        System.out.println(services + "\n\n\n" + rates);
+        s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
+        tv = (TextView) s.findViewById(R.id.spinnerText2);
+        
+        insertRow(services, rates, tv.getText().toString());
+        System.out.println("Inserted: " + services + "\n\n\n" + rates);
+        finish();
     }
-
+    private void insertRow(String services, String rates, String customer)
+    {
+        openDB();
+        int total = 0;
+        String[] amountdue = rates.split("-");
+        for (int i=0; i < amountdue.length; i++)
+        {
+            total+=Integer.parseInt(amountdue[i]);
+        }
+        _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, "sample", Integer.toString(total) , getStatus());
+        
+        closeDB();
+    }
+    private String getStatus() {
+        String[] types = new String[] {"Open", "Pending", "Paid", "Quote"};
+        Random randomGenerator = new Random();
+        int rand = randomGenerator.nextInt(4);
+        
+        return types[rand];
+    }
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
     public void onClick_cancelInvoice(View v)
     {
         finish();
     }
-
+   
     // //////////////////////////////////////////////////////
     // ///*
     // ///* OnClick listener adding/removing dynamic elements
@@ -322,6 +365,8 @@ public class AddNewInvoice extends Activity
             if (_rIdStore.size() > 1)
             {
                 _rIdStore.remove(size);
+                _rIdStore_spinners.remove(size);
+                _rIdStore_editText.remove(size);
                 _nextBelowID = _rIdStore.get(size - 1);
             }
 
@@ -330,6 +375,8 @@ public class AddNewInvoice extends Activity
             else
             {
                 _rIdStore.remove(0);
+                _rIdStore_editText.remove(0);
+                _rIdStore_spinners.remove(0);
                 _nextBelowID = R.id.addNewInvoice_rateInput;
             }
             moveButtons();
@@ -423,18 +470,20 @@ public class AddNewInvoice extends Activity
 
     // //////////////////////////////////////////////////////
     // ///*
-    // ///* Internal class to handle the custom spinner 
+    // ///* Internal class to handle the custom spinner
     // ///*
     // //////////////////////////////////////////////////////
+    //  This needs to be an internal class so that the getLayoutInflater can be called (needs to extend the activity class)
     public class MyAdapter extends ArrayAdapter<String>
     {
-        ArrayList<String> l = null;
+        ArrayList<String> l = null, l2 =null;
 
         public MyAdapter(Context context, int textViewResourceId,
-                List<String> list)
+                List<String> list, List<String> list2)
         {
             super(context, textViewResourceId, list);
             l = (ArrayList<String>) list;
+            l2 = (ArrayList<String>) list2;
         }
 
         @Override
@@ -458,16 +507,16 @@ public class AddNewInvoice extends Activity
             View row = inflater.inflate(R.layout.spinner_text_layout, parent,
                     false);
             TextView label = (TextView) row.findViewById(R.id.spinnerText1);
-//            if (position > 0)
-//                label.setText(l.get(position-1));
-//            else
-                label.setText(l.get(position));
+            // if (position > 0)
+            // label.setText(l.get(position-1));
+            // else
+            label.setText(l.get(position));
 
             TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
             if (position > 0)
-                sub.setText(_serviceID.get(position-1));
+                sub.setText(l2.get(position - 1));
             else
-                sub.setText(_serviceID.get(position));
+                sub.setText(l2.get(position));
 
             return row;
         }

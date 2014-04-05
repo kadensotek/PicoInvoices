@@ -11,7 +11,8 @@ public class Settings extends Activity
 {
 
     private InvoiceAdapter myDb = null;
-//    private SPAdapter _sp = null;
+
+    // private SPAdapter _sp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,8 +20,8 @@ public class Settings extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-       // _sp = new SPAdapter(getApplicationContext());
-        //openDB();
+        // _sp = new SPAdapter(getApplicationContext());
+        // openDB();
         refresh();
 
         // TextView textView = (TextView)
@@ -35,7 +36,7 @@ public class Settings extends Activity
     {
         super.onDestroy();
 
-      //  closeDB();
+        // closeDB();
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Settings extends Activity
     {
         super.onResume();
 
-    //    openDB();
+        // openDB();
         refresh();
         // TextView textView = (TextView)
         // findViewById(R.id.client_invoices_txtClientName);
@@ -73,9 +74,9 @@ public class Settings extends Activity
             case R.id.action_settings:
                 System.out.println("Settings selected");
                 return true;
-            //case R.id.action_acceptNewInvoice:
-            //    System.out.println("Added new invoice");
-           //     return true;
+                // case R.id.action_acceptNewInvoice:
+                // System.out.println("Added new invoice");
+                // return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -108,61 +109,61 @@ public class Settings extends Activity
 
     private void populateListView()
     {
-     /*   Cursor cursor = myDb.getAllRows(); // Create the list of items
-        // String array to use as a map for which db rows should be mapped to
-        // which element in the template layout
-        String[] client_name_list = new String[] { InvoiceAdapter.KEY_ROWID,
-                InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS };
-        int[] ints = new int[] {
-                R.id.invoice_listview_layout_template_txtInvoiceNumber,
-                R.id.invoice_listview_layout_template_txtDate,
-                R.id.invoice_listview_layout_template_txtStatus };
-
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.invoice_listview_layout_template, cursor,
-                client_name_list, ints);
-
-        ListView list = (ListView) findViewById(R.id.client_invoices_listView);
-        list.setAdapter(adapter);*/
+        /*
+         * Cursor cursor = myDb.getAllRows(); // Create the list of items //
+         * String array to use as a map for which db rows should be mapped to //
+         * which element in the template layout String[] client_name_list = new
+         * String[] { InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_ISSUEDATE,
+         * InvoiceAdapter.KEY_STATUS }; int[] ints = new int[] {
+         * R.id.invoice_listview_layout_template_txtInvoiceNumber,
+         * R.id.invoice_listview_layout_template_txtDate,
+         * R.id.invoice_listview_layout_template_txtStatus };
+         * 
+         * SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+         * R.layout.invoice_listview_layout_template, cursor, client_name_list,
+         * ints);
+         * 
+         * ListView list = (ListView)
+         * findViewById(R.id.client_invoices_listView);
+         * list.setAdapter(adapter);
+         */
 
     }
 
     private void registerClickCallback()
     {
-        /*ListView list = (ListView) findViewById(R.id.client_invoices_listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked,
-                    int position, long idInDB)
-            {
-
-                Intent intent1 = new Intent(Settings.this,
-                        ShowDetailedInvoice.class);
-                _sp.saveInvioceID(Long.toString(idInDB));
-                startActivity(intent1);
-            }
-        });*/
+        /*
+         * ListView list = (ListView)
+         * findViewById(R.id.client_invoices_listView);
+         * list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         * 
+         * @Override public void onItemClick(AdapterView<?> parent, View
+         * viewClicked, int position, long idInDB) {
+         * 
+         * Intent intent1 = new Intent(Settings.this,
+         * ShowDetailedInvoice.class); _sp.saveInvioceID(Long.toString(idInDB));
+         * startActivity(intent1); } });
+         */
     }
 
     /*
      * onClickListeners are implemented here
      */
-    //TODO Implement editing user data
+    // TODO Implement editing user data
     public void onClick_ToUserData(View v)
     {
         // Intent intent = new Intent(this, UserData.class);
         // startActivity(intent);
     }
 
-   //TODO Implement importing database
+    // TODO Implement importing database
     public void onClick_toImport(View v)
     {
-         Intent intent = new Intent(this, ImportDB.class);
-         startActivity(intent);
+        Intent intent = new Intent(this, ImportDB.class);
+        startActivity(intent);
     }
 
-    //TODO Implement exporting database
+    // TODO Implement exporting database
     public void onClick_toExport(View v)
     {
         System.out.println("Export database selected.");

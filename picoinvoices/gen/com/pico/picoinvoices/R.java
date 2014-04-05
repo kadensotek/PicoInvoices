@@ -56,9 +56,9 @@ public final class R {
         public static final int expandableListView1=0x7f08002d;
         public static final int exportdb_btnToExportCSV=0x7f08001e;
         public static final int exportdb_btnToExportXML=0x7f08001d;
+        public static final int home_btnEmail=0x7f080021;
         public static final int home_btnToClients=0x7f08001f;
         public static final int home_btnToManageInvoices=0x7f080020;
-        public static final int home_btnToServices=0x7f080021;
         public static final int home_toSettings=0x7f080022;
         public static final int imageView1=0x7f08001c;
         public static final int importdb_btnToImportCSV=0x7f080024;

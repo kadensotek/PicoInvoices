@@ -43,7 +43,7 @@
 	        android:text="Manage Invoices" />
 	
 	    <Button
-	        android:id="@+id/home_btnToServices"
+	        android:id="@+id/home_btnEmail"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/home_btnToManageInvoices"
@@ -56,7 +56,7 @@
 	        android:id="@+id/home_toSettings"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/home_btnToServices"
+	        android:layout_below="@+id/home_btnEmail"
 	        android:layout_centerHorizontal="true"
 	        android:maxHeight="80dp"
 	        android:minHeight="80dp"

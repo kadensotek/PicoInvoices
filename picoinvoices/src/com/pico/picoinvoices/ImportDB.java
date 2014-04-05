@@ -1,10 +1,6 @@
 package com.pico.picoinvoices;
 
 import android.app.Activity;
-<<<<<<< HEAD
-import android.content.Intent;
-=======
->>>>>>> 692159ae306fdb1d95439b4562458a046c332e76
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,12 +9,12 @@ public class ImportDB extends Activity
 
     DBAdapter _myDb = null;
     SPAdapter _sp = null;
-    
-    ////////////////////////////////////////////////////////
-    /////*
-    /////*  Activity Lifecycle functions
-    /////*
-    ////////////////////////////////////////////////////////
+
+    // //////////////////////////////////////////////////////
+    // ///*
+    // ///* Activity Lifecycle functions
+    // ///*
+    // //////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -26,7 +22,7 @@ public class ImportDB extends Activity
         setContentView(R.layout.activity_importdb);
         initialize();
     }
-    
+
     @Override
     protected void onDestroy()
     {
@@ -34,38 +30,36 @@ public class ImportDB extends Activity
 
         closeDB();
     }
-    
+
     @Override
     protected void onResume()
     {
         super.onResume();
         initialize();
     }
-    
+
     private void initialize()
     {
         _sp = new SPAdapter(getApplicationContext());
         _sp.saveClientID("0");
         _sp.saveInvioceID("0");
         openDB();
-//        closeDB();
+        // closeDB();
     }
 
-//  @Override
-//  public boolean onCreateOptionsMenu(Menu menu)
-//  {
-//      // Inflate the menu; this adds items to the action bar if it is present.
-//      getMenuInflater().inflate(R.menu.home, menu);
-//      return true;
-//  }
+    // @Override
+    // public boolean onCreateOptionsMenu(Menu menu)
+    // {
+    // // Inflate the menu; this adds items to the action bar if it is present.
+    // getMenuInflater().inflate(R.menu.home, menu);
+    // return true;
+    // }
 
-    
-
-    ////////////////////////////////////////////////////////
-    /////*
-    /////*  Database functions
-    /////*
-    ////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////
+    // ///*
+    // ///* Database functions
+    // ///*
+    // //////////////////////////////////////////////////////
     private void closeDB()
     {
         _myDb.close();
@@ -78,20 +72,20 @@ public class ImportDB extends Activity
 
     }
 
-    ////////////////////////////////////////////////////////
-    /////*
-    /////*  OnClick listener for starting new activities
-    /////*
-    ////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////
+    // ///*
+    // ///* OnClick listener for starting new activities
+    // ///*
+    // //////////////////////////////////////////////////////
     public void onClick_ToImportXML(View v)
     {
-//        Intent intent = new Intent(this, ImportXML.class);
-//        startActivity(intent);
+        // Intent intent = new Intent(this, ImportXML.class);
+        // startActivity(intent);
     }
-    
+
     public void onClick_ToImportCSV(View v)
     {
-//        Intent intent = new Intent(this, ImportCSV.class);
-//        startActivity(intent);
+        // Intent intent = new Intent(this, ImportCSV.class);
+        // startActivity(intent);
     }
 }
