@@ -212,7 +212,7 @@ public class ShowDetailedInvoice extends Activity
 //        startActivity(Intent.createChooser(new Intent(Intent.ACTION_SENDTO, Uri.parse(uriString)), "Contact Developer"));
         
         
-        //This version only selects mail applications and will format the body with html
+        
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         intent.setType("text/html");
         intent.putExtra(Intent.EXTRA_EMAIL, _email);
