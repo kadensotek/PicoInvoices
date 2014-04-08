@@ -249,7 +249,6 @@ public class AddNewInvoice extends Activity
         openDB();
         ArrayList<String> list = new ArrayList<String>();
         list.add("No Client Selected");
-        _customerID.add("0");
         Cursor cursor = _myDb.getAllRows(ClientAdapter.DATABASE_TABLE,
                 ClientAdapter.ALL_KEYS);
         
