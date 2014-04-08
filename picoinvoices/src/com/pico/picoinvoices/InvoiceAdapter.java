@@ -31,26 +31,24 @@ public class InvoiceAdapter
     public static final String KEY_ISSUEDATE = "issuedate";
     public static final String KEY_CUSTOMER = "customer";
     public static final String KEY_SERVICE = "service";
-    public static final String KEY_DATESERVICEPERFORMED = "dateserviceperformed";
+    public static final String KEY_DUEDATE = "duedate";
     public static final String KEY_PRICESERVICE = "priceservice";
-    public static final String KEY_SERVICEDESC = "servicedesc";
     public static final String KEY_AMOUNTDUE = "amountdue";
     public static final String KEY_STATUS = "status";
 
     // TODO: Setup your field numbers here (0 = KEY_ROWID, 1=...)
     public static final int COL_ISSUEDATE = 1;
     public static final int COL_CUSTOMER = 2;
-    public static final int COL_DATESERVICEPERFORMED = 3;
+    public static final int COL_DUEDATE = 3;
     public static final int COL_PRICESERVICE = 4;
     public static final int COL_SERVICE = 5;
-    public static final int COL_SERVICEDESC = 6;
-    public static final int COL_AMOUNTDUE = 7;
-    public static final int COL_STATUS = 8;
+    public static final int COL_AMOUNTDUE = 6;
+    public static final int COL_STATUS = 7;
 
 
     public static final String[] ALL_KEYS = new String[] { KEY_ROWID,
-            KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DATESERVICEPERFORMED,
-            KEY_PRICESERVICE, KEY_SERVICEDESC, KEY_AMOUNTDUE, KEY_STATUS };
+            KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DUEDATE,
+            KEY_PRICESERVICE, KEY_AMOUNTDUE, KEY_STATUS };
 
     // DB info: it's name, and the table we are using (just one).
     public static final String DATABASE_TABLE = "invoices";
@@ -85,7 +83,7 @@ public class InvoiceAdapter
     }
 
     // Add a new set of values to the database.
-    public long insertRow(String issuedate, String customer,String dateserviceperformed, String priceservice, String service,String servicedesc, String amountdue, String status)
+    public long insertRow(String issuedate, String customer,String duedate, String priceservice, String service, String amountdue, String status)
     {
         /*
          * CHANGE 3:
@@ -96,10 +94,9 @@ public class InvoiceAdapter
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ISSUEDATE, issuedate);
         initialValues.put(KEY_CUSTOMER, customer);
-        initialValues.put(KEY_DATESERVICEPERFORMED, dateserviceperformed);
+        initialValues.put(KEY_DUEDATE, duedate);
         initialValues.put(KEY_PRICESERVICE, priceservice);
         initialValues.put(KEY_SERVICE, service);
-        initialValues.put(KEY_SERVICEDESC, servicedesc);
         initialValues.put(KEY_AMOUNTDUE, amountdue);
         initialValues.put(KEY_STATUS, status);
         
@@ -220,8 +217,7 @@ public class InvoiceAdapter
 
     // Change an existing row to be equal to new data.
     public boolean updateRow(long rowId, String issuedate, String customer,
-            String dateserviceperformed, String priceservice,
-            String servicedesc, String amountdue, String status)
+            String duedate, String priceservice,String amountdue, String status)
     {
 
         String where = KEY_ROWID + "=" + rowId;
@@ -235,9 +231,8 @@ public class InvoiceAdapter
         ContentValues newValues = new ContentValues();
         newValues.put(KEY_ISSUEDATE, issuedate);
         newValues.put(KEY_CUSTOMER, customer);
-        newValues.put(KEY_DATESERVICEPERFORMED, dateserviceperformed);
+        newValues.put(KEY_DUEDATE, duedate);
         newValues.put(KEY_PRICESERVICE, priceservice);
-        newValues.put(KEY_SERVICEDESC, servicedesc);
         newValues.put(KEY_AMOUNTDUE, amountdue);
         newValues.put(KEY_STATUS, status);
 

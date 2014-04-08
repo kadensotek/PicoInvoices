@@ -25,8 +25,7 @@ public class ShowDetailedInvoice extends Activity
     private InvoiceAdapter _myDb = null;
     private SPAdapter _sp = null;
     private String _fname, _lname, _address, _email, _phone;
-    private String _issuedate, _service, _dateserviceperformed, _priceservice,
-            _servicedesc, _amountdue, _status;
+    private String _issuedate, _service, _duedate, _priceservice, _amountdue, _status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -119,10 +118,9 @@ public class ShowDetailedInvoice extends Activity
         {
             _issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
             _service = cursor.getString(InvoiceAdapter.COL_SERVICE);
-            _dateserviceperformed = cursor
-                    .getString(InvoiceAdapter.COL_DATESERVICEPERFORMED);
+            _duedate = cursor
+                    .getString(InvoiceAdapter.COL_DUEDATE);
             _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
-            _servicedesc = cursor.getString(InvoiceAdapter.COL_SERVICEDESC);
             _amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
             _status = cursor.getString(InvoiceAdapter.COL_STATUS);
         } else
@@ -145,8 +143,8 @@ public class ShowDetailedInvoice extends Activity
     {
         // preparing laptops collection(child)
         String[] contactInfo = { _fname, _lname, _address, _email, _phone };
-        String[] invoiceDetail = { _issuedate, _service, _dateserviceperformed,
-                _priceservice, _servicedesc, _amountdue, _status };
+        String[] invoiceDetail = { _issuedate, _service, _duedate,
+                _priceservice, _amountdue, _status };
 
         _invoice = new LinkedHashMap<String, List<String>>();
 
@@ -205,7 +203,7 @@ public class ShowDetailedInvoice extends Activity
         intent.setType("text/html");
         intent.putExtra(Intent.EXTRA_EMAIL, _email);
         intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
-        intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" + _service + "\n" + _servicedesc +"\n"+_amountdue);
+        intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" + _service  +"\n"+_amountdue);
   
         startActivity(Intent.createChooser(intent, "Send Email"));
     }

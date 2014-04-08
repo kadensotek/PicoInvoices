@@ -141,15 +141,23 @@ public class AddNewInvoice extends Activity
         if (cs.equals("services"))
         {
             list = getServices();
-            MyAdapter dataAdapter = new MyAdapter(this,
-                    R.layout.spinner_text_layout, list, _serviceID);
-            spinner.setAdapter(dataAdapter);
-        } else
+            if (_serviceID.size() >0)
+            {
+                MyAdapter dataAdapter = new MyAdapter(this,
+                        R.layout.spinner_text_layout, list, _serviceID);
+                spinner.setAdapter(dataAdapter);
+            }
+        } 
+        else if(cs.equals("customer"))
         {
             list = getCustomers();
-            MyAdapter dataAdapter = new MyAdapter(this,
-                    R.layout.spinner_text_layout, list, _customerID);
-            spinner.setAdapter(dataAdapter);
+            if ( _customerID.size() >0)
+            {
+                MyAdapter dataAdapter = new MyAdapter(this,
+                        R.layout.spinner_text_layout, list, _customerID);
+                spinner.setAdapter(dataAdapter);
+            }
+            
         }
 
         // Set an adapter on the spinner to map the values to the layout
@@ -202,7 +210,7 @@ public class AddNewInvoice extends Activity
                 RegisterServicesAdapter.DATABASE_TABLE,
                 RegisterServicesAdapter.ALL_KEYS);
 
-        if (cursor != null)
+        if (cursor != null && cursor.getCount() >0)
         {
             cursor.moveToFirst();
             do
@@ -243,9 +251,10 @@ public class AddNewInvoice extends Activity
         list.add("No Client Selected");
         Cursor cursor = _myDb.getAllRows(ClientAdapter.DATABASE_TABLE,
                 ClientAdapter.ALL_KEYS);
-        cursor.moveToFirst();
-        if (cursor != null)
+        
+        if (cursor != null && cursor.getCount() >0)
         {
+            cursor.moveToFirst();
             do
             {
                 // Only allow one of each instance into the dropdown
@@ -320,7 +329,7 @@ public class AddNewInvoice extends Activity
         {
             total+=Integer.parseInt(amountdue[i]);
         }
-        _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, "sample", Integer.toString(total) , getStatus());
+        _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, Integer.toString(total) , getStatus());
         
         closeDB();
     }
@@ -503,6 +512,8 @@ public class AddNewInvoice extends Activity
                 ViewGroup parent)
         {
 
+           if (l.size() > 0 && l2.size() > 0)
+           {
             LayoutInflater inflater = getLayoutInflater();
             View row = inflater.inflate(R.layout.spinner_text_layout, parent,
                     false);
@@ -519,6 +530,11 @@ public class AddNewInvoice extends Activity
                 sub.setText(l2.get(position));
 
             return row;
+           }
+           else
+           {
+               return null;
+           }
         }
 
     }
