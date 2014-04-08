@@ -8,7 +8,7 @@ Basic Requirements to be completed
 (*)Determine the best way to insert new invoices into the table
 		-->Trying to add a hidden textview on the spinner so that each name of the service is mapped to the service Id as well.
 		-->Add the service id into the invoice row, so that information from that service can be queried later if need be.
-		-->Need to separate how id is added for services vs customers.
+		
 	( )Create a good method for keeping track of how many services and for what price (reporting)
 			-->This is tied to the objective above... There needs to be a good way to search the db and parse for the number of services/goods
 		   		in an effective manner to be used for reporting.

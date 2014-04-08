@@ -34,8 +34,10 @@ public class ShowDetailedInvoice extends Activity
         setContentView(R.layout.activity_show_detailed_invoice);
 
         _sp = new SPAdapter(getApplicationContext());
-        System.out.println("Client Id (ShowDetailedInvoices):"+ _sp.getClientID());
-        System.out.println("Invoice Id (ShowDetailedInvoices):"+ _sp.getInvoiceID());
+        System.out.println("Client Id (ShowDetailedInvoices):"
+                + _sp.getClientID());
+        System.out.println("Invoice Id (ShowDetailedInvoices):"
+                + _sp.getInvoiceID());
         openDB();
 
         populateValues();
@@ -53,10 +55,14 @@ public class ShowDetailedInvoice extends Activity
 
         _expListView.setOnChildClickListener(new OnChildClickListener()
         {
-            public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id)
+
+            public boolean onChildClick(ExpandableListView parent, View v,
+                    int groupPosition, int childPosition, long id)
             {
-                final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
-                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
+                final String selected = (String) expListAdapter.getChild(
+                        groupPosition, childPosition);
+                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
+                        .show();
 
                 return true;
             }
@@ -96,48 +102,25 @@ public class ShowDetailedInvoice extends Activity
             _address = cursor.getString(ClientAdapter.COL_ADDRESS);
             _email = cursor.getString(ClientAdapter.COL_EMAIL);
             _phone = cursor.getString(ClientAdapter.COL_PHONE);
-        } 
-        else
-        {
+        } else
             Toast.makeText(ShowDetailedInvoice.this,"failed to load cursor for customerId " + _sp.getClientID(),Toast.LENGTH_SHORT).show();
-        }
-        
+
         // Populate invoice specific information
-        cursor = _myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
+        cursor = _myDb.query(
+                new String[] { Integer.toString(_sp.getInvoiceID()) },
+                InvoiceAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
             _issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+            _service = cursor.getString(InvoiceAdapter.COL_SERVICE);
             _duedate = cursor.getString(InvoiceAdapter.COL_DUEDATE);
             _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
             _amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
             _status = cursor.getString(InvoiceAdapter.COL_STATUS);
-        } 
-        else
-        {
+        } else
             Toast.makeText(ShowDetailedInvoice.this,"failed to load cursor for invoiceID " + _sp.getInvoiceID(),Toast.LENGTH_SHORT).show();
-        }
-        
         cursor.close();
 
-    }
-    private String returnServices(String s)
-    {
-        Cursor cursor = null;
-        String[] services = s.split("||");
-        s = "";
-        for (int i = 0; i < services.length-1; i++)
-        {
-            System.out.println("Parsed service: " + services[i]);
-            cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
-            if (cursor.moveToFirst())
-            {
-                s+="\t" + cursor.getString(RegisterServicesAdapter.COL_NAME) + "\n";
-            }
-            
-        }
-        cursor.close();
-        return s;
     }
 
     private void createGroupList()

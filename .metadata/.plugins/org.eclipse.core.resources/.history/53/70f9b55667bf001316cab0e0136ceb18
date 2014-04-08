@@ -107,7 +107,7 @@ public class ShowDetailedInvoice extends Activity
         if (cursor.moveToFirst())
         {
             _issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+            _service = cursor.getString(InvoiceAdapter.COL_SERVICE);
             _duedate = cursor.getString(InvoiceAdapter.COL_DUEDATE);
             _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
             _amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);

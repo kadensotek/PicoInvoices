@@ -323,8 +323,7 @@ public class AddNewInvoice extends Activity
         String[] amountdue = rates.split("||");
         for (int i=0; i < amountdue.length-1; i++)
         {
-            System.out.println(amountdue[i]);
-//            total+=Integer.parseInt(amountdue[i]);
+            total+=Integer.parseInt(amountdue[i]);
         }
         _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, Integer.toString(total) , getStatus());
         
