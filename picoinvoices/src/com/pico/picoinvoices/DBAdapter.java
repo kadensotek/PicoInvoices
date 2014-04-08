@@ -163,4 +163,9 @@ public class DBAdapter
     {
         this.DBHelper.close();
     }
+    
+    public SQLiteDatabase getDB()
+    {
+        return this.db;
+    }
 }
