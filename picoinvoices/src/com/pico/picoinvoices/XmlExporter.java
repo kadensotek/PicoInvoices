@@ -1,0 +1,177 @@
+package com.pico.picoinvoices;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+
+public class XmlExporter
+{
+    private static final String DATASUBDIRECTORY = "/Android/data/com.pico.picoinvoices/";
+
+    private final SQLiteDatabase db;
+    private XmlBuilder xmlBuilder;
+
+    public XmlExporter(final SQLiteDatabase db)
+    {
+        this.db = db;
+    }
+
+    public void export(final String dbName, final String exportFileNamePrefix) throws IOException
+    {
+        System.out.println("exporting database - " + dbName + " exportFileNamePrefix=" + exportFileNamePrefix);
+
+        xmlBuilder = new XmlBuilder();
+        xmlBuilder.start(dbName);
+
+        // get the tables
+        String sql = "select * from sqlite_master";
+        Cursor c = db.rawQuery(sql, new String[0]);
+        
+        if (c.moveToFirst())
+        {
+            do
+            {
+                String tableName = c.getString(c.getColumnIndex("name"));
+
+                // skip metadata, sequence, and uidx (unique indexes)
+                if (!tableName.equals("android_metadata")
+                        && !tableName.equals("sqlite_sequence")
+                        && !tableName.startsWith("uidx"))
+                {
+                    exportTable(tableName);
+                }
+            } while (c.moveToNext());
+        }
+        
+        String xmlString = xmlBuilder.end();
+        writeToFile(xmlString, exportFileNamePrefix + ".xml");
+        
+        System.out.println("exporting database complete");
+    }
+
+    private void exportTable(final String tableName) throws IOException
+    {
+        xmlBuilder.openTable(tableName);
+        String sql = "select * from " + tableName;
+        Cursor c = db.rawQuery(sql, new String[0]);
+        
+        if (c.moveToFirst())
+        {
+            int cols = c.getColumnCount();
+            
+            do
+            {
+                xmlBuilder.openRow();
+                
+                for (int i = 0; i < cols; i++)
+                {
+                    xmlBuilder.addColumn(c.getColumnName(i), c.getString(i));
+                }
+                
+                xmlBuilder.closeRow();
+            } while (c.moveToNext());
+        }
+        
+        c.close();
+        xmlBuilder.closeTable();
+    }
+
+    private void writeToFile(final String xmlString, final String exportFileName) throws IOException
+    {
+        File dir = new File(Environment.getExternalStorageDirectory(), XmlExporter.DATASUBDIRECTORY);
+        
+        if (!dir.exists())
+        {
+            dir.mkdirs();
+        }
+        
+        File file = new File(dir, exportFileName);
+        file.createNewFile();
+
+        ByteBuffer buff = ByteBuffer.wrap(xmlString.getBytes());
+        FileChannel channel = new FileOutputStream(file).getChannel();
+        
+        try
+        {
+            channel.write(buff);
+        }
+        finally
+        {
+            if (channel != null)
+            {
+                channel.close();
+            }
+        }
+
+        /*
+         * FileWriter fw = new FileWriter(file); if (fw != null) { try {
+         * fw.write(xmlString); fw.flush(); } finally { fw.close(); } }
+         */
+    }
+
+    static class XmlBuilder
+    {
+        private static final String OPEN_XML_STANZA = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+        private static final String CLOSE_WITH_TICK = "'>";
+        private static final String DB_OPEN = "<database name='";
+        private static final String DB_CLOSE = "</database>";
+        private static final String TABLE_OPEN = "<table name='";
+        private static final String TABLE_CLOSE = "</table>";
+        private static final String ROW_OPEN = "<row>";
+        private static final String ROW_CLOSE = "</row>";
+        private static final String COL_OPEN = "<col name='";
+        private static final String COL_CLOSE = "</col>";
+
+        private final StringBuilder sb;
+
+        public XmlBuilder() throws IOException
+        {
+            sb = new StringBuilder();
+        }
+
+        void start(final String dbName)
+        {
+            sb.append(XmlBuilder.OPEN_XML_STANZA);
+            sb.append(XmlBuilder.DB_OPEN + dbName + XmlBuilder.CLOSE_WITH_TICK);
+        }
+
+        String end() throws IOException
+        {
+            sb.append(XmlBuilder.DB_CLOSE);
+            return sb.toString();
+        }
+
+        void openTable(final String tableName)
+        {
+            sb.append(XmlBuilder.TABLE_OPEN + tableName
+                    + XmlBuilder.CLOSE_WITH_TICK);
+        }
+
+        void closeTable()
+        {
+            sb.append(XmlBuilder.TABLE_CLOSE);
+        }
+
+        void openRow()
+        {
+            sb.append(XmlBuilder.ROW_OPEN);
+        }
+
+        void closeRow()
+        {
+            sb.append(XmlBuilder.ROW_CLOSE);
+        }
+
+        void addColumn(final String name, final String val) throws IOException
+        {
+            sb.append(XmlBuilder.COL_OPEN + name + XmlBuilder.CLOSE_WITH_TICK
+                    + val + XmlBuilder.COL_CLOSE);
+        }
+    }
+}
