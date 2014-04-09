@@ -198,25 +198,30 @@ public class ShowDetailedInvoice extends Activity
         getMenuInflater().inflate(R.menu.show_detailed_invoice, menu);
         return true;
     }
+
     public void onClick_Email(View v)
     {
-        
+
         StringBuffer buffer = new StringBuffer();
         buffer.append("mailto:");
         buffer.append(_email);
         buffer.append("?subject=");
         buffer.append("App Name");
-        buffer.append("&body=" +  _fname + " " + _lname + "\n" + _service + "\n" + _servicedesc +"\n"+_amountdue);
+        buffer.append("&body=" + _fname + " " + _lname + "\n" + _service + "\n"
+                + _servicedesc + "\n" + _amountdue);
         String uriString = buffer.toString().replace(" ", "%20");
 
-        startActivity(Intent.createChooser(new Intent(Intent.ACTION_SENDTO, Uri.parse(uriString)), "Contact Developer"));
-//        Intent intent = new Intent(Intent.ACTION_SEND);
-//        intent.setType("text/html");
-//        intent.putExtra(Intent.EXTRA_EMAIL, _email);
-//        intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
-//        intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" + _service + "\n" + _servicedesc +"\n"+_amountdue);
-//  
-//
-//        startActivity(Intent.createChooser(intent, "Send Email"));
+        startActivity(Intent.createChooser(
+                new Intent(Intent.ACTION_SENDTO, Uri.parse(uriString)),
+                "Contact Developer"));
+        // Intent intent = new Intent(Intent.ACTION_SEND);
+        // intent.setType("text/html");
+        // intent.putExtra(Intent.EXTRA_EMAIL, _email);
+        // intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
+        // intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" +
+        // _service + "\n" + _servicedesc +"\n"+_amountdue);
+        //
+        //
+        // startActivity(Intent.createChooser(intent, "Send Email"));
     }
 }

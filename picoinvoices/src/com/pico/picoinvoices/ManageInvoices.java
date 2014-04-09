@@ -19,10 +19,10 @@ import android.widget.TextView;
 public class ManageInvoices extends Activity
 {
 
-    private Spinner spinner;
-    private InvoiceAdapter myDb;
+    private Spinner _spinner;
+    private InvoiceAdapter _myDb;
     private SPAdapter _sp = null;
-    private String sort = "customer";
+    private String _sort = "customer";
 
     // //////////////////////////////////////////////////////
     // ///*
@@ -93,13 +93,13 @@ public class ManageInvoices extends Activity
     // //////////////////////////////////////////////////////
     private void closeDB()
     {
-        myDb.close();
+        _myDb.close();
     }
 
     private void openDB()
     {
-        myDb = new InvoiceAdapter(this);
-        myDb.open();
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
     }
 
     // //////////////////////////////////////////////////////
@@ -120,18 +120,20 @@ public class ManageInvoices extends Activity
         openDB();
 
         // Create the list of items
-        Cursor cursor = myDb.querySort2(new String[] { sort },
+        Cursor cursor = _myDb.querySort2(new String[] { _sort },
                 InvoiceAdapter.DATABASE_TABLE);
 
         // String array to use as a map for which db rows should be mapped to
         // which element in the template layout
+        
         // client_name_list corresponds to the database columns that should be
         // mapped to the corresponding xml element as specified in ints. NOTE:
-        // this mappings are
-        // done on directly (ie: InvoiceAdapter.KEY_ROWID maps to
+        // these mappings are done on directly (ie: InvoiceAdapter.KEY_ROWID maps to
         // R.id.invoice_listview_layout_template_txtInvoiceNumber)
-        String[] client_name_list = new String[] { InvoiceAdapter.KEY_ROWID,
-                InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_STATUS,
+        String[] client_name_list = new String[] { 
+                InvoiceAdapter.KEY_ROWID,
+                InvoiceAdapter.KEY_ISSUEDATE,
+                InvoiceAdapter.KEY_STATUS,
                 InvoiceAdapter.KEY_CUSTOMER };
         int[] ints = new int[] {
                 R.id.invoice_listview_layout_template_txtInvoiceNumber,
@@ -139,11 +141,8 @@ public class ManageInvoices extends Activity
                 R.id.invoice_listview_layout_template_txtStatus,
                 R.id.invoice_listview_layout_template_CustomerID };
 
-        // Create the adapter that will bind the data from the DB to the
-        // listview
-        ListViewAdapter adapter = new ListViewAdapter(this,
-                R.layout.invoice_listview_layout_template, cursor,
-                client_name_list, ints, 0);
+        // Create the adapter that will bind the data from the DB to the listview
+        ListViewAdapter adapter = new ListViewAdapter(this,R.layout.invoice_listview_layout_template, cursor,client_name_list, ints, 0);
 
         ListView list = (ListView) findViewById(R.id.manageInvoices_listView);
         list.setAdapter(adapter);
@@ -190,7 +189,7 @@ public class ManageInvoices extends Activity
     public void addItemsOnSpinner()
     {
 
-        spinner = (Spinner) findViewById(R.id.spinner2);
+        _spinner = (Spinner) findViewById(R.id.spinner2);
         List<String> list = new ArrayList<String>();
         list.add(InvoiceAdapter.KEY_CUSTOMER);
         list.add(InvoiceAdapter.KEY_ISSUEDATE);
@@ -199,8 +198,8 @@ public class ManageInvoices extends Activity
                 android.R.layout.simple_spinner_item, list);
         dataAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        addListenerOnSpinnerItemSelection(spinner);
+        _spinner.setAdapter(dataAdapter);
+        addListenerOnSpinnerItemSelection(_spinner);
     }
 
     public void addListenerOnSpinnerItemSelection(Spinner spinner)
@@ -212,7 +211,7 @@ public class ManageInvoices extends Activity
                     int pos, long id)
             {
                 System.out.println("You selected: " + pos);
-                sort = parent.getItemAtPosition(pos).toString();
+                _sort = parent.getItemAtPosition(pos).toString();
                 refresh();
             }
 

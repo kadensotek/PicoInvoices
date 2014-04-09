@@ -19,21 +19,21 @@ import android.widget.TextView;
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter
 {
 
-    private Activity context;
-    private Map<String, List<String>> invoice;
-    private List<String> content;
+    private Activity _context;
+    private Map<String, List<String>> _invoice;
+    private List<String> _content;
 
     public ExpandableListViewAdapter(Activity context, List<String> content,
             Map<String, List<String>> invoice)
     {
-        this.context = context;
-        this.invoice = invoice;
-        this.content = content;
+        this._context = context;
+        this._invoice = invoice;
+        this._content = content;
     }
 
     public Object getChild(int groupPosition, int childPosition)
     {
-        return invoice.get(content.get(groupPosition)).get(
+        return _invoice.get(_content.get(groupPosition)).get(
                 childPosition);
     }
 
@@ -46,7 +46,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
             boolean isLastChild, View convertView, ViewGroup parent)
     {
         final String laptop = (String) getChild(groupPosition, childPosition);
-        LayoutInflater inflater = context.getLayoutInflater();
+        LayoutInflater inflater = _context.getLayoutInflater();
 
         if (convertView == null)
         {
@@ -61,7 +61,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
 
             public void onClick(View v)
             {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(_context);
                 builder.setMessage("Do you want to remove?");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes",
@@ -69,7 +69,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
                         {
                             public void onClick(DialogInterface dialog, int id)
                             {
-                                List<String> child = invoice.get(content.get(groupPosition));
+                                List<String> child = _invoice.get(_content.get(groupPosition));
                                 child.remove(childPosition);
                                 notifyDataSetChanged();
                             }
@@ -93,17 +93,17 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
 
     public int getChildrenCount(int groupPosition)
     {
-        return invoice.get(content.get(groupPosition)).size();
+        return _invoice.get(_content.get(groupPosition)).size();
     }
 
     public Object getGroup(int groupPosition)
     {
-        return content.get(groupPosition);
+        return _content.get(groupPosition);
     }
 
     public int getGroupCount()
     {
-        return content.size();
+        return _content.size();
     }
 
     public long getGroupId(int groupPosition)
@@ -117,7 +117,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
         String laptopName = (String) getGroup(groupPosition);
         if (convertView == null)
         {
-            LayoutInflater infalInflater = (LayoutInflater) context
+            LayoutInflater infalInflater = (LayoutInflater) _context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.parent_view, null);
         }
