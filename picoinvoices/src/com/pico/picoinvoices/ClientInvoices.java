@@ -226,14 +226,13 @@ public class ClientInvoices extends Activity
 	    openDB();
 	    String issuedate = getDateTime();
 	    String customer = Long.toString(_sp.getClientID());
-	    String dateserviceperformed = getDateTime();
+	    String duedate = getDateTime();
 	    String priceservice = getPrice();
 	    String service = getName();
-	    String servicedesc = getType();
 	    String amountdue = getPrice();
 	    String status = getStatus();
 	    
-	    _myDb.insertRow(issuedate, customer, dateserviceperformed, priceservice, service, servicedesc, amountdue, status);
+	    _myDb.insertRow(issuedate, customer, duedate, priceservice, service, amountdue, status);
 	    closeDB();
 	    refresh();
 //	    Intent intent = new Intent(this, AddNewInvoice.class);

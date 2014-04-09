@@ -141,15 +141,23 @@ public class AddNewInvoice extends Activity
         if (cs.equals("services"))
         {
             list = getServices();
-            MyAdapter dataAdapter = new MyAdapter(this,
-                    R.layout.spinner_text_layout, list, _serviceID);
-            spinner.setAdapter(dataAdapter);
-        } else
+            if (_serviceID.size() >0)
+            {
+                MyAdapter dataAdapter = new MyAdapter(this,
+                        R.layout.spinner_text_layout, list, _serviceID);
+                spinner.setAdapter(dataAdapter);
+            }
+        } 
+        else if(cs.equals("customer"))
         {
             list = getCustomers();
-            MyAdapter dataAdapter = new MyAdapter(this,
-                    R.layout.spinner_text_layout, list, _customerID);
-            spinner.setAdapter(dataAdapter);
+            if ( _customerID.size() >0)
+            {
+                MyAdapter dataAdapter = new MyAdapter(this,
+                        R.layout.spinner_text_layout, list, _customerID);
+                spinner.setAdapter(dataAdapter);
+            }
+            
         }
 
         // Set an adapter on the spinner to map the values to the layout
@@ -202,22 +210,20 @@ public class AddNewInvoice extends Activity
                 RegisterServicesAdapter.DATABASE_TABLE,
                 RegisterServicesAdapter.ALL_KEYS);
 
-        if (cursor != null)
+        if (cursor != null && cursor.getCount() >0)
         {
             cursor.moveToFirst();
             do
             {
                 // Only add the service if it is not already in the list of
                 // services
-                if (list.contains(cursor
-                        .getString(RegisterServicesAdapter.COL_NAME)))
+                if (list.contains(cursor.getString(RegisterServicesAdapter.COL_NAME)))
                 {
                 } else
                 {
                     list.add(cursor.getString(RegisterServicesAdapter.COL_NAME));
                     // Add the service
-                    _serviceID.add(cursor
-                            .getString(RegisterServicesAdapter.COL_ROWID));
+                    _serviceID.add(cursor.getString(RegisterServicesAdapter.COL_ROWID));
                 }
             } while (cursor.moveToNext());
         } else
@@ -241,21 +247,20 @@ public class AddNewInvoice extends Activity
         openDB();
         ArrayList<String> list = new ArrayList<String>();
         list.add("No Client Selected");
-        Cursor cursor = _myDb.getAllRows(ClientAdapter.DATABASE_TABLE,
-                ClientAdapter.ALL_KEYS);
-        cursor.moveToFirst();
-        if (cursor != null)
+        _customerID.add("0");
+        Cursor cursor = _myDb.getAllRows(ClientAdapter.DATABASE_TABLE,ClientAdapter.ALL_KEYS);
+        
+        if (cursor != null && cursor.getCount() >0)
         {
+            cursor.moveToFirst();
             do
             {
                 // Only allow one of each instance into the dropdown
-                if (list.contains(cursor.getString(ClientAdapter.COL_FNAME)
-                        + " " + cursor.getString(ClientAdapter.COL_LNAME)))
+                if (list.contains(cursor.getString(ClientAdapter.COL_FNAME)+ " " + cursor.getString(ClientAdapter.COL_LNAME)))
+                {} 
+                else
                 {
-                } else
-                {
-                    list.add(cursor.getString(ClientAdapter.COL_FNAME) + " "
-                            + cursor.getString(ClientAdapter.COL_LNAME));
+                    list.add(cursor.getString(ClientAdapter.COL_FNAME) + " "+ cursor.getString(ClientAdapter.COL_LNAME));
                     _customerID.add(cursor.getString(ClientAdapter.COL_ROWID));
                 }
 
@@ -288,21 +293,21 @@ public class AddNewInvoice extends Activity
         // Makes sure that the original edittext and spinner are added as well
         Spinner s = (Spinner) findViewById(R.id.addNewInvoice_serviceSpinner);
         TextView tv = (TextView) s.findViewById(R.id.spinnerText2);
-        services = services + tv.getText().toString() + "-";
+        services = services + tv.getText().toString() + "||";
 
         EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
-        rates = rates + et.getText().toString() + "-";
+        rates = rates + et.getText().toString() + "||";
 
         for (int i = 0; i < _rIdStore_spinners.size(); i++)
         {
             Spinner s2 = _rIdStore_spinners.get(i);
             TextView tv2 = (TextView) s2.findViewById(R.id.spinnerText2);
-            services = services + tv2.getText().toString() + "-";
+            services = services + tv2.getText().toString() + "||";
         }
         for (int i = 0; i < _rIdStore_editText.size(); i++)
         {
             EditText et2 = _rIdStore_editText.get(i);
-            rates = rates + et2.getText().toString() + "-";
+            rates = rates + et2.getText().toString() + "||";
         }
         s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
         tv = (TextView) s.findViewById(R.id.spinnerText2);
@@ -315,12 +320,13 @@ public class AddNewInvoice extends Activity
     {
         openDB();
         int total = 0;
-        String[] amountdue = rates.split("-");
-        for (int i=0; i < amountdue.length; i++)
+        String[] amountdue = rates.split("||");
+        for (int i=0; i < amountdue.length-1; i++)
         {
-            total+=Integer.parseInt(amountdue[i]);
+            System.out.println(amountdue[i]);
+//            total+=Integer.parseInt(amountdue[i]);
         }
-        _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, "sample", Integer.toString(total) , getStatus());
+        _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, Integer.toString(total) , getStatus());
         
         closeDB();
     }
@@ -332,8 +338,7 @@ public class AddNewInvoice extends Activity
         return types[rand];
     }
     private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -398,9 +403,7 @@ public class AddNewInvoice extends Activity
 
         // Set the layout rules for the new service_rows layout and add it to
         // the activity layout
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, _nextBelowID);
         layout.addView(l, params);
 
@@ -442,9 +445,7 @@ public class AddNewInvoice extends Activity
         // Programmically set the layout of the button container to redraw
         // itself to the bottom of the newest
         // 'new service' laytout. This is mapped to by the nextBelowID variable.
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.BELOW, _nextBelowID);
         cancel.setLayoutParams(p);
 
@@ -478,8 +479,7 @@ public class AddNewInvoice extends Activity
     {
         ArrayList<String> l = null, l2 =null;
 
-        public MyAdapter(Context context, int textViewResourceId,
-                List<String> list, List<String> list2)
+        public MyAdapter(Context context, int textViewResourceId,List<String> list, List<String> list2)
         {
             super(context, textViewResourceId, list);
             l = (ArrayList<String>) list;
@@ -487,8 +487,7 @@ public class AddNewInvoice extends Activity
         }
 
         @Override
-        public View getDropDownView(int position, View convertView,
-                ViewGroup parent)
+        public View getDropDownView(int position, View convertView,ViewGroup parent)
         {
             return getCustomView(position, convertView, parent);
         }
@@ -502,23 +501,30 @@ public class AddNewInvoice extends Activity
         public View getCustomView(int position, View convertView,
                 ViewGroup parent)
         {
-
-            LayoutInflater inflater = getLayoutInflater();
-            View row = inflater.inflate(R.layout.spinner_text_layout, parent,
-                    false);
-            TextView label = (TextView) row.findViewById(R.id.spinnerText1);
-            // if (position > 0)
-            // label.setText(l.get(position-1));
-            // else
-            label.setText(l.get(position));
-
-            TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
-            if (position > 0)
-                sub.setText(l2.get(position - 1));
-            else
-                sub.setText(l2.get(position));
-
-            return row;
+            //Only return a row if there are elements (clients and services have been registered) in the arraylists
+           if (l.size() > 0 && l2.size() > 0)
+           {
+                LayoutInflater inflater = getLayoutInflater();
+                View row = inflater.inflate(R.layout.spinner_text_layout, parent,false);
+                TextView label = (TextView) row.findViewById(R.id.spinnerText1);
+                // if (position > 0)
+                // label.setText(l.get(position-1));
+                // else
+                label.setText(l.get(position));
+    
+                TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
+                
+                if (position > 0)
+                    sub.setText(l2.get(position - 1));
+                else
+                    sub.setText(l2.get(position));
+    
+                return row;
+           }
+           else
+           {
+               return null;
+           }
         }
 
     }

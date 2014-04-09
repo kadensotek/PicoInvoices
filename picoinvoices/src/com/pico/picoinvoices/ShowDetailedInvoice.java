@@ -8,7 +8,6 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -26,8 +25,7 @@ public class ShowDetailedInvoice extends Activity
     private InvoiceAdapter _myDb = null;
     private SPAdapter _sp = null;
     private String _fname, _lname, _address, _email, _phone;
-    private String _issuedate, _service, _dateserviceperformed, _priceservice,
-            _servicedesc, _amountdue, _status;
+    private String _issuedate, _service, _duedate, _priceservice, _amountdue, _status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,10 +34,8 @@ public class ShowDetailedInvoice extends Activity
         setContentView(R.layout.activity_show_detailed_invoice);
 
         _sp = new SPAdapter(getApplicationContext());
-        System.out.println("Client Id (ShowDetailedInvoices):"
-                + _sp.getClientID());
-        System.out.println("Invoice Id (ShowDetailedInvoices):"
-                + _sp.getInvoiceID());
+        System.out.println("Client Id (ShowDetailedInvoices):"+ _sp.getClientID());
+        System.out.println("Invoice Id (ShowDetailedInvoices):"+ _sp.getInvoiceID());
         openDB();
 
         populateValues();
@@ -57,14 +53,10 @@ public class ShowDetailedInvoice extends Activity
 
         _expListView.setOnChildClickListener(new OnChildClickListener()
         {
-
-            public boolean onChildClick(ExpandableListView parent, View v,
-                    int groupPosition, int childPosition, long id)
+            public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id)
             {
-                final String selected = (String) expListAdapter.getChild(
-                        groupPosition, childPosition);
-                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
-                        .show();
+                final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
+                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
 
                 return true;
             }
@@ -95,9 +87,7 @@ public class ShowDetailedInvoice extends Activity
     private void populateValues()
     {
         // Populate the values for the contact information.
-        Cursor cursor = _myDb.query(
-                new String[] { Integer.toString(_sp.getClientID()) },
-                ClientAdapter.DATABASE_TABLE);
+        Cursor cursor = _myDb.query(new String[] { Integer.toString(_sp.getClientID()) },ClientAdapter.DATABASE_TABLE);
 
         if (cursor.moveToFirst())
         {
@@ -106,33 +96,48 @@ public class ShowDetailedInvoice extends Activity
             _address = cursor.getString(ClientAdapter.COL_ADDRESS);
             _email = cursor.getString(ClientAdapter.COL_EMAIL);
             _phone = cursor.getString(ClientAdapter.COL_PHONE);
-        } else
-            Toast.makeText(
-                    ShowDetailedInvoice.this,
-                    "failed to load cursor for customerId " + _sp.getClientID(),
-                    Toast.LENGTH_SHORT).show();
-
+        } 
+        else
+        {
+            Toast.makeText(ShowDetailedInvoice.this,"failed to load cursor for customerId " + _sp.getClientID(),Toast.LENGTH_SHORT).show();
+        }
+        
         // Populate invoice specific information
-        cursor = _myDb.query(
-                new String[] { Integer.toString(_sp.getInvoiceID()) },
-                InvoiceAdapter.DATABASE_TABLE);
+        cursor = _myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
             _issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-            _service = cursor.getString(InvoiceAdapter.COL_SERVICE);
-            _dateserviceperformed = cursor
-                    .getString(InvoiceAdapter.COL_DATESERVICEPERFORMED);
+            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+            _duedate = cursor.getString(InvoiceAdapter.COL_DUEDATE);
             _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
-            _servicedesc = cursor.getString(InvoiceAdapter.COL_SERVICEDESC);
             _amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
             _status = cursor.getString(InvoiceAdapter.COL_STATUS);
-        } else
-            Toast.makeText(
-                    ShowDetailedInvoice.this,
-                    "failed to load cursor for invoiceID " + _sp.getInvoiceID(),
-                    Toast.LENGTH_SHORT).show();
+        } 
+        else
+        {
+            Toast.makeText(ShowDetailedInvoice.this,"failed to load cursor for invoiceID " + _sp.getInvoiceID(),Toast.LENGTH_SHORT).show();
+        }
+        
         cursor.close();
 
+    }
+    private String returnServices(String s)
+    {
+        Cursor cursor = null;
+        String[] services = s.split("||");
+        s = "";
+        for (int i = 0; i < services.length-1; i++)
+        {
+            System.out.println("Parsed service: " + services[i]);
+            cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
+            if (cursor.moveToFirst())
+            {
+                s+="\t" + cursor.getString(RegisterServicesAdapter.COL_NAME) + "\n";
+            }
+            
+        }
+        cursor.close();
+        return s;
     }
 
     private void createGroupList()
@@ -146,8 +151,7 @@ public class ShowDetailedInvoice extends Activity
     {
         // preparing laptops collection(child)
         String[] contactInfo = { _fname, _lname, _address, _email, _phone };
-        String[] invoiceDetail = { _issuedate, _service, _dateserviceperformed,
-                _priceservice, _servicedesc, _amountdue, _status };
+        String[] invoiceDetail = { _issuedate, _service, _duedate,_priceservice, _amountdue, _status };
 
         _invoice = new LinkedHashMap<String, List<String>>();
 
@@ -156,9 +160,11 @@ public class ShowDetailedInvoice extends Activity
             if (row.equals("Contact Info - " + _fname + " " + _lname))
             {
                 loadChild(contactInfo);
-            } else if (row.equals("Invoice - Amount Due: $" + _amountdue))
+            } 
+            else if (row.equals("Invoice - Amount Due: $" + _amountdue))
+            {
                 loadChild(invoiceDetail);
-
+            }
             _invoice.put(row, _childList);
         }
     }
@@ -167,7 +173,9 @@ public class ShowDetailedInvoice extends Activity
     {
         _childList = new ArrayList<String>();
         for (String line : invoiceInfo)
+        {
             _childList.add(line);
+        }
     }
 
     // @SuppressWarnings("unused")
@@ -201,6 +209,7 @@ public class ShowDetailedInvoice extends Activity
 
     public void onClick_Email(View v)
     {
+<<<<<<< HEAD
 
         StringBuffer buffer = new StringBuffer();
         buffer.append("mailto:");
@@ -223,5 +232,16 @@ public class ShowDetailedInvoice extends Activity
         //
         //
         // startActivity(Intent.createChooser(intent, "Send Email"));
+=======
+        
+        //This version only selects mail applications and will format the body with html
+        Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        intent.setType("text/html");
+        intent.putExtra(Intent.EXTRA_EMAIL, _email);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
+        intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" + _service  +"\n"+_amountdue);
+  
+        startActivity(Intent.createChooser(intent, "Send Email"));
+>>>>>>> a149e977cf03f9ecdc74a28320701264c54137c5
     }
 }

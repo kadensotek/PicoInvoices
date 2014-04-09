@@ -10,7 +10,7 @@ public class DBAdapter
 
     public static final String DATABASE_NAME = "picoinvoices"; //$NON-NLS-1$
 
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 13;
 
     static final String CREATE_TABLE_INVOICE = "create table "
 
@@ -33,10 +33,9 @@ public class DBAdapter
             // have NO comma!!
             + InvoiceAdapter.KEY_ISSUEDATE + " string not null, "
             + InvoiceAdapter.KEY_CUSTOMER + " integer not null, "
-            + InvoiceAdapter.KEY_DATESERVICEPERFORMED + " string not null, "
+            + InvoiceAdapter.KEY_DUEDATE + " string not null, "
             + InvoiceAdapter.KEY_PRICESERVICE + " string not null, "
             + InvoiceAdapter.KEY_SERVICE + " string not null, "
-            + InvoiceAdapter.KEY_SERVICEDESC + " string not null,  "
             + InvoiceAdapter.KEY_AMOUNTDUE + " string not null, "
             + InvoiceAdapter.KEY_STATUS + " string not null "
 
@@ -162,5 +161,10 @@ public class DBAdapter
     public void close()
     {
         this.DBHelper.close();
+    }
+    
+    public SQLiteDatabase getDB()
+    {
+        return this.db;
     }
 }
