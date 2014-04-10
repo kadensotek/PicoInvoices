@@ -4,9 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -326,6 +327,7 @@ public class AddNewInvoice extends Activity
             System.out.println(amountdue[i]);
 //            total+=Integer.parseInt(amountdue[i]);
         }
+       
         _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, Integer.toString(total) , getStatus());
         
         closeDB();
@@ -337,8 +339,11 @@ public class AddNewInvoice extends Activity
         
         return types[rand];
     }
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    @SuppressLint("SimpleDateFormat")
+	private String getDateTime() {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -428,6 +433,7 @@ public class AddNewInvoice extends Activity
         Spinner s = (Spinner) findViewById(R.id.serviceRow_spinner);
         int id = generateViewId();
         s.setId(id);
+        
         _rIdStore_spinners.add(s);
         addItemsOnSpinner(s, "services");
         addListenerOnSpinnerItemSelection(id);
@@ -515,7 +521,7 @@ public class AddNewInvoice extends Activity
                 TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
                 
                 if (position > 0)
-                    sub.setText(l2.get(position - 1));
+                    sub.setText(l2.get(position));
                 else
                     sub.setText(l2.get(position));
     

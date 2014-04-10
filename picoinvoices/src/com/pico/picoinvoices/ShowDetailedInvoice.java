@@ -33,6 +33,45 @@ public class ShowDetailedInvoice extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_detailed_invoice);
 
+        initialize();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        closeDB();
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        initialize();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.show_detailed_invoice, menu);
+        return true;
+    }
+    /*
+     * Database maintenance functions
+     */
+    private void closeDB()
+    {
+        _myDb.close();
+    }
+
+    private void openDB()
+    {
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
+    }
+    
+    private void initialize()
+    {
         _sp = new SPAdapter(getApplicationContext());
         System.out.println("Client Id (ShowDetailedInvoices):"+ _sp.getClientID());
         System.out.println("Invoice Id (ShowDetailedInvoices):"+ _sp.getInvoiceID());
@@ -62,28 +101,6 @@ public class ShowDetailedInvoice extends Activity
             }
         });
     }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        closeDB();
-    }
-
-    /*
-     * Database maintenance functions
-     */
-    private void closeDB()
-    {
-        _myDb.close();
-    }
-
-    private void openDB()
-    {
-        _myDb = new InvoiceAdapter(this);
-        _myDb.open();
-    }
-
     private void populateValues()
     {
         // Populate the values for the contact information.
@@ -91,11 +108,11 @@ public class ShowDetailedInvoice extends Activity
 
         if (cursor.moveToFirst())
         {
-            _fname = cursor.getString(ClientAdapter.COL_FNAME);
-            _lname = cursor.getString(ClientAdapter.COL_LNAME);
-            _address = cursor.getString(ClientAdapter.COL_ADDRESS);
-            _email = cursor.getString(ClientAdapter.COL_EMAIL);
-            _phone = cursor.getString(ClientAdapter.COL_PHONE);
+            _fname = "First Name:\n\t" + cursor.getString(ClientAdapter.COL_FNAME);
+            _lname = "Last Name:\n\t"  + cursor.getString(ClientAdapter.COL_LNAME);
+            _address = "Address:\n\t" + cursor.getString(ClientAdapter.COL_ADDRESS);
+            _email = "Email:\n\t" + cursor.getString(ClientAdapter.COL_EMAIL);
+            _phone = "Phone:\n\t" + cursor.getString(ClientAdapter.COL_PHONE);
         } 
         else
         {
@@ -106,12 +123,12 @@ public class ShowDetailedInvoice extends Activity
         cursor = _myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
-            _issuedate = cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
-            _duedate = cursor.getString(InvoiceAdapter.COL_DUEDATE);
+            _issuedate = "Date issued:\n\t" + cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
+            _duedate = "Payment due date:\n\t" + cursor.getString(InvoiceAdapter.COL_DUEDATE);
             _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
-            _amountdue = cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
-            _status = cursor.getString(InvoiceAdapter.COL_STATUS);
+            _amountdue = "Amount due:\n\t" + cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
+            _status = "Current status:\n\t" + cursor.getString(InvoiceAdapter.COL_STATUS);
+            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
         } 
         else
         {
@@ -125,7 +142,8 @@ public class ShowDetailedInvoice extends Activity
     {
         Cursor cursor = null;
         String[] services = s.split("||");
-        s = "";
+        s = "Services:\n";
+        
         for (int i = 0; i < services.length-1; i++)
         {
             System.out.println("Parsed service: " + services[i]);
@@ -137,21 +155,21 @@ public class ShowDetailedInvoice extends Activity
             
         }
         cursor.close();
-        return s;
+        return s.substring(0, s.length()-1);
     }
 
     private void createGroupList()
     {
         _groupList = new ArrayList<String>();
         _groupList.add("Contact Info - " + _fname + " " + _lname);
-        _groupList.add("Invoice - Amount Due: $" + _amountdue);
+        _groupList.add("Invoice - " + _amountdue);
     }
 
     private void createCollection()
     {
         // preparing laptops collection(child)
         String[] contactInfo = { _fname, _lname, _address, _email, _phone };
-        String[] invoiceDetail = { _issuedate, _service, _duedate,_priceservice, _amountdue, _status };
+        String[] invoiceDetail = { _issuedate, _duedate, _service, _priceservice, _amountdue, _status };
 
         _invoice = new LinkedHashMap<String, List<String>>();
 
@@ -161,7 +179,7 @@ public class ShowDetailedInvoice extends Activity
             {
                 loadChild(contactInfo);
             } 
-            else if (row.equals("Invoice - Amount Due: $" + _amountdue))
+            else if (row.equals("Invoice - " + _amountdue))
             {
                 loadChild(invoiceDetail);
             }
@@ -199,49 +217,17 @@ public class ShowDetailedInvoice extends Activity
     // return (int) (pixels * scale + 0.5f);
     // }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.show_detailed_invoice, menu);
-        return true;
-    }
 
     public void onClick_Email(View v)
     {
-<<<<<<< HEAD
-
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("mailto:");
-        buffer.append(_email);
-        buffer.append("?subject=");
-        buffer.append("App Name");
-        buffer.append("&body=" + _fname + " " + _lname + "\n" + _service + "\n"
-                + _servicedesc + "\n" + _amountdue);
-        String uriString = buffer.toString().replace(" ", "%20");
-
-        startActivity(Intent.createChooser(
-                new Intent(Intent.ACTION_SENDTO, Uri.parse(uriString)),
-                "Contact Developer"));
-        // Intent intent = new Intent(Intent.ACTION_SEND);
-        // intent.setType("text/html");
-        // intent.putExtra(Intent.EXTRA_EMAIL, _email);
-        // intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
-        // intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" +
-        // _service + "\n" + _servicedesc +"\n"+_amountdue);
-        //
-        //
-        // startActivity(Intent.createChooser(intent, "Send Email"));
-=======
         
         //This version only selects mail applications and will format the body with html
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         intent.setType("text/html");
-        intent.putExtra(Intent.EXTRA_EMAIL, _email);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {_email});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
-        intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" + _service  +"\n"+_amountdue);
+        intent.putExtra(Intent.EXTRA_TEXT, _fname +" " + _lname +"\n\t" + _service + "\n" + _amountdue);
   
         startActivity(Intent.createChooser(intent, "Send Email"));
->>>>>>> a149e977cf03f9ecdc74a28320701264c54137c5
     }
 }
