@@ -475,7 +475,7 @@ public class AddNewInvoice extends Activity
     // ///*
     // //////////////////////////////////////////////////////
     //  This needs to be an internal class so that the getLayoutInflater can be called (needs to extend the activity class)
-    private class MyAdapter extends ArrayAdapter<String>
+    public class MyAdapter extends ArrayAdapter<String>
     {
         ArrayList<String> l = null, l2 =null;
 

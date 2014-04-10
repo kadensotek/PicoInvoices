@@ -125,7 +125,7 @@ public class ShowDetailedInvoice extends Activity
     {
         Cursor cursor = null;
         String[] services = s.split("||");
-        s = "<b>Services</b>\n";
+        s = "";
         for (int i = 0; i < services.length-1; i++)
         {
             System.out.println("Parsed service: " + services[i]);
@@ -209,13 +209,39 @@ public class ShowDetailedInvoice extends Activity
 
     public void onClick_Email(View v)
     {
+<<<<<<< HEAD
+
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("mailto:");
+        buffer.append(_email);
+        buffer.append("?subject=");
+        buffer.append("App Name");
+        buffer.append("&body=" + _fname + " " + _lname + "\n" + _service + "\n"
+                + _servicedesc + "\n" + _amountdue);
+        String uriString = buffer.toString().replace(" ", "%20");
+
+        startActivity(Intent.createChooser(
+                new Intent(Intent.ACTION_SENDTO, Uri.parse(uriString)),
+                "Contact Developer"));
+        // Intent intent = new Intent(Intent.ACTION_SEND);
+        // intent.setType("text/html");
+        // intent.putExtra(Intent.EXTRA_EMAIL, _email);
+        // intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
+        // intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" +
+        // _service + "\n" + _servicedesc +"\n"+_amountdue);
+        //
+        //
+        // startActivity(Intent.createChooser(intent, "Send Email"));
+=======
+        
         //This version only selects mail applications and will format the body with html
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         intent.setType("text/html");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{_email});
+        intent.putExtra(Intent.EXTRA_EMAIL, _email);
         intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
         intent.putExtra(Intent.EXTRA_TEXT, _fname + " " + _lname + "\n" + _service  +"\n"+_amountdue);
   
         startActivity(Intent.createChooser(intent, "Send Email"));
+>>>>>>> a149e977cf03f9ecdc74a28320701264c54137c5
     }
 }
