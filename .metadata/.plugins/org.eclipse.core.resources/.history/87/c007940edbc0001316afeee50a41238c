@@ -517,7 +517,7 @@ public class AddNewInvoice extends Activity
                 if (position > 0)
                     sub.setText(l2.get(position));
                 else
-                    sub.setText("0");
+                    sub.setText(l2.get(position));
     
                 return row;
            }

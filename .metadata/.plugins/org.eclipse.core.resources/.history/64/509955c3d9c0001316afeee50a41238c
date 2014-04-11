@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/txt_clientFName"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp"
         android:text="Invoices"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

@@ -515,9 +515,9 @@ public class AddNewInvoice extends Activity
                 TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
                 
                 if (position > 0)
-                    sub.setText(l2.get(position));
+                    sub.setText(l2.get(position - 1));
                 else
-                    sub.setText("0");
+                    sub.setText(l2.get(position));
     
                 return row;
            }
