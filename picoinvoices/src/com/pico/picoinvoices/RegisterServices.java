@@ -97,6 +97,9 @@ public class RegisterServices extends Activity
     ////////////////////////////////////////////////////////
     private void refresh()
     {
+      //Make sure that there is a message if the listview is empty
+        ListView listView = (ListView) findViewById(R.id.services_listView);
+        listView.setEmptyView(findViewById(R.id.emptyRegisteredServices));
         openDB();
         populateListView();
         registerClickCallback();

@@ -41,6 +41,9 @@ public class ClientList extends Activity
 		refresh();
 		System.out.println(_sp.getClientID());
 		 System.out.println("Created..");
+		 //Make sure that there is a message if the listview is empty
+		 ListView listView = (ListView) findViewById(R.id.client_listView);
+		 listView.setEmptyView(findViewById(R.id.emptyClientList));
 	}
 	@Override
 	protected void onDestroy()

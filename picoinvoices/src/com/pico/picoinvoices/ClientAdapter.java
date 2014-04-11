@@ -85,6 +85,7 @@ public class ClientAdapter
 		// TODO: Update data in the row with new fields.
 		// TODO: Also change the function's arguments to be what you need!
 		// Create row's data:
+	    //ContentValues use variable binding behind the scenes and therefore do not allow sql injection
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_FNAME, fname);
 		initialValues.put(KEY_LNAME, lname);

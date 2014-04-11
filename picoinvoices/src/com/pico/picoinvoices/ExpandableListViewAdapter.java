@@ -4,16 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter
@@ -42,8 +38,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
         return childPosition;
     }
 
-    public View getChildView(final int groupPosition, final int childPosition,
-            boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(final int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent)
     {
         final String laptop = (String) getChild(groupPosition, childPosition);
         LayoutInflater inflater = _context.getLayoutInflater();
@@ -54,38 +49,6 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
         }
 
         TextView item = (TextView) convertView.findViewById(R.id.laptop);
-
-        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
-        delete.setOnClickListener(new OnClickListener()
-        {
-
-            public void onClick(View v)
-            {
-                AlertDialog.Builder builder = new AlertDialog.Builder(_context);
-                builder.setMessage("Do you want to remove?");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int id)
-                            {
-                                List<String> child = _invoice.get(_content.get(groupPosition));
-                                child.remove(childPosition);
-                                notifyDataSetChanged();
-                            }
-                        });
-                builder.setNegativeButton("No",
-                        new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int id)
-                            {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
 
         item.setText(laptop);
         return convertView;
