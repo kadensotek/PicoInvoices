@@ -10,7 +10,7 @@ public class DBAdapter
 
     public static final String DATABASE_NAME = "picoinvoices"; //$NON-NLS-1$
 
-    public static final int DATABASE_VERSION = 13;
+    public static final int DATABASE_VERSION = 14;
 
     static final String CREATE_TABLE_INVOICE = "create table "
 

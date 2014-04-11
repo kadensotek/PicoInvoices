@@ -110,6 +110,9 @@ public class ClientInvoices extends Activity
        TextView textView = (TextView) findViewById(R.id.client_invoices_txtClientName);
        String name = getClientName();
        textView.setText(name);
+     //Make sure that there is a message if the listview is empty
+       ListView listView = (ListView) findViewById(R.id.client_invoices_listView);
+       listView.setEmptyView(findViewById(R.id.emptyInvoiceList));
 	}
 	private void refresh()
 	{

@@ -142,12 +142,8 @@ public class ShowDetailedInvoice extends Activity
     {
         Cursor cursor = null;
         String[] services = s.split("||");
-<<<<<<< HEAD
         s = "Services:\n";
         
-=======
-        s = "<b>Services</b>\n";
->>>>>>> 4cac902843c7738c2c2239919f642605b184de9b
         for (int i = 0; i < services.length-1; i++)
         {
             System.out.println("Parsed service: " + services[i]);
@@ -165,7 +161,7 @@ public class ShowDetailedInvoice extends Activity
     private void createGroupList()
     {
         _groupList = new ArrayList<String>();
-        _groupList.add("Contact Info - " + _fname + " " + _lname);
+        _groupList.add("Contact Info - " + _fname.substring(_fname.indexOf("\t") + 1, _fname.length()-1) + " " + _lname.substring(_lname.indexOf("\t") + 1, _lname.length()));
         _groupList.add("Invoice - " + _amountdue);
     }
 
@@ -179,7 +175,7 @@ public class ShowDetailedInvoice extends Activity
 
         for (String row : _groupList)
         {
-            if (row.equals("Contact Info - " + _fname + " " + _lname))
+            if (row.equals("Contact Info - " + _fname.substring(_fname.indexOf("\t") + 1, _fname.length()-1) + " " + _lname.substring(_lname.indexOf("\t") + 1, _lname.length())))
             {
                 loadChild(contactInfo);
             } 
@@ -224,18 +220,10 @@ public class ShowDetailedInvoice extends Activity
 
     public void onClick_Email(View v)
     {
-<<<<<<< HEAD
-        
-        //This version only selects mail applications and will format the body with html
-        Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-        intent.setType("text/html");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {_email});
-=======
         //This version only selects mail applications and will format the body with html
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         intent.setType("text/html");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{_email});
->>>>>>> 4cac902843c7738c2c2239919f642605b184de9b
         intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
         intent.putExtra(Intent.EXTRA_TEXT, _fname +" " + _lname +"\n\t" + _service + "\n" + _amountdue);
   

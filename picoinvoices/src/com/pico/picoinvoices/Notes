@@ -40,3 +40,39 @@ May not be completed before EoS
 ( )Search feature
 
 ( )Edit all activities for final release
+
+
+-----------------------------------------------------------------------------------------
+Checklist of Activities to check
+
+Mike
+------
+(*)Home
+(*)ClientList
+(*)AddNewClient
+	(*)-->Enforce that every EditText is filled out before accepting
+	( )-->Figure out best way to cancel
+	
+( )ClientInvoice
+	( )-->Format the listview rows to be more meaningful
+	( )-->Remove "Add" button
+	
+( )ShowDetailedInvoice 
+	( )-->Started, need to format the expandable rows better and figure out why gmail crashes 
+	
+( )AddNewInvoice
+	( )-->Format the spinners for appearance
+	( )-->Figure out why the amount for each service is not parsing properly
+	
+( )ManageInvoices
+	( )-->Format the spinner and listview rows
+	( )-->Create more meaningful sorts
+	( )-->Figure out why it does not refresh after adding an invoice from this activity
+
+( )RegisterServices
+	( )-->Create a method for registering new services
+( )AddNewService
+
+Bobby
+------
+( )Settings

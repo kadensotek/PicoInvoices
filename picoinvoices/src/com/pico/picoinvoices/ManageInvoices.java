@@ -36,6 +36,9 @@ public class ManageInvoices extends Activity
         setContentView(R.layout.activity_manage_invoices);
         _sp = new SPAdapter(getApplicationContext());
         addItemsOnSpinner();
+      //Make sure that there is a message if the listview is empty
+        ListView listView = (ListView) findViewById(R.id.manageInvoices_listView);
+        listView.setEmptyView(findViewById(R.id.emptyManageInvoices));
         refresh();
     }
 
