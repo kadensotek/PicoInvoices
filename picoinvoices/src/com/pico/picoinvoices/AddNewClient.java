@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,7 +52,7 @@ public class AddNewClient extends Activity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_new_invoice, menu);
+        getMenuInflater().inflate(R.menu.add_new_client, menu);
         return true;
     }
 
@@ -63,10 +62,10 @@ public class AddNewClient extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId())
         {
-            case R.id.action_settings:
-                System.out.println("Settings selected");
+            case R.id.action_cancelNewClient:
+                onClick_cancelAdd();
                 return true;
-            case R.id.action_acceptNewInvoice:
+            case R.id.action_acceptNewClient:
                 onClick_addUser();
                 return true;
             default:
@@ -117,22 +116,22 @@ public class AddNewClient extends Activity
                         // Last Name
                         EditText lname = (EditText) findViewById(R.id.txt_addNew_lname);
                         final String lname_txt = lname.getText()
-                                .toString();
+                                .toString().trim();
 
                         // Address
                         EditText address = (EditText) findViewById(R.id.txt_addNew_address);
                         final String address_txt = address.getText()
-                                .toString();
+                                .toString().trim();
 
                         // Phone
                         EditText phone = (EditText) findViewById(R.id.txt_addNew_phone);
                         final String phone_txt = phone.getText()
-                                .toString();
+                                .toString().trim();
 
                         // EMail
                         EditText email = (EditText) findViewById(R.id.txt_addNew_email);
                         final String email_txt = email.getText()
-                                .toString();
+                                .toString().trim();
                         
                         //Check to make sure that the fields are filled out
                         //Do not need to do sqlinjection checking here because ContentValues are used to insert into DB
@@ -143,11 +142,11 @@ public class AddNewClient extends Activity
                         else
                         {
                             
-                            myDb.insertRow(fname_txt, lname_txt,address_txt, phone_txt, email_txt,"Wegmans Lawn Care");
-                                // Call finish() to prevent the flow of
-                                // activities from accessing this activity from
-                                // the backstack
-                                finish();
+                            myDb.insertRow(fname_txt, lname_txt,address_txt, phone_txt, email_txt,"");
+                            // Call finish() to prevent the flow of
+                            // activities from accessing this activity from
+                            // the backstack
+                            finish();
                         }
                     }
                 })
@@ -162,9 +161,29 @@ public class AddNewClient extends Activity
                 }).setIcon(R.drawable.ic_launcher).show();
 
     }
-    public void onClick_cancelAdd(View v)
+    public void onClick_cancelAdd()
     {
-        finish();
+        new AlertDialog.Builder(this)
+        .setTitle("Add Client")
+        .setMessage("Cancel add?")
+        .setPositiveButton(android.R.string.yes,
+        new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,
+                    int which)
+            {
+               finish();
+            }
+        })
+        .setNegativeButton(android.R.string.no,
+        new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,
+                    int which)
+            {
+                //Do nothing to go back to the current entry
+            }
+        }).setIcon(R.drawable.ic_launcher).show();
     }
 
 }

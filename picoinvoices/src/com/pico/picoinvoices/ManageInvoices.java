@@ -34,28 +34,25 @@ public class ManageInvoices extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_invoices);
-        _sp = new SPAdapter(getApplicationContext());
-        addItemsOnSpinner();
-      //Make sure that there is a message if the listview is empty
-        ListView listView = (ListView) findViewById(R.id.manageInvoices_listView);
-        listView.setEmptyView(findViewById(R.id.emptyManageInvoices));
-        refresh();
+        initialize();
     }
 
-    // Handles onDestroy events
     @Override
-    protected void onDestroy()
+    protected void onRestart() {
+        super.onRestart();
+        initialize();
+    }
+    @Override
+    protected void onResume() 
+    {
+        super.onResume();
+        initialize();
+    }
+    @Override
+    protected void onDestroy() 
     {
         super.onDestroy();
         closeDB();
-    }
-
-    // Handles onResume events
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        openDB();
     }
 
     // //////////////////////////////////////////////////////
@@ -110,6 +107,15 @@ public class ManageInvoices extends Activity
     // ///* Refresh functions
     // ///*
     // //////////////////////////////////////////////////////
+    private void initialize()
+    {
+        _sp = new SPAdapter(getApplicationContext());
+        addItemsOnSpinner();
+        //Make sure that there is a message if the listview is empty
+        ListView listView = (ListView) findViewById(R.id.manageInvoices_listView);
+        listView.setEmptyView(findViewById(R.id.emptyManageInvoices));
+        refresh();
+    }
     private void refresh()
     {
         openDB();
@@ -133,14 +139,13 @@ public class ManageInvoices extends Activity
         // mapped to the corresponding xml element as specified in ints. NOTE:
         // these mappings are done on directly (ie: InvoiceAdapter.KEY_ROWID maps to
         // R.id.invoice_listview_layout_template_txtInvoiceNumber)
-        String[] client_name_list = new String[] { 
-                InvoiceAdapter.KEY_ROWID,
-                InvoiceAdapter.KEY_ISSUEDATE,
-                InvoiceAdapter.KEY_STATUS,
+        String[] client_name_list = new String[] { InvoiceAdapter.KEY_ROWID,
+                InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_DUEDATE, InvoiceAdapter.KEY_STATUS,
                 InvoiceAdapter.KEY_CUSTOMER };
         int[] ints = new int[] {
                 R.id.invoice_listview_layout_template_txtInvoiceNumber,
                 R.id.invoice_listview_layout_template_txtDate,
+                R.id.invoice_listview_layout_template_txtDateDue,
                 R.id.invoice_listview_layout_template_txtStatus,
                 R.id.invoice_listview_layout_template_CustomerID };
 

@@ -1,5 +1,11 @@
 package com.pico.picoinvoices;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -31,21 +37,42 @@ public class ListViewAdapter extends SimpleCursorAdapter
             System.out.println(customerID);
             if (customerID.equals("Paid"))
             {
+                textView.setTextColor(Color.rgb(0,200,0));
+            }
+            else if (customerID.equals("Quote"))
+            {
+                textView.setTextColor(Color.rgb(100,255,0));
+            }
+            else if (customerID.equals("Overdue"))
+            {
                 textView.setTextColor(Color.rgb(200,0,0));
             }
-            else 
+            else
             {
-                textView.setTextColor(Color.rgb(0,0,0));
+                textView.setTextColor(Color.rgb(0, 0, 0));
             }
         }
-//        // check for odd or even to set alternate colors to the row background
-//        if (position % 2 == 0)
-//        {
-//            view.setBackgroundColor(Color.rgb(238, 233, 233));
-//        } else
-//        {
-//            view.setBackgroundColor(Color.rgb(255, 255, 255));
-//        }
+        
+        if(view.findViewById(R.id.invoice_listview_layout_template_txtDateDue) != null && view.findViewById(R.id.invoice_listview_layout_template_txtDate) != null)
+        {
+            TextView date = (TextView) view.findViewById(R.id.invoice_listview_layout_template_txtDate);
+            TextView dueDate = (TextView) view.findViewById(R.id.invoice_listview_layout_template_txtDateDue);
+            
+            DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            DateFormat targetFormat = new SimpleDateFormat("MMM dd, yyyy");
+            try
+            {
+                Date dated = originalFormat.parse(dueDate.getText().toString());
+                String formattedDate = targetFormat.format(dated);
+                System.out.println(formattedDate);
+                dueDate.setText(formattedDate);
+            } catch (ParseException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+              // 20120821
+        }
         return view;
     }
 
