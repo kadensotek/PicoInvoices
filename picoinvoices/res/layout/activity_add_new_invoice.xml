@@ -4,10 +4,12 @@
     android:orientation="horizontal" >
 
     <ScrollView
+        android:id="@+id/addNewInvoiceScroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:padding="10dp" >
 
         <RelativeLayout
             android:id="@+id/addNewInvoiceLayout"
@@ -79,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="onClick_addServiceDyn"
                     android:text="+" />
+
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

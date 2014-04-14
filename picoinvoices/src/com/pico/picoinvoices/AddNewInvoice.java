@@ -79,7 +79,8 @@ public class AddNewInvoice extends Activity
         //addListeners to the spinners
 //        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_customerSpinner);
 //        addListenerOnSpinnerItemSelection(R.id.addNewInvoice_serviceSpinner);
-
+        
+        //Sets the default client if applicable otherwise specifies "No client selected"
         setSelection();
     }
 
@@ -298,7 +299,8 @@ public class AddNewInvoice extends Activity
 
         EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
         rates = rates + et.getText().toString() + "||";
-
+        
+        //Loop through the list of EditTexts and Spinners for services
         for (int i = 0; i < _rIdStore_spinners.size(); i++)
         {
             Spinner s2 = _rIdStore_spinners.get(i);
@@ -310,6 +312,7 @@ public class AddNewInvoice extends Activity
             EditText et2 = _rIdStore_editText.get(i);
             rates = rates + et2.getText().toString() + "||";
         }
+        //Get the customer information
         s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
         tv = (TextView) s.findViewById(R.id.spinnerText2);
         
@@ -389,6 +392,7 @@ public class AddNewInvoice extends Activity
                 _rIdStore_spinners.remove(0);
                 _nextBelowID = R.id.addNewInvoice_rateInput;
             }
+            
             moveButtons();
         }
     }
@@ -428,6 +432,7 @@ public class AddNewInvoice extends Activity
         // and R.id.serviceRow_spinner
         EditText et = (EditText) findViewById(R.id.serviceRow_edit);
         et.setId(generateViewId());
+//        et.requestFocus();
         _rIdStore_editText.add(et);
 
         Spinner s = (Spinner) findViewById(R.id.serviceRow_spinner);
@@ -454,7 +459,6 @@ public class AddNewInvoice extends Activity
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.BELOW, _nextBelowID);
         cancel.setLayoutParams(p);
-
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)

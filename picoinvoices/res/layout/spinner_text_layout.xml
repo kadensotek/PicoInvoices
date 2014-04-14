@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp" >
 
 <TextView
     android:id="@+id/spinnerText1"
@@ -17,9 +18,10 @@ android:layout_height="fill_parent" >
     android:id="@+id/spinnerText2"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignBottom="@+id/textView1"
+    android:layout_alignBaseline="@+id/spinnerText1"
+    android:layout_alignBottom="@+id/spinnerText1"
     android:layout_alignParentRight="true"
-    android:layout_marginRight="23dp"
     android:text="Medium Text"
     android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>

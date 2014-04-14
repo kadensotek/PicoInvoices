@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+@SuppressLint("SimpleDateFormat")
 public class ListViewAdapter extends SimpleCursorAdapter
 {
 
@@ -30,6 +32,8 @@ public class ListViewAdapter extends SimpleCursorAdapter
         // get reference to the row
         View view = super.getView(position, convertView, parent);
         
+        //The below code is used for customizing the look and feel of the listview
+        
         if (view.findViewById(R.id.invoice_listview_layout_template_txtStatus) != null)
         {
             TextView textView = (TextView) view.findViewById(R.id.invoice_listview_layout_template_txtStatus);
@@ -41,7 +45,7 @@ public class ListViewAdapter extends SimpleCursorAdapter
             }
             else if (customerID.equals("Quote"))
             {
-                textView.setTextColor(Color.rgb(100,255,0));
+                textView.setTextColor(Color.rgb(255,204,51));
             }
             else if (customerID.equals("Overdue"))
             {
@@ -53,25 +57,28 @@ public class ListViewAdapter extends SimpleCursorAdapter
             }
         }
         
+        //format the date from the UTC style that is stored in the database to a more readable version
         if(view.findViewById(R.id.invoice_listview_layout_template_txtDateDue) != null && view.findViewById(R.id.invoice_listview_layout_template_txtDate) != null)
         {
             TextView date = (TextView) view.findViewById(R.id.invoice_listview_layout_template_txtDate);
             TextView dueDate = (TextView) view.findViewById(R.id.invoice_listview_layout_template_txtDateDue);
             
             DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-            DateFormat targetFormat = new SimpleDateFormat("MMM dd, yyyy");
+            DateFormat targetFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
             try
             {
                 Date dated = originalFormat.parse(dueDate.getText().toString());
                 String formattedDate = targetFormat.format(dated);
                 System.out.println(formattedDate);
                 dueDate.setText(formattedDate);
+                
+                dated = originalFormat.parse(date.getText().toString());
+                formattedDate = targetFormat.format(dated);
+                date.setText(formattedDate);
             } catch (ParseException e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-              // 20120821
         }
         return view;
     }
