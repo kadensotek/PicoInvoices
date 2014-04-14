@@ -189,11 +189,13 @@ public class ClientAdapter
 		@Override
 		public void onCreate(SQLiteDatabase _db) 
 		{
+		    //This is handled in the DBAdapter on App startup to ensure that the database exists/is created on startup
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) 
 		{
+		    //This is handled in the DBAdapter on App startup to ensure that the database exists/is upgraded on startup
 		}
 	}
 }

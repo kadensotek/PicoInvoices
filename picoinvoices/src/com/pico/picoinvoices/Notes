@@ -51,11 +51,11 @@ Mike
 (*)ClientList
 (*)AddNewClient
 	(*)-->Enforce that every EditText is filled out before accepting
-	( )-->Figure out best way to cancel
+	(*)-->Figure out best way to cancel ==> Added delete and add button in the action bar 
 	
 ( )ClientInvoice
 	( )-->Format the listview rows to be more meaningful
-	( )-->Remove "Add" button
+	(*)-->Remove "Add" button
 	
 ( )ShowDetailedInvoice 
 	( )-->Started, need to format the expandable rows better and figure out why gmail crashes 
@@ -67,12 +67,12 @@ Mike
 ( )ManageInvoices
 	( )-->Format the spinner and listview rows
 	( )-->Create more meaningful sorts
-	( )-->Figure out why it does not refresh after adding an invoice from this activity
+	(*)-->Figure out why it does not refresh after adding an invoice from this activity ==>Added an initialize function and further lifecycle functions
 
 ( )RegisterServices
 	( )-->Create a method for registering new services
 ( )AddNewService
-
+( )Drop down menu in the action bar so that "main" activity can get accessed through any other activity
 Bobby
 ------
 ( )Settings
