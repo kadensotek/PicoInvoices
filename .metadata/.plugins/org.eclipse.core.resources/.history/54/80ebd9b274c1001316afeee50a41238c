@@ -521,6 +521,11 @@ public class AddNewInvoice extends Activity
                 TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
                 
                 if (position > 0)
+<<<<<<< HEAD
+=======
+                    sub.setText(l2.get(position));
+                else
+>>>>>>> a9a169ea7e075a6f4185cf5ef17d45efbd48f665
                     sub.setText(l2.get(position));
                 else
                     sub.setText("0");
