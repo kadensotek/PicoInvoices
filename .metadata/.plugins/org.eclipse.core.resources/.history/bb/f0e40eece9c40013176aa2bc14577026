@@ -348,7 +348,7 @@ public class AddNewInvoice extends Activity
                     Spinner s2 = _rIdStore_spinners.get(i);
                     TextView tv2 = (TextView) s2.findViewById(R.id.spinnerText2);
                     System.out.println(tv2.getText().toString());
-                    if(tv2.getText().toString().equals("0"))
+                    if(tv2.getText().toString().equals("No Service Selected"))
                     {
                         System.out.println("Spinner is wrong");
                         spinnerWrong = true;
