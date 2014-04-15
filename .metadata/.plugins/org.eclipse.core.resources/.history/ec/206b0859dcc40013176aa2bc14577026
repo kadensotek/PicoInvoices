@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_addClient"
+        android:icon="@drawable/ic_action_new"
+        android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_overflow"
+        android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/a_More"
+        android:icon="@drawable/more"
+        android:showAsAction="always"
+        android:title="More">
+        <menu>
+            <item
+                android:id="@+id/aM_Home"
+                android:icon="@drawable/home"
+                android:title="Home"/>
+        </menu>
+    </item>
+
+</menu>

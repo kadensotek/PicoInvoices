@@ -48,6 +48,7 @@ Checklist of Activities to check
 Mike
 ------
 (*)Home
+(*)Drop down menu in the action bar so that "main" activity can get accessed through any other activity
 (*)ClientList
 (*)AddNewClient
 	(*)-->Enforce that every EditText is filled out before accepting
@@ -58,10 +59,11 @@ Mike
 	(*)-->Remove "Add" button
 	
 ( )ShowDetailedInvoice 
-	( )-->Started, need to format the expandable rows better
+	(*)-->Started, need to format the expandable rows better
 	( )-->Figure out why gmail crashes 
+	( )-->Be able to edit the status of the invoice
 	
-( )AddNewInvoice
+(*)AddNewInvoice
 	(*)-->Format the spinners for appearance
 	(*)-->Figure out why the amount for each service is not parsing properly
 	
@@ -73,7 +75,7 @@ Mike
 ( )RegisterServices
 	( )-->Create a method for registering new services
 ( )AddNewService
-( )Drop down menu in the action bar so that "main" activity can get accessed through any other activity
+
 Bobby
 ------
 ( )Settings

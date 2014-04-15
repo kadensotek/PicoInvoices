@@ -51,6 +51,20 @@ public class ClientList extends Activity
 		closeDB();
 		System.out.println("Destroyed..");
 	}
+	@Override
+    protected void onPause()
+    {
+        super.onPause();
+        closeDB();
+        System.out.println("Paused..");
+    }
+	@Override
+    protected void onStop()
+    {
+        super.onStop();
+        closeDB();
+        System.out.println("Paused..");
+    }
 	
 	@Override
     protected void onResume()
@@ -83,12 +97,29 @@ public class ClientList extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                System.out.println("Settings selected");
-                return true;
             case R.id.action_addClient:
                 Intent intent = new Intent(this, AddNewClient.class);
                 startActivity(intent);
+                return true;
+            case R.id.goto_Home:
+                Intent home = new Intent(this, Home.class);
+                startActivity(home);
+                return true;
+            case R.id.goto_Clients:
+                Intent clients = new Intent(this, ClientList.class);
+                startActivity(clients);
+                return true;
+            case R.id.goto_ManageInvoices:
+                Intent manage = new Intent(this, ManageInvoices.class);
+                startActivity(manage);
+                return true;
+            case R.id.goto_Services:
+                Intent services = new Intent(this, RegisterServices.class);
+                startActivity(services);
+                return true;
+            case R.id.goto_Settings:
+                Intent settings = new Intent(this, Settings.class);
+                startActivity(settings);
                 return true;
             default:
             return super.onOptionsItemSelected(item);

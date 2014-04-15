@@ -10,7 +10,9 @@ import java.util.TimeZone;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddNewInvoice extends Activity
 {
@@ -58,6 +61,31 @@ public class AddNewInvoice extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_invoice);
+        initialize();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        closeDB();
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        closeDB();
+    }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        closeDB();
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
         initialize();
     }
 
@@ -103,7 +131,7 @@ public class AddNewInvoice extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId())
         {
-            case R.id.action_settings:
+            case R.id.action_cancelNewClient:
                 System.out.println("Settings selected");
                 return true;
             case R.id.action_acceptNewInvoice:
@@ -217,8 +245,8 @@ public class AddNewInvoice extends Activity
                 // Only add the service if it is not already in the list of
                 // services
                 if (list.contains(cursor.getString(RegisterServicesAdapter.COL_NAME)))
-                {
-                } else
+                {} 
+                else
                 {
                     list.add(cursor.getString(RegisterServicesAdapter.COL_NAME));
                     // Add the service
@@ -285,36 +313,93 @@ public class AddNewInvoice extends Activity
     // //////////////////////////////////////////////////////
     public void onClick_addInvoice()
     {
-        String services = "";
-        String rates = "";
-
-        // Makes sure that the original edittext and spinner are added as well
-        Spinner s = (Spinner) findViewById(R.id.addNewInvoice_serviceSpinner);
-        TextView tv = (TextView) s.findViewById(R.id.spinnerText2);
-        services = services + tv.getText().toString() + "&";
-
-        EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
-        rates = rates + et.getText().toString() + "&";
-        
-        //Loop through the list of EditTexts and Spinners for services
-        for (int i = 0; i < _rIdStore_spinners.size(); i++)
+        new AlertDialog.Builder(this)
+        .setTitle("Add Invoice")
+        .setMessage("Do you want to add new invoice?")
+        .setPositiveButton(android.R.string.yes,
+        new DialogInterface.OnClickListener()
         {
-            Spinner s2 = _rIdStore_spinners.get(i);
-            TextView tv2 = (TextView) s2.findViewById(R.id.spinnerText2);
-            services = services + tv2.getText().toString() + "&";
-        }
-        for (int i = 0; i < _rIdStore_editText.size(); i++)
+            public void onClick(DialogInterface dialog,
+                    int which)
+            {
+                String services = "";
+                String rates = "";
+                boolean spinnerWrong = false;
+                boolean rateEmpty = true;
+                // Makes sure that the original edittext and spinner are added as well
+                Spinner s = (Spinner) findViewById(R.id.addNewInvoice_serviceSpinner);
+                TextView tv = (TextView) s.findViewById(R.id.spinnerText2);
+                System.out.println(tv.getText().toString());
+                if(tv.getText().toString().equals("0"))
+                    spinnerWrong = true;
+                else
+                    services = services + tv.getText().toString() + "&";
+
+                EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
+                System.out.println(et.getText().toString());
+                if (et.getText().toString().equals(""))
+                    rateEmpty = false;
+                else
+                    rates = rates + et.getText().toString() + "&";
+                
+                //Loop through the list of EditTexts and Spinners for services
+                for (int i = 0; i < _rIdStore_spinners.size(); i++)
+                {
+                    Spinner s2 = _rIdStore_spinners.get(i);
+                    TextView tv2 = (TextView) s2.findViewById(R.id.spinnerText2);
+                    System.out.println(tv2.getText().toString());
+                    if(tv2.getText().toString().equals("No Service Selected"))
+                    {
+                        System.out.println("Spinner is wrong");
+                        spinnerWrong = true;
+                    }
+                    else
+                        services = services + tv.getText().toString() + "&";
+                }
+                for (int i = 0; i < _rIdStore_editText.size(); i++)
+                {
+                    EditText et2 = _rIdStore_editText.get(i);
+                    System.out.println(et2.getText().toString());
+                    if (et2.getText().toString().equals(""))
+                        rateEmpty = false;
+                    else
+                        rates = rates + et.getText().toString() + "&";
+                }
+                //Get the customer information
+                s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
+                tv = (TextView) s.findViewById(R.id.spinnerText2);
+                if (tv.getText().toString().equals("0"))
+                    spinnerWrong = true;
+                
+                
+                //Check to make sure that the fields are filled out
+                //Do not need to do sqlinjection checking here because ContentValues are used to insert into DB
+                if (spinnerWrong == true)
+                {
+                    Toast.makeText(getBaseContext(), "Please choose a service and/or client.", Toast.LENGTH_LONG).show();
+                }
+                else if (rateEmpty == false)
+                {
+                    Toast.makeText(getBaseContext(), "Please enter rates for all services.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    insertRow(services, rates, tv.getText().toString());
+                    System.out.println("Inserted: " + services + "\n\n\n" + rates);
+                    finish();
+                }
+            }
+        })
+        .setNegativeButton(android.R.string.no,
+        new DialogInterface.OnClickListener()
         {
-            EditText et2 = _rIdStore_editText.get(i);
-            rates = rates + et2.getText().toString() + "&";
-        }
-        //Get the customer information
-        s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
-        tv = (TextView) s.findViewById(R.id.spinnerText2);
-        
-        insertRow(services, rates, tv.getText().toString());
-        System.out.println("Inserted: " + services + "\n\n\n" + rates);
-        finish();
+            public void onClick(DialogInterface dialog,
+                    int which)
+            {
+                finish();
+            }
+        }).setIcon(R.drawable.ic_launcher).show();
+
     }
     private void insertRow(String services, String rates, String customer)
     {

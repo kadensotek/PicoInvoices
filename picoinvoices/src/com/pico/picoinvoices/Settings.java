@@ -20,36 +20,33 @@ public class Settings extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // _sp = new SPAdapter(getApplicationContext());
-        // openDB();
         refresh();
-
-        // TextView textView = (TextView)
-        // findViewById(R.id.client_invoices_txtClientName);
-        // String name = getClientName();
-        // textView.setText(name);
-
     }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-
-        // closeDB();
+        closeDB();
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        closeDB();
+    }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        closeDB();
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-
-        // openDB();
         refresh();
-        // TextView textView = (TextView)
-        // findViewById(R.id.client_invoices_txtClientName);
-        // String name = getClientName();
-        // textView.setText(name);
     }
 
     // //////////////////////////////////////////////////////
@@ -71,12 +68,26 @@ public class Settings extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId())
         {
-            case R.id.action_settings:
-                System.out.println("Settings selected");
+            case R.id.goto_Home:
+                Intent home = new Intent(this, Home.class);
+                startActivity(home);
                 return true;
-                // case R.id.action_acceptNewInvoice:
-                // System.out.println("Added new invoice");
-                // return true;
+            case R.id.goto_Clients:
+                Intent clients = new Intent(this, ClientList.class);
+                startActivity(clients);
+                return true;
+            case R.id.goto_ManageInvoices:
+                Intent manage = new Intent(this, ManageInvoices.class);
+                startActivity(manage);
+                return true;
+            case R.id.goto_Services:
+                Intent services = new Intent(this, RegisterServices.class);
+                startActivity(services);
+                return true;
+            case R.id.goto_Settings:
+                Intent settings = new Intent(this, Settings.class);
+                startActivity(settings);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

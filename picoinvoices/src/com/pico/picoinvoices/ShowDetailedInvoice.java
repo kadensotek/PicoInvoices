@@ -1,8 +1,13 @@
 package com.pico.picoinvoices;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.Activity;
@@ -25,7 +30,7 @@ public class ShowDetailedInvoice extends Activity
     private InvoiceAdapter _myDb = null;
     private SPAdapter _sp = null;
     private String _fname, _lname, _address, _email, _phone;
-    private String _issuedate, _service, _duedate, _priceservice, _amountdue, _status;
+    private String _issuedate, _service, _duedate, _amountdue, _status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +45,18 @@ public class ShowDetailedInvoice extends Activity
     protected void onDestroy()
     {
         super.onDestroy();
+        closeDB();
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        closeDB();
+    }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
         closeDB();
     }
     @Override
@@ -100,6 +117,7 @@ public class ShowDetailedInvoice extends Activity
                 return true;
             }
         });
+        closeDB();
     }
     private void populateValues()
     {
@@ -123,12 +141,12 @@ public class ShowDetailedInvoice extends Activity
         cursor = _myDb.query(new String[] { Integer.toString(_sp.getInvoiceID()) },InvoiceAdapter.DATABASE_TABLE);
         if (cursor.moveToFirst())
         {
-            _issuedate = "Date issued:\n\t" + cursor.getString(InvoiceAdapter.COL_ISSUEDATE);
-            _duedate = "Payment due date:\n\t" + cursor.getString(InvoiceAdapter.COL_DUEDATE);
-            _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
-            _amountdue = "Amount due:\n\t" + cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
+            _issuedate = "Date issued:\n\t" + returnDate(cursor.getString(InvoiceAdapter.COL_ISSUEDATE));
+            _duedate = "Payment due date:\n\t" + returnDate(cursor.getString(InvoiceAdapter.COL_DUEDATE));
+//            _priceservice = cursor.getString(InvoiceAdapter.COL_PRICESERVICE);
+            _amountdue = "Amount due:\n\t$" + cursor.getString(InvoiceAdapter.COL_AMOUNTDUE);
             _status = "Current status:\n\t" + cursor.getString(InvoiceAdapter.COL_STATUS);
-            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+            _service = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE), cursor.getString(InvoiceAdapter.COL_PRICESERVICE));
         } 
         else
         {
@@ -138,10 +156,11 @@ public class ShowDetailedInvoice extends Activity
         cursor.close();
 
     }
-    private String returnServices(String s)
+    private String returnServices(String s, String v)
     {
         Cursor cursor = null;
         String[] services = s.split("&");
+        String[] amount = v.split("&");
         s = "Services:\n";
         
         for (int i = 0; i < services.length; i++)
@@ -150,14 +169,33 @@ public class ShowDetailedInvoice extends Activity
             cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
             if (cursor.moveToFirst())
             {
-                s+="\t" + cursor.getString(RegisterServicesAdapter.COL_NAME) + "\n";
+                s+="\t" + cursor.getString(RegisterServicesAdapter.COL_NAME) + "\t\t\t\t$" + amount[i] + "\n";
             }
             
         }
         cursor.close();
         return s.substring(0, s.length()-1);
     }
+    
+    //Convert the UTC time to a more readable form
+    private String returnDate(String s)
+    {
+        DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        DateFormat targetFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+        String formattedDate = "";
+        try
+        {
+            Date dated = originalFormat.parse(s);
+            formattedDate = targetFormat.format(dated);
+            System.out.println(formattedDate);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return formattedDate;
+    }
 
+    //Creates the list for the main/parent headers (always shown)
     private void createGroupList()
     {
         _groupList = new ArrayList<String>();
@@ -165,11 +203,12 @@ public class ShowDetailedInvoice extends Activity
         _groupList.add("Invoice - " + _amountdue);
     }
 
+    //Creates the list of child/sub categories
     private void createCollection()
     {
         // preparing laptops collection(child)
         String[] contactInfo = { _fname, _lname, _address, _email, _phone };
-        String[] invoiceDetail = { _issuedate, _duedate, _service, _priceservice, _amountdue, _status };
+        String[] invoiceDetail = { _status, _issuedate, _duedate, _service, _amountdue };
 
         _invoice = new LinkedHashMap<String, List<String>>();
 

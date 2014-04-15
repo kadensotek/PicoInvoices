@@ -35,11 +35,16 @@ public class AddNewClient extends Activity
         super.onDestroy();
         closeDB();
     }
-
     @Override
     protected void onPause()
     {
         super.onPause();
+        closeDB();
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
         closeDB();
     }
 

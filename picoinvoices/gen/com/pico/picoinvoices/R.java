@@ -30,13 +30,13 @@ public final class R {
         public static final int ic_launcher=0x7f020006;
     }
     public static final class id {
-        public static final int action_acceptNewClient=0x7f08004b;
+        public static final int action_acceptNewClient=0x7f08004c;
         public static final int action_acceptNewInvoice=0x7f08004d;
-        public static final int action_addClient=0x7f08004f;
+        public static final int action_addClient=0x7f080054;
         public static final int action_addInvoice=0x7f08004e;
-        public static final int action_cancelNewClient=0x7f08004c;
-        public static final int action_exportdb=0x7f080050;
-        public static final int action_importdb=0x7f080051;
+        public static final int action_cancelNewClient=0x7f08004b;
+        public static final int action_exportdb=0x7f080055;
+        public static final int action_importdb=0x7f080056;
         public static final int action_settings=0x7f08004a;
         public static final int addNewInvoiceLayout=0x7f080000;
         public static final int addNewInvoiceScroll=0x7f08000b;
@@ -61,6 +61,11 @@ public final class R {
         public static final int expandableListView1=0x7f08002e;
         public static final int exportdb_btnToExportCSV=0x7f08001d;
         public static final int exportdb_btnToExportXML=0x7f08001c;
+        public static final int goto_Clients=0x7f080050;
+        public static final int goto_Home=0x7f08004f;
+        public static final int goto_ManageInvoices=0x7f080051;
+        public static final int goto_Services=0x7f080052;
+        public static final int goto_Settings=0x7f080053;
         public static final int home_btnEmail=0x7f080020;
         public static final int home_btnToClients=0x7f08001e;
         public static final int home_btnToManageInvoices=0x7f08001f;
@@ -145,10 +150,11 @@ public final class R {
         public static final int exportdb=0x7f070005;
         public static final int home=0x7f070006;
         public static final int importdb=0x7f070007;
-        public static final int manage_invoices=0x7f070008;
-        public static final int register_services=0x7f070009;
-        public static final int settings=0x7f07000a;
-        public static final int show_detailed_invoice=0x7f07000b;
+        public static final int main_navigation=0x7f070008;
+        public static final int manage_invoices=0x7f070009;
+        public static final int register_services=0x7f07000a;
+        public static final int settings=0x7f07000b;
+        public static final int show_detailed_invoice=0x7f07000c;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
