@@ -63,7 +63,7 @@ Mike
 	
 ( )AddNewInvoice
 	(*)-->Format the spinners for appearance
-	( )-->Figure out why the amount for each service is not parsing properly
+	(*)-->Figure out why the amount for each service is not parsing properly
 	
 ( )ManageInvoices
 	(*)-->Format the spinner and listview rows

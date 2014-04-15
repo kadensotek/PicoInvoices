@@ -49,17 +49,6 @@
                 android:layout_alignLeft="@+id/addNewInvoice_lblService"
                 android:layout_below="@+id/addNewInvoice_lblService" />
 
-            <EditText
-                android:id="@+id/addNewInvoice_rateInput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/addNewInvoice_serviceSpinner"
-                android:layout_alignRight="@+id/addNewInvoice_lblCustomer"
-                android:layout_below="@+id/addNewInvoice_serviceSpinner"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:paddingBottom="10dp" />
-
             <LinearLayout
                 android:id="@+id/buttonContainer"
                 android:layout_width="wrap_content"
@@ -83,6 +72,30 @@
                     android:text="+" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/addNewInvoice_serviceSpinner"
+                android:layout_below="@+id/addNewInvoice_serviceSpinner"
+                android:text="Rate ($/hour)"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/addNewInvoice_rateInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView1"
+                android:layout_alignRight="@+id/textView1"
+                android:layout_below="@+id/textView1"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:paddingBottom="10dp" >
+
+                <requestFocus />
+            </EditText>
+
         </RelativeLayout>
     </ScrollView>
 

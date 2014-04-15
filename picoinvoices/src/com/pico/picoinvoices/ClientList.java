@@ -39,7 +39,6 @@ public class ClientList extends Activity
 		//initialize SharedPreferences
 		_sp = new SPAdapter(getApplicationContext());
 		refresh();
-		System.out.println(_sp.getClientID());
 		 System.out.println("Created..");
 		 //Make sure that there is a message if the listview is empty
 		 ListView listView = (ListView) findViewById(R.id.client_listView);
@@ -58,7 +57,6 @@ public class ClientList extends Activity
     {
         super.onResume();
         refresh();
-        System.out.println(_sp.getClientID());
         System.out.println("Resumed..");
     }
 	@Override
@@ -171,8 +169,6 @@ public class ClientList extends Activity
 			    //Set the value of the CLIENT_ID value in the shared preferences
 			    //This will be used to access which client was selected in subsequent activities (ClientInvoices and ShowDetailedInvoice)
 			    _sp.saveClientID(Long.toString(idInDB));
-			    System.out.println("Client Id (ClientList):" + _sp.getClientID());
-                System.out.println("Invoice Id (ClientList):" + _sp.getInvoiceID());
 				startActivity(goToInvoices);
 			}
 		});

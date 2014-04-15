@@ -184,9 +184,6 @@ public class AddNewInvoice extends Activity
             {
                 if (pos > 0)
                 {
-                    System.out.println("You selected: " + pos);
-                    System.out.println("Value in serviceID"
-                            + _serviceID.get(pos - 1));
                 }
             }
 
@@ -230,7 +227,6 @@ public class AddNewInvoice extends Activity
             } while (cursor.moveToNext());
         } else
         {
-            System.out.println("No servuces");
         }
 
         // Close cursor
@@ -295,22 +291,22 @@ public class AddNewInvoice extends Activity
         // Makes sure that the original edittext and spinner are added as well
         Spinner s = (Spinner) findViewById(R.id.addNewInvoice_serviceSpinner);
         TextView tv = (TextView) s.findViewById(R.id.spinnerText2);
-        services = services + tv.getText().toString() + "||";
+        services = services + tv.getText().toString() + "&";
 
         EditText et = (EditText) findViewById(R.id.addNewInvoice_rateInput);
-        rates = rates + et.getText().toString() + "||";
+        rates = rates + et.getText().toString() + "&";
         
         //Loop through the list of EditTexts and Spinners for services
         for (int i = 0; i < _rIdStore_spinners.size(); i++)
         {
             Spinner s2 = _rIdStore_spinners.get(i);
             TextView tv2 = (TextView) s2.findViewById(R.id.spinnerText2);
-            services = services + tv2.getText().toString() + "||";
+            services = services + tv2.getText().toString() + "&";
         }
         for (int i = 0; i < _rIdStore_editText.size(); i++)
         {
             EditText et2 = _rIdStore_editText.get(i);
-            rates = rates + et2.getText().toString() + "||";
+            rates = rates + et2.getText().toString() + "&";
         }
         //Get the customer information
         s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);
@@ -324,11 +320,12 @@ public class AddNewInvoice extends Activity
     {
         openDB();
         int total = 0;
-        String[] amountdue = rates.split("||");
-        for (int i=0; i < amountdue.length-1; i++)
+        String[] amountdue = rates.trim().split("&");
+        System.out.println(rates);
+        for (int i=0; i < amountdue.length; i++)
         {
             System.out.println(amountdue[i]);
-//            total+=Integer.parseInt(amountdue[i]);
+            total+=Integer.parseInt(amountdue[i]);
         }
        
         _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, Integer.toString(total) , getStatus());

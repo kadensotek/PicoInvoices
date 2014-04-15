@@ -141,10 +141,10 @@ public class ShowDetailedInvoice extends Activity
     private String returnServices(String s)
     {
         Cursor cursor = null;
-        String[] services = s.split("||");
+        String[] services = s.split("&");
         s = "Services:\n";
         
-        for (int i = 0; i < services.length-1; i++)
+        for (int i = 0; i < services.length; i++)
         {
             System.out.println("Parsed service: " + services[i]);
             cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
