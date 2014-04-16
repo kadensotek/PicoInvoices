@@ -1,15 +1,27 @@
 package com.pico.picoinvoices;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class Home extends Activity
 {
 
-	DBAdapter _myDb = null;
-	SPAdapter _sp = null;
+	private DBAdapter _vDb = null;
+	private SPAdapter _sp = null;
+	private InvoiceAdapter _myDb = null; 
 	
 	////////////////////////////////////////////////////////
     /////*
@@ -22,13 +34,14 @@ public class Home extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		initialize();
+		getNotifications();
 	}
 	@Override
     protected void onDestroy()
     {
         super.onDestroy();
 
-        closeDB();
+        closevDB();
     }
 	@Override
     protected void onResume()
@@ -42,8 +55,8 @@ public class Home extends Activity
 	    _sp = new SPAdapter(getApplicationContext());
         _sp.saveClientID("0");
         _sp.saveInvioceID("0");
-        openDB();
-        closeDB();
+        openvDB();
+        closevDB();
 	}
 
 //	@Override
@@ -56,22 +69,89 @@ public class Home extends Activity
 
 	
 
+    @SuppressLint("SimpleDateFormat")
+    private void getNotifications() 
+    {
+       openDB();
+       boolean displayNote = false;
+       Date todayDate = new Date();
+       String notice = "";
+       Cursor cursor = _myDb.getAllRows();
+//       Cursor cursor = _myDb.querySort2(new String[] { InvoiceAdapter.KEY_DUEDATE },InvoiceAdapter.DATABASE_TABLE);
+       if (cursor.moveToFirst())
+       {
+           Calendar c=Calendar.getInstance();
+           DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           System.out.println(df.format(c.getTime()));      // This past Sunday [ May include today ]
+           c.add(Calendar.DATE,7);
+           String s = df.format(c.getTime());
+           Date sevenDayDate = null;
+           Date invoiceDate = null;
+           try
+           {
+                sevenDayDate = df.parse(s);
+                invoiceDate = df.parse(cursor.getString(InvoiceAdapter.COL_DUEDATE));
+           } 
+           catch (ParseException e)
+           {
+               Toast.makeText(Home.this, "Error parsing the date.",Toast.LENGTH_SHORT).show();
+           }
+           
+           //If the invoice duedate is between today and 7 days out, add that to the list to be displayed.
+           if(invoiceDate.after(todayDate) && invoiceDate.before(sevenDayDate)) 
+           {
+               notice+="Invoice #: " + cursor.getString(InvoiceAdapter.COL_ROWID) + " - " + cursor.getString(InvoiceAdapter.COL_DUEDATE) + "\n";
+               displayNote = true;
+           }
+       } 
+       else
+           Toast.makeText(Home.this, "No invoices have been found.",Toast.LENGTH_SHORT).show();
+       //Display the notification with the included invoices due within the following week
+       if(displayNote == true)
+       {
+           AlertDialog.Builder builder = new AlertDialog.Builder(this);
+           builder.setMessage("The following invoices have a payment due within a week...\n" + notice)
+                  .setCancelable(false)
+                  .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int id) {
+                           //do things
+                      }
+                  });
+           AlertDialog alert = builder.create();
+           alert.show();
+       }
+
+       cursor.close();
+       closeDB();
+        
+    }
     ////////////////////////////////////////////////////////
     /////*
     /////*  Database functions
     /////*
     ////////////////////////////////////////////////////////
+	private void closevDB()
+	{
+		_vDb.close();
+	}
+	private void openvDB()
+	{
+		_vDb = new DBAdapter(this);
+		_vDb.open();
+
+	}
+	
+	
 	private void closeDB()
-	{
-		_myDb.close();
-	}
+    {
+        _myDb.close();
+    }
+    private void openDB()
+    {
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
 
-	private void openDB()
-	{
-		_myDb = new DBAdapter(this);
-		_myDb.open();
-
-	}
+    }
 
     ////////////////////////////////////////////////////////
     /////*

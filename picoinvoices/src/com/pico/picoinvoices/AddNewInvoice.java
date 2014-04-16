@@ -2,6 +2,7 @@ package com.pico.picoinvoices;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -413,12 +414,12 @@ public class AddNewInvoice extends Activity
             total+=Integer.parseInt(amountdue[i]);
         }
        
-        _myDb.insertRow(getDateTime(), customer, getDateTime(), rates, services, Integer.toString(total) , getStatus());
+        _myDb.insertRow(getDateTime(), customer, getDueDate(), rates, services, Integer.toString(total) , getStatus());
         
         closeDB();
     }
     private String getStatus() {
-        String[] types = new String[] {"Open", "Pending", "Paid", "Quote"};
+        String[] types = new String[] {"Open", "Pending", "Paid", "Quote", "Overdue"};
         Random randomGenerator = new Random();
         int rand = randomGenerator.nextInt(4);
         
@@ -431,6 +432,17 @@ public class AddNewInvoice extends Activity
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = new Date();
         return dateFormat.format(date);
+    }
+    @SuppressLint("SimpleDateFormat")
+	private String getDueDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date()); // Now use today date.
+        c.add(Calendar.DATE, 30); // Adding 5 days
+        String output = sdf.format(c.getTime());
+        System.out.println(output);
+        return output;
     }
     public void onClick_cancelInvoice(View v)
     {

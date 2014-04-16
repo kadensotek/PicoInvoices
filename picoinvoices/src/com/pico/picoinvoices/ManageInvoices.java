@@ -3,13 +3,17 @@ package com.pico.picoinvoices;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -229,13 +233,23 @@ public class ManageInvoices extends Activity
         _spinner = (Spinner) findViewById(R.id.spinner2);
         List<String> list = new ArrayList<String>();
         list.add(InvoiceAdapter.KEY_CUSTOMER);
+        list.add(InvoiceAdapter.KEY_DUEDATE);
         list.add(InvoiceAdapter.KEY_ISSUEDATE);
         list.add(InvoiceAdapter.KEY_STATUS);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        
+        List<String> shownList = new ArrayList<String>();
+        shownList.add("Client");
+        shownList.add("Date Due");
+        shownList.add("Date Issued");
+        shownList.add("Current Status");
+        MyAdapter dataAdapter = new MyAdapter(this,
+                R.layout.spinner_text_layout,list,shownList);
         _spinner.setAdapter(dataAdapter);
+//        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_spinner_item, list);
+//        dataAdapter
+//                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        _spinner.setAdapter(dataAdapter);
         addListenerOnSpinnerItemSelection(_spinner);
     }
 
@@ -248,6 +262,8 @@ public class ManageInvoices extends Activity
                     int pos, long id)
             {
                 System.out.println("You selected: " + pos);
+                TextView tv = (TextView) view.findViewById(R.id.spinnerText2);
+                System.out.println("TextView is: " + tv.getText().toString());
                 _sort = parent.getItemAtPosition(pos).toString();
                 refresh();
             }
@@ -269,4 +285,57 @@ public class ManageInvoices extends Activity
         refresh();
     }
 
+    private class MyAdapter extends ArrayAdapter<String>
+    {
+        ArrayList<String> l = null, l2 =null;
+
+        public MyAdapter(Context context, int textViewResourceId,List<String> list, List<String> list2)
+        {
+            super(context, textViewResourceId, list);
+            l = (ArrayList<String>) list;
+            l2 = (ArrayList<String>) list2;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView,
+                ViewGroup parent)
+        {
+            //Only return a row if there are elements (clients and services have been registered) in the arraylists
+           if (l.size() > 0 && l2.size() > 0)
+           {
+                LayoutInflater inflater = getLayoutInflater();
+                View row = inflater.inflate(R.layout.spinner_text_layout, parent,false);
+                TextView label = (TextView) row.findViewById(R.id.spinnerText1);
+                // if (position > 0)
+                // label.setText(l.get(position-1));
+                // else
+                label.setText(l.get(position));
+    
+                TextView sub = (TextView) row.findViewById(R.id.spinnerText2);
+                
+                if (position > 0)
+                    sub.setText(l2.get(position));
+                else
+                    sub.setText(l2.get(position));
+    
+                return row;
+           }
+           else
+           {
+               return null;
+           }
+        }
+
+    }
 }

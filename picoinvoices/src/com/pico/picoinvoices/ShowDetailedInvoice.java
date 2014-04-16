@@ -296,10 +296,11 @@ public class ShowDetailedInvoice extends Activity
 
     public void onClick_Email(View v)
     {
+        System.out.println(_email.substring(_email.indexOf("\t"), _email.length()).trim());
         //This version only selects mail applications and will format the body with html
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         intent.setType("text/html");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{_email});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{_email.substring(_email.indexOf("\t"), _email.length()).trim()});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
         intent.putExtra(Intent.EXTRA_TEXT, _fname +" " + _lname +"\n\t" + _service + "\n" + _amountdue);
   

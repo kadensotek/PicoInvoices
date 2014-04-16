@@ -60,7 +60,7 @@ Mike
 	
 ( )ShowDetailedInvoice 
 	(*)-->Started, need to format the expandable rows better
-	( )-->Figure out why gmail crashes 
+	(*)-->Figure out why gmail crashes 
 	( )-->Be able to edit the status of the invoice
 	
 (*)AddNewInvoice
@@ -74,7 +74,7 @@ Mike
 
 ( )RegisterServices
 	( )-->Create a method for registering new services
-( )AddNewService
+
 
 Bobby
 ------
