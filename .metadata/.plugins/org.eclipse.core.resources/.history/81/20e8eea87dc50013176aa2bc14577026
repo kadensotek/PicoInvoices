@@ -12,10 +12,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,7 +23,6 @@ public class Home extends Activity
 	private DBAdapter _vDb = null;
 	private SPAdapter _sp = null;
 	private InvoiceAdapter _myDb = null; 
-	private boolean _showNotes = true;
 	
 	////////////////////////////////////////////////////////
     /////*
@@ -38,21 +35,7 @@ public class Home extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		initialize();
-		if (_showNotes == true)
-		{
-		      getNotifications();
-		      _showNotes = false;
-		}
-		
-		//Use shared preferences to make sure that the notification is only shown once per application life
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		if(!prefs.getBoolean("firstTime", false)) {
-		    
-    		SharedPreferences.Editor editor = prefs.edit();
-    		editor.putBoolean("firstTime", true);
-    		editor.commit();
-		}
-		
+		getNotifications();
 	}
 	@Override
     protected void onDestroy()
@@ -98,33 +81,29 @@ public class Home extends Activity
 //       Cursor cursor = _myDb.querySort2(new String[] { InvoiceAdapter.KEY_DUEDATE },InvoiceAdapter.DATABASE_TABLE);
        if (cursor.moveToFirst())
        {
-          do 
-          {
-               Calendar c=Calendar.getInstance();
-               DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               System.out.println(df.format(c.getTime()));      // This past Sunday [ May include today ]
-               //changed to 60 for testing purposes should be 7 in production
-               c.add(Calendar.DATE,60);
-               String s = df.format(c.getTime());
-               Date sevenDayDate = null;
-               Date invoiceDate = null;
-               try
-               {
-                    sevenDayDate = df.parse(s);
-                    invoiceDate = df.parse(cursor.getString(InvoiceAdapter.COL_DUEDATE));
-               } 
-               catch (ParseException e)
-               {
-                   Toast.makeText(Home.this, "Error parsing the date.",Toast.LENGTH_SHORT).show();
-               }
-               
-               //If the invoice duedate is between today and 7 days out, add that to the list to be displayed.
-               if(invoiceDate.after(todayDate) && invoiceDate.before(sevenDayDate)) 
-               {
-                   notice+="Invoice #: " + cursor.getString(InvoiceAdapter.COL_ROWID) + " - " + returnDate(cursor.getString(InvoiceAdapter.COL_DUEDATE)) + "\n";
-                   displayNote = true;
-               }
-          }while(cursor.moveToNext());
+           Calendar c=Calendar.getInstance();
+           DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           System.out.println(df.format(c.getTime()));      // This past Sunday [ May include today ]
+           c.add(Calendar.DATE,7);
+           String s = df.format(c.getTime());
+           Date sevenDayDate = null;
+           Date invoiceDate = null;
+           try
+           {
+                sevenDayDate = df.parse(s);
+                invoiceDate = df.parse(cursor.getString(InvoiceAdapter.COL_DUEDATE));
+           } 
+           catch (ParseException e)
+           {
+               Toast.makeText(Home.this, "Error parsing the date.",Toast.LENGTH_SHORT).show();
+           }
+           
+           //If the invoice duedate is between today and 7 days out, add that to the list to be displayed.
+           if(invoiceDate.after(todayDate) && invoiceDate.before(sevenDayDate)) 
+           {
+               notice+="Invoice #: " + cursor.getString(InvoiceAdapter.COL_ROWID) + " - " + returnDate(cursor.getString(InvoiceAdapter.COL_DUEDATE)) + "\n";
+               displayNote = true;
+           }
        } 
        else
            Toast.makeText(Home.this, "No invoices have been found.",Toast.LENGTH_SHORT).show();

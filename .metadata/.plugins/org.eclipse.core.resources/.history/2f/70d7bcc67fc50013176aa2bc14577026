@@ -20,7 +20,7 @@ Basic Requirements to be completed
 			-->Accessed via settings 
 ( )Create an edit view for specific invoices
 
-(*)Validate data before inserting/updating
+( )Validate data before inserting/updating
 
 ( )Overall look and feel of application
 
@@ -33,7 +33,7 @@ Basic Requirements to be completed
 -----------------------------------------------------------------------------------------
 May not be completed before EoS
 
-(*)Notification system (whether through accessing the application or a phone notification at a specific time during the day.
+( )Notification system (whether through accessing the application or a phone notification at a specific time during the day.
 
 ( )History feature
 

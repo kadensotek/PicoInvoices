@@ -355,7 +355,7 @@ public class AddNewInvoice extends Activity
                         spinnerWrong = true;
                     }
                     else
-                        services = services + tv2.getText().toString() + "&";
+                        services = services + tv.getText().toString() + "&";
                 }
                 for (int i = 0; i < _rIdStore_editText.size(); i++)
                 {
@@ -364,7 +364,7 @@ public class AddNewInvoice extends Activity
                     if (et2.getText().toString().equals(""))
                         rateEmpty = false;
                     else
-                        rates = rates + et2.getText().toString() + "&";
+                        rates = rates + et.getText().toString() + "&";
                 }
                 //Get the customer information
                 s = (Spinner) findViewById(R.id.addNewInvoice_customerSpinner);

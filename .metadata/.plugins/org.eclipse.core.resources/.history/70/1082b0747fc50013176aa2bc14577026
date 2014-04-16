@@ -25,7 +25,6 @@ public class Home extends Activity
 	private DBAdapter _vDb = null;
 	private SPAdapter _sp = null;
 	private InvoiceAdapter _myDb = null; 
-	private boolean _showNotes = true;
 	
 	////////////////////////////////////////////////////////
     /////*
@@ -38,16 +37,9 @@ public class Home extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		initialize();
-		if (_showNotes == true)
-		{
-		      getNotifications();
-		      _showNotes = false;
-		}
-		
-		//Use shared preferences to make sure that the notification is only shown once per application life
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		if(!prefs.getBoolean("firstTime", false)) {
-		    
+		    getNotifications();
     		SharedPreferences.Editor editor = prefs.edit();
     		editor.putBoolean("firstTime", true);
     		editor.commit();
