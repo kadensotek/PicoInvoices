@@ -3,6 +3,7 @@ package com.pico.picoinvoices;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,7 +16,7 @@ public class XmlExporter
     private static final String DATASUBDIRECTORY = "/Android/data/com.pico.picoinvoices/";
 
     private final SQLiteDatabase db;
-    private XmlBuilder xmlBuilder;
+    private XmlBuilder xmlBuilder = null;
 
     public XmlExporter(final SQLiteDatabase db)
     {
@@ -29,17 +30,18 @@ public class XmlExporter
         xmlBuilder = new XmlBuilder();
         xmlBuilder.start(dbName);
 
-        // get the tables
+        /* get the tables */
         String sql = "select * from sqlite_master";
         Cursor c = db.rawQuery(sql, new String[0]);
         
+        /* Moves through tables */
         if (c.moveToFirst())
         {
             do
             {
                 String tableName = c.getString(c.getColumnIndex("name"));
 
-                // skip metadata, sequence, and uidx (unique indexes)
+                /* skip metadata, sequence, and uidx (unique indexes) */
                 if (!tableName.equals("android_metadata")
                         && !tableName.equals("sqlite_sequence")
                         && !tableName.startsWith("uidx"))
@@ -55,6 +57,7 @@ public class XmlExporter
         System.out.println("exporting database complete");
     }
 
+    /* Pulls all rows and columns from given table */
     private void exportTable(final String tableName) throws IOException
     {
         xmlBuilder.openTable(tableName);
@@ -108,11 +111,6 @@ public class XmlExporter
                 channel.close();
             }
         }
-
-        /*
-         * FileWriter fw = new FileWriter(file); if (fw != null) { try {
-         * fw.write(xmlString); fw.flush(); } finally { fw.close(); } }
-         */
     }
 
     private static class XmlBuilder
