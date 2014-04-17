@@ -35,10 +35,10 @@
 	        android:id="@+id/exportdb_btnToExportCSV"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/exportdb_btnToExportXML"
+	        android:layout_below="@+id/exportdb_btnToExportCSV"
 	        android:layout_centerHorizontal="true"
 	        android:minHeight="80dp"
-	        android:onClick="onClick_toExportCSV"
+	        android:onClick="onClick_ToExportCSV"
 	        android:text="Export to CSV" />
 	
     </LinearLayout>

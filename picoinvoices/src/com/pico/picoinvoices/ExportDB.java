@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Toast;
 
 public class ExportDB extends Activity
 {
@@ -82,16 +83,25 @@ public class ExportDB extends Activity
 
     // //////////////////////////////////////////////////////
     // ///*
-    // ///* OnClick listener for starting new activities
+    // ///* OnClick listeners
     // ///*
     // //////////////////////////////////////////////////////
     public void onClick_ToExportXML(View v)
     {
-        confirmation(v);
-        
-        
+        xmlConfirmation(v);
     }
     
+    public void onClick_ToExportCSV(View v)
+    {
+        csvConfirmation(v);
+    }
+    
+    
+    // //////////////////////////////////////////////////////
+    // ///*
+    // ///* Exporting functions
+    // ///*
+    // //////////////////////////////////////////////////////
     public void exportToXML(View v)
     {
         String path = Environment.getExternalStorageDirectory() + "/Android/data/com.pico.picoinvoices/";
@@ -110,35 +120,27 @@ public class ExportDB extends Activity
             e.printStackTrace();
         }
     }
-
-    public void onClick_ToExportCSV(View v)
+    
+    public void exportToCSV(View v)
     {
-        // Intent intent = new Intent(this, ExportCSV.class);
-        // startActivity(intent);
-    }
+        String path = Environment.getExternalStorageDirectory() + "/Android/data/com.pico.picoinvoices/";
+        createDirIfNotExists(path);
 
-    public static boolean createDirIfNotExists(String path)
-    {
-        boolean exists = true;
+        CsvExporter csvExporter = null;
+        this.db = _myDb.getDB();
+        csvExporter = new CsvExporter(this.db);
 
-        File file = new File(path);
-
-        if (!file.exists())
+        try
         {
-            System.out.println("directory does not exist; creating directory");
-            if (!file.mkdirs())
-            {
-                System.out.println("Problem creating data storage folder");
-                exists = false;
-            }
-        } else
+            csvExporter.export("picoinvoices", "picodatabase");
+        } catch (IOException e)
         {
-            System.out.println("directory exists");
+            // TODO Auto-generated catch block; add real handling
+            e.printStackTrace();
         }
-        return exists;
     }
 
-    public void confirmation(final View v)
+    public void xmlConfirmation(final View v)
     {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -154,5 +156,43 @@ public class ExportDB extends Activity
 
                 }).setNegativeButton("No", null).show();
     }
+    
+    public void csvConfirmation(final View v)
+    {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Confirm export")
+                .setMessage("Are you sure you want to export the database to CSV?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        exportToCSV(v);
+                    }
 
+                }).setNegativeButton("No", null).show();
+    }
+    
+    public static boolean createDirIfNotExists(String path)
+    {
+        boolean exists = true;
+
+        File file = new File(path);
+        //Toast.makeText(this.Context, "Exporting database complete.",Toast.LENGTH_SHORT).show();
+        
+        if (!file.exists())
+        {
+            System.out.println("directory does not exist; creating directory");
+            if (!file.mkdirs())
+            {
+                System.out.println("Problem creating data storage folder");
+                exists = false;
+            }
+        } else
+        {
+            System.out.println("directory exists");
+        }
+        return exists;
+    }
 }
