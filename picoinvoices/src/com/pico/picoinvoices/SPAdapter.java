@@ -7,8 +7,7 @@ import android.content.SharedPreferences.Editor;
 
 public class SPAdapter
 {
-    public static final String CLIENT_ID = "0-0-t";
-    public static final String FIRST_OPEN = "true";
+    public static final String CLIENT_ID = "0-0";
     private static final String APP_SHARED_PREFS = SPAdapter.class
             .getSimpleName(); // Name of the file -.xml
     private SharedPreferences _sharedPrefs;
@@ -28,22 +27,14 @@ public class SPAdapter
     // //////////////////////////////////////////////////////
     public int getClientID()
     {
-        String[] values = _sharedPrefs.getString(CLIENT_ID, "0-0-t").split("-");
+        String[] values = _sharedPrefs.getString(CLIENT_ID, "0-0").split("-");
         return Integer.parseInt(values[0]);
     }
 
     public int getInvoiceID()
     {
-        String[] values = _sharedPrefs.getString(CLIENT_ID, "0-0-t").split("-");
+        String[] values = _sharedPrefs.getString(CLIENT_ID, "0-0").split("-");
         return Integer.parseInt(values[1]);
-    }
-    public boolean getAppFirstOpen()
-    {
-        boolean values = _sharedPrefs.getBoolean(FIRST_OPEN, true);
-        if (values == true)
-            return true;
-        else
-            return false;
     }
 
     // //////////////////////////////////////////////////////
@@ -53,7 +44,7 @@ public class SPAdapter
     // //////////////////////////////////////////////////////
     public void saveClientID(String id)
     {
-        String[] values = _sharedPrefs.getString(CLIENT_ID, "0-0-t").split("-");
+        String[] values = _sharedPrefs.getString(CLIENT_ID, "0-0").split("-");
         values[0] = id;
         String fin = values[0] + "-" + values[1];
         _prefsEditor.putString(CLIENT_ID, fin);
@@ -68,20 +59,6 @@ public class SPAdapter
         _prefsEditor.putString(CLIENT_ID, fin);
         _prefsEditor.commit();
 
-    }
-    public void saveAppFirstOpen(boolean b)
-    {
-        if (b == true)
-        {
-            _prefsEditor.putBoolean(FIRST_OPEN, false);
-            _prefsEditor.commit();
-        }
-        else
-        {
-            _prefsEditor.putBoolean(FIRST_OPEN, true);
-            _prefsEditor.commit();
-        }
-            
     }
 
 }

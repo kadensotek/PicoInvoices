@@ -1,14 +1,15 @@
 package com.pico.picoinvoices;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 
 public class XmlExporter
 {
@@ -84,7 +85,6 @@ public class XmlExporter
         xmlBuilder.closeTable();
     }
 
-    @SuppressWarnings("resource")
     private void writeToFile(final String xmlString, final String exportFileName) throws IOException
     {
         File dir = new File(Environment.getExternalStorageDirectory(), XmlExporter.DATASUBDIRECTORY);
