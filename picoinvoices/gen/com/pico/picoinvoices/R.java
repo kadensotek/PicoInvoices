@@ -47,9 +47,9 @@ public final class R {
         public static final int addNewInvoice_newServiceButton=0x7f080013;
         public static final int addNewInvoice_rateInput=0x7f080011;
         public static final int addNewInvoice_serviceSpinner=0x7f08000f;
-        public static final int button1=0x7f080041;
         public static final int button2=0x7f080042;
         public static final int buttonContainer=0x7f080010;
+        public static final int clientInvoices_reports=0x7f080041;
         public static final int client_invoices_listView=0x7f080016;
         public static final int client_invoices_txtClientName=0x7f080017;
         public static final int client_listView=0x7f080019;

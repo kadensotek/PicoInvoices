@@ -9,4 +9,8 @@
 <fullyQualifiedTypeName name="android.R.layout"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.R"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.R.id"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.ClientList"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.ManageInvoices"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.RegisterServices"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.Settings"/>
 </qualifiedTypeNameHistroy>

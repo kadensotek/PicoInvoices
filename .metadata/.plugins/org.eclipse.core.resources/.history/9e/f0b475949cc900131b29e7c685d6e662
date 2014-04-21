@@ -74,7 +74,7 @@
 	        android:text="-" />
 
   <Button
-      android:id="@+id/clientInvoices_reports"
+      android:id="@+id/button1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"

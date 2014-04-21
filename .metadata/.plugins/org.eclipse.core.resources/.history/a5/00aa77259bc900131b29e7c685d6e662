@@ -12,8 +12,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ public class Home extends Activity
 	private DBAdapter _vDb = null;
 	private SPAdapter _sp = null;
 	private InvoiceAdapter _myDb = null; 
+	private boolean _showNotes = true;
 	
 	////////////////////////////////////////////////////////
     /////*
@@ -35,10 +38,19 @@ public class Home extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		initialize();
-		if (_sp.getAppFirstOpen() == true)
+		if (_showNotes == true)
 		{
 		      getNotifications();
-		      _sp.saveAppFirstOpen(false);
+		      _showNotes = false;
+		}
+		
+		//Use shared preferences to make sure that the notification is only shown once per application life
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		if(!prefs.getBoolean("firstTime", false)) {
+		    
+    		SharedPreferences.Editor editor = prefs.edit();
+    		editor.putBoolean("firstTime", true);
+    		editor.commit();
 		}
 		
 	}

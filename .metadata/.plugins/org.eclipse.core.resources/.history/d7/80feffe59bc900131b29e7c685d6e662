@@ -88,7 +88,6 @@ public class CsvExporter
         csvBuilder.newLine();
     }
     
-    @SuppressWarnings("resource")
     private void writeToFile(final String csvString, final String exportFileName) throws IOException
     {
         File dir = new File(Environment.getExternalStorageDirectory(), CsvExporter.DATASUBDIRECTORY);

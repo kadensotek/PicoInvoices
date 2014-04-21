@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -35,12 +34,7 @@ public class Home extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		initialize();
-		if (_sp.getAppFirstOpen() == true)
-		{
-		      getNotifications();
-		      _sp.saveAppFirstOpen(false);
-		}
-		
+		getNotifications();
 	}
 	@Override
     protected void onDestroy()
@@ -86,33 +80,29 @@ public class Home extends Activity
 //       Cursor cursor = _myDb.querySort2(new String[] { InvoiceAdapter.KEY_DUEDATE },InvoiceAdapter.DATABASE_TABLE);
        if (cursor.moveToFirst())
        {
-          do 
-          {
-               Calendar c=Calendar.getInstance();
-               DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               System.out.println(df.format(c.getTime()));      // This past Sunday [ May include today ]
-               //changed to 60 for testing purposes should be 7 in production
-               c.add(Calendar.DATE,60);
-               String s = df.format(c.getTime());
-               Date sevenDayDate = null;
-               Date invoiceDate = null;
-               try
-               {
-                    sevenDayDate = df.parse(s);
-                    invoiceDate = df.parse(cursor.getString(InvoiceAdapter.COL_DUEDATE));
-               } 
-               catch (ParseException e)
-               {
-                   Toast.makeText(Home.this, "Error parsing the date.",Toast.LENGTH_SHORT).show();
-               }
-               
-               //If the invoice duedate is between today and 7 days out, add that to the list to be displayed.
-               if(invoiceDate.after(todayDate) && invoiceDate.before(sevenDayDate)) 
-               {
-                   notice+="Invoice #: " + cursor.getString(InvoiceAdapter.COL_ROWID) + " - " + returnDate(cursor.getString(InvoiceAdapter.COL_DUEDATE)) + "\n";
-                   displayNote = true;
-               }
-          }while(cursor.moveToNext());
+           Calendar c=Calendar.getInstance();
+           DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           System.out.println(df.format(c.getTime()));      // This past Sunday [ May include today ]
+           c.add(Calendar.DATE,7);
+           String s = df.format(c.getTime());
+           Date sevenDayDate = null;
+           Date invoiceDate = null;
+           try
+           {
+                sevenDayDate = df.parse(s);
+                invoiceDate = df.parse(cursor.getString(InvoiceAdapter.COL_DUEDATE));
+           } 
+           catch (ParseException e)
+           {
+               Toast.makeText(Home.this, "Error parsing the date.",Toast.LENGTH_SHORT).show();
+           }
+           
+           //If the invoice duedate is between today and 7 days out, add that to the list to be displayed.
+           if(invoiceDate.after(todayDate) && invoiceDate.before(sevenDayDate)) 
+           {
+               notice+="Invoice #: " + cursor.getString(InvoiceAdapter.COL_ROWID) + " - " + cursor.getString(InvoiceAdapter.COL_DUEDATE) + "\n";
+               displayNote = true;
+           }
        } 
        else
            Toast.makeText(Home.this, "No invoices have been found.",Toast.LENGTH_SHORT).show();
@@ -120,7 +110,7 @@ public class Home extends Activity
        if(displayNote == true)
        {
            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-           builder.setMessage("Upcoming payments due...\n" + notice)
+           builder.setMessage("The following invoices have a payment due within a week...\n" + notice)
                   .setCancelable(false)
                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                       public void onClick(DialogInterface dialog, int id) {
@@ -134,22 +124,6 @@ public class Home extends Activity
        cursor.close();
        closeDB();
         
-    }
-    private String returnDate(String s)
-    {
-        DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        DateFormat targetFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
-        String formattedDate = "";
-        try
-        {
-            Date dated = originalFormat.parse(s);
-            formattedDate = targetFormat.format(dated);
-            System.out.println(formattedDate);
-        } catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-        return formattedDate;
     }
     ////////////////////////////////////////////////////////
     /////*

@@ -244,17 +244,7 @@ public class ClientInvoices extends Activity
         closeDB();
         return name;
     }
-    // ////////////////////////////////////////////////////////
-    // /////*
-    // /////* OnClick listener for reporting
-    // /////*
-    // ////////////////////////////////////////////////////////
-    public void onClick_Reports(View v)
-    {
-        Intent intent = new Intent(this, Reports.class);
-        startActivity(intent);
-    }
-    
+
     // ////////////////////////////////////////////////////////
     // /////*
     // /////* OnClick listener for adding an invoice as described in the xml

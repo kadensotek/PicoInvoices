@@ -84,7 +84,6 @@ public class XmlExporter
         xmlBuilder.closeTable();
     }
 
-    @SuppressWarnings("resource")
     private void writeToFile(final String xmlString, final String exportFileName) throws IOException
     {
         File dir = new File(Environment.getExternalStorageDirectory(), XmlExporter.DATASUBDIRECTORY);
