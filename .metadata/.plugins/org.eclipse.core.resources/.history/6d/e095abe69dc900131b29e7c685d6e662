@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pico.picoinvoices"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="Pico"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.pico.picoinvoices.Home"
+            android:label="Pico" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ClientList"
+            android:label="Clients"
+            android:parentActivityName="com.pico.picoinvoices.Home" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.AddNewClient"
+            android:label="Add New Client"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.pico.picoinvoices.ClientList"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ClientInvoices"
+            android:label="Client Invoices"
+            android:parentActivityName="com.pico.picoinvoices.ClientList" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ShowDetailedInvoice"
+            android:label="Detailed Invoice Info"
+            android:parentActivityName="com.pico.picoinvoices.ClientInvoices" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.AddNewInvoice"
+            android:label="Add New Invoice"
+            android:parentActivityName="com.pico.picoinvoices.ClientInvoices"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.RegisterServices"
+            android:label="Register Services"
+            android:parentActivityName="com.pico.picoinvoices.Home" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.AddNewService"
+            android:label="Add New Service"
+            android:parentActivityName="com.pico.picoinvoices.RegisterServices"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ManageInvoices"
+            android:label="Manage Invoices"
+            android:parentActivityName="com.pico.picoinvoices.Home" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.Settings"
+            android:label="Settings"
+            android:parentActivityName="com.pico.picoinvoices.Home" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ExportDB"
+            android:label="ExportDB"
+            android:parentActivityName="com.pico.picoinvoices.Settings" >
+        </activity>
+        <activity
+            android:name="com.pico.picoinvoices.ImportDB"
+            android:label="ImportDB"
+            android:parentActivityName="com.pico.picoinvoices.Settings" >
+        </activity>
+    </application>
+
+</manifest>
