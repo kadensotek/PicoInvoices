@@ -4210,6 +4210,7 @@ Binding(CTRL+SHIFT+\,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+<<<<<<< HEAD
 !SESSION 2014-04-21 17:13:18.101 -----------------------------------------------
 eclipse.buildId=v22.3.0-887826
 java.version=1.7.0_55
@@ -4481,3 +4482,5 @@ Binding(CTRL+SHIFT+\,
 
 !ENTRY com.android.ide.eclipse.adt 4 0 2014-04-21 17:42:56.773
 !MESSAGE Warning: Ignoring name conflict in resource file for name activity_vertical_margin
+=======
+>>>>>>> parent of 7c7074b... Minor changes, starting to finish reporting
