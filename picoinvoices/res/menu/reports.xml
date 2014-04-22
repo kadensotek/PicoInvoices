@@ -1,9 +1,21 @@
+<<<<<<< HEAD
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+=======
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.pico.picoinvoices.Reports" >
+>>>>>>> 061df82953d0b0bb1b579dcaacb8db2e84b78f49
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
+<<<<<<< HEAD
         android:showAsAction="never"
         android:title="@string/action_settings"/>
+=======
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+>>>>>>> 061df82953d0b0bb1b579dcaacb8db2e84b78f49
 
 </menu>
