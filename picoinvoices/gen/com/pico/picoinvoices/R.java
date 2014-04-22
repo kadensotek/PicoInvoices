@@ -13,6 +13,11 @@ public final class R {
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
+         Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+    
+
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
@@ -138,13 +143,14 @@ public final class R {
         public static final int activity_show_detailed_invoice=0x7f03000c;
         public static final int child_view=0x7f03000d;
         public static final int client_name=0x7f03000e;
-        public static final int invoice_detail=0x7f03000f;
-        public static final int invoice_listview_layout_template=0x7f030010;
-        public static final int parent_view=0x7f030011;
-        public static final int scrollview=0x7f030012;
-        public static final int service_layout_template=0x7f030013;
-        public static final int service_rows=0x7f030014;
-        public static final int spinner_text_layout=0x7f030015;
+        public static final int fragment_reports=0x7f03000f;
+        public static final int invoice_detail=0x7f030010;
+        public static final int invoice_listview_layout_template=0x7f030011;
+        public static final int parent_view=0x7f030012;
+        public static final int scrollview=0x7f030013;
+        public static final int service_layout_template=0x7f030014;
+        public static final int service_rows=0x7f030015;
+        public static final int spinner_text_layout=0x7f030016;
     }
     public static final class menu {
         public static final int add_new=0x7f070000;
