@@ -83,14 +83,6 @@
             android:label="ImportDB"
             android:parentActivityName="com.pico.picoinvoices.Settings" >
         </activity>
-        <activity
-            android:name="com.pico.picoinvoices.Reports"
-            android:label="@string/title_activity_reports"
-            android:parentActivityName="com.pico.picoinvoices.ClientInvoices" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pico.picoinvoices.ClientInvoices" />
-        </activity>
     </application>
 
 </manifest>
