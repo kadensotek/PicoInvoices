@@ -243,7 +243,7 @@ public class ManageInvoices extends Activity
         shownList.add("Date Issued");
         shownList.add("Current Status");
         MyAdapter dataAdapter = new MyAdapter(this,
-                R.layout.spinner_text_layout,list,shownList);
+                R.layout.spinner_text_layout,shownList,list);
         _spinner.setAdapter(dataAdapter);
 //        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 //                android.R.layout.simple_spinner_item, list);
@@ -264,7 +264,7 @@ public class ManageInvoices extends Activity
                 System.out.println("You selected: " + pos);
                 TextView tv = (TextView) view.findViewById(R.id.spinnerText2);
                 System.out.println("TextView is: " + tv.getText().toString());
-                _sort = parent.getItemAtPosition(pos).toString();
+                _sort = tv.getText().toString();
                 refresh();
             }
 

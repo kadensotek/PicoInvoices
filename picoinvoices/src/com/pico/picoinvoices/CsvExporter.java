@@ -88,6 +88,7 @@ public class CsvExporter
         csvBuilder.newLine();
     }
     
+<<<<<<< HEAD
     private void writeToFile(final String csvString, final String exportFileName) throws IOException
     {
         File dir = new File(Environment.getExternalStorageDirectory(), CsvExporter.DATASUBDIRECTORY);
@@ -255,6 +256,9 @@ public class CsvExporter
         csvBuilder.newLine();
     }
     
+=======
+    @SuppressWarnings("resource")
+>>>>>>> 748505011681d6976669731b020e4d1ab4e39d36
     private void writeToFile(final String csvString, final String exportFileName) throws IOException
     {
         File dir = new File(Environment.getExternalStorageDirectory(), CsvExporter.DATASUBDIRECTORY);

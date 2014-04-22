@@ -3,6 +3,7 @@ package com.pico.picoinvoices;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -151,6 +152,8 @@ public class AddNewClient extends Activity
                             // Call finish() to prevent the flow of
                             // activities from accessing this activity from
                             // the backstack
+                            Intent intent =  new Intent(AddNewClient.this, ClientList.class);
+                            startActivity(intent);
                             finish();
                         }
                     }

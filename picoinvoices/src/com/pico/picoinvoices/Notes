@@ -67,7 +67,7 @@ Mike
 	(*)-->Format the spinners for appearance
 	(*)-->Figure out why the amount for each service is not parsing properly
 	
-( )ManageInvoices
+(*)ManageInvoices
 	(*)-->Format the spinner and listview rows
 	(*)-->Create more meaningful sorts
 	(*)-->Figure out why it does not refresh after adding an invoice from this activity ==>Added an initialize function and further lifecycle functions
