@@ -133,7 +133,7 @@ public class AddNewInvoice extends Activity
         switch (item.getItemId())
         {
             case R.id.action_cancelNewClient:
-                System.out.println("Settings selected");
+                onClick_cancelInvoice();
                 return true;
             case R.id.action_acceptNewInvoice:
                 onClick_addInvoice();
@@ -312,6 +312,30 @@ public class AddNewInvoice extends Activity
     // ///* OnClick listener for accepting/cancelling changes
     // ///*
     // //////////////////////////////////////////////////////
+    public void onClick_cancelInvoice()
+    {
+        new AlertDialog.Builder(this)
+        .setTitle("Add Invoice")
+        .setMessage("Cancel add?")
+        .setPositiveButton(android.R.string.yes,
+        new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,
+                    int which)
+            {
+               finish();
+            }
+        })
+        .setNegativeButton(android.R.string.no,
+        new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,
+                    int which)
+            {
+                //Do nothing to go back to the current entry
+            }
+        }).setIcon(R.drawable.ic_launcher).show();
+    }
     public void onClick_addInvoice()
     {
         new AlertDialog.Builder(this)

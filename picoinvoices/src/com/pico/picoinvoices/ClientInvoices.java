@@ -86,17 +86,17 @@ public class ClientInvoices extends Activity
             case R.id.action_addInvoice:
                 Intent intent = new Intent(this, AddNewInvoice.class);
                 startActivity(intent);
-                finish();
+//                finish();
                 return true;
             case R.id.goto_Home:
                 Intent home = new Intent(this, Home.class);
                 startActivity(home);
-                finish();
+//                finish();
                 return true;
             case R.id.goto_Clients:
                 Intent clients = new Intent(this, ClientList.class);
                 startActivity(clients);
-                finish();
+//                finish();
                 return true;
             case R.id.goto_ManageInvoices:
                 Intent manage = new Intent(this, ManageInvoices.class);
@@ -106,12 +106,12 @@ public class ClientInvoices extends Activity
             case R.id.goto_Services:
                 Intent services = new Intent(this, RegisterServices.class);
                 startActivity(services);
-                finish();
+//                finish();
                 return true;
-            case R.id.goto_Settings:
+            case R.id.goto_Settings: 
                 Intent settings = new Intent(this, Settings.class);
                 startActivity(settings);
-                finish();
+//                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -244,7 +244,18 @@ public class ClientInvoices extends Activity
         closeDB();
         return name;
     }
-
+    // ////////////////////////////////////////////////////////
+    // /////*
+    // /////* OnClick listener for reports
+    // /////*
+    // ////////////////////////////////////////////////////////
+    public void onClick_Reports(View v)
+    {
+        Intent intent = new Intent(this, Reports.class);
+        startActivity(intent);
+    }
+    
+    
     // ////////////////////////////////////////////////////////
     // /////*
     // /////* OnClick listener for adding an invoice as described in the xml
