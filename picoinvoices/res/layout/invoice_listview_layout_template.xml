@@ -6,7 +6,7 @@
     android:paddingTop="10dp" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/report_serviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/invoice_listview_layout_template_txtInvoiceNumber"
@@ -17,10 +17,10 @@
         android:id="@+id/invoice_listview_layout_template_txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBaseline="@+id/report_avgCost"
+        android:layout_alignBottom="@+id/report_avgCost"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/textView2"
+        android:layout_toRightOf="@+id/report_avgCost"
         android:text="Date Issued"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -37,7 +37,7 @@
         android:id="@+id/invoice_listview_layout_template_CustomerID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/report_avgCost"
         android:layout_below="@+id/textView3"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -58,7 +58,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/report_avgCost"
         android:layout_alignParentTop="true"
         android:layout_marginTop="14dp"
         android:text="Invoice #:" />
@@ -74,7 +74,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/report_avgCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -87,7 +87,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/report_avgCost"
         android:layout_alignLeft="@+id/textView4"
         android:text="Payment Due:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/invoice_listview_layout_template_txtClient"
         android:layout_alignBottom="@+id/invoice_listview_layout_template_txtClient"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/report_avgCost"
         android:text="Client:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

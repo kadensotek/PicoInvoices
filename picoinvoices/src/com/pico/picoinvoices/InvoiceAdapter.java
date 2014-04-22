@@ -163,7 +163,18 @@ public class InvoiceAdapter
         }
         return c;
     }
-
+ // Get a specific row (by rowId)
+    public Cursor getCustRow(long rowId)
+    {
+        String where = KEY_CUSTOMER + "=" + rowId;
+        Cursor c = db.query(true, DATABASE_TABLE, ALL_KEYS, where, null, null,
+                null, null, null);
+        if (c != null)
+        {
+            c.moveToFirst();
+        }
+        return c;
+    }
     // Return the list of invoices associated with a specific customer
     public Cursor getCustomerInvoice(long rowId)
     {

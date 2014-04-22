@@ -37,7 +37,8 @@
         android:id="@+id/clientInvoices_Reports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/client_invoices_listView"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/client_invoices_txtClientName"
         android:onClick="onClick_Reports"
         android:text="Reports" />
 

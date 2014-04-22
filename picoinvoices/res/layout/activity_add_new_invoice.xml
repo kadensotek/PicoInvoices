@@ -74,7 +74,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/report_serviceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/addNewInvoice_serviceSpinner"
@@ -86,9 +86,9 @@
                 android:id="@+id/addNewInvoice_rateInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView1"
-                android:layout_alignRight="@+id/textView1"
-                android:layout_below="@+id/textView1"
+                android:layout_alignLeft="@+id/report_serviceName"
+                android:layout_alignRight="@+id/report_serviceName"
+                android:layout_below="@+id/report_serviceName"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:paddingBottom="10dp" >
