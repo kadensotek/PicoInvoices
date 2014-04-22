@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,13 +36,3 @@
     
 
 </RelativeLayout>
-=======
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.pico.picoinvoices.Reports"
-    tools:ignore="MergeRootFrame" />
-
->>>>>>> 061df82953d0b0bb1b579dcaacb8db2e84b78f49
