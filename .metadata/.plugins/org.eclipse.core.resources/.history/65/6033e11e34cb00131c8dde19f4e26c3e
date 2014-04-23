@@ -115,8 +115,7 @@ public class Reports extends Activity
         }
         return null;
     }
-    
-    //Ret
+        
     private String[] returnServices(String s)
     {
         Cursor cursor = null;
@@ -128,7 +127,7 @@ public class Reports extends Activity
             cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
             if (cursor.moveToFirst())
             {
-                services[i] = cursor.getString(RegisterServicesAdapter.COL_NAME).trim();
+                services[i] = cursor.getString(RegisterServicesAdapter.COL_NAME);
             }
             
         }

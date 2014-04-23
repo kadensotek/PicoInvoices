@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class Reports extends Activity
 {
@@ -68,23 +67,22 @@ public class Reports extends Activity
         openDB();
         //Create the list of items
         
-        getUserServiceInfo();
-//        /*
-//         * This pull is now working correctly, need to pull in the information, process it, 
-//         * and then add it in a normal listview adapter, not a cursor listview
-//         */
-//        
-//            
-//              //Create the arrays for mapping DB columns to elements in the listview
-//              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
-//              int[] ints = new int[] {R.id.report_serviceName, R.id.report_instances, R.id.report_avgCost};
-//              
-//              //Set the custom listviewadapter on the data and view
-//              ListViewAdapter adapter = new ListViewAdapter(this, R.layout.reports, cursor,client_name_list , ints, 0);
-//              ListView list = (ListView) findViewById(R.id.reports_listView);
-//              list.setAdapter(adapter);
-//              
-//              //Close database
+        /*
+         * This pull is now working correctly, need to pull in the information, process it, 
+         * and then add it in a normal listview adapter, not a cursor listview
+         */
+        
+            
+              //Create the arrays for mapping DB columns to elements in the listview
+              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
+              int[] ints = new int[] {R.id.report_serviceName, R.id.report_instances, R.id.report_avgCost};
+              
+              //Set the custom listviewadapter on the data and view
+              ListViewAdapter adapter = new ListViewAdapter(this, R.layout.reports, cursor,client_name_list , ints, 0);
+              ListView list = (ListView) findViewById(R.id.reports_listView);
+              list.setAdapter(adapter);
+              
+              //Close database
         
         
 //        
@@ -105,18 +103,13 @@ public class Reports extends Activity
             do 
             {
                String[] servicesAvail = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
-               for (int i = 0; i < servicesAvail.length; i++)
-               {
-                   System.out.println(servicesAvail[i]);
-                   Toast.makeText(Reports.this,servicesAvail[i],Toast.LENGTH_SHORT).show();
-               }
+                
                 
             }while (cursor.moveToNext());
         }
         return null;
     }
-    
-    //Ret
+        
     private String[] returnServices(String s)
     {
         Cursor cursor = null;
@@ -128,7 +121,7 @@ public class Reports extends Activity
             cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
             if (cursor.moveToFirst())
             {
-                services[i] = cursor.getString(RegisterServicesAdapter.COL_NAME).trim();
+                services[i] = cursor.getString(RegisterServicesAdapter.COL_NAME);
             }
             
         }
