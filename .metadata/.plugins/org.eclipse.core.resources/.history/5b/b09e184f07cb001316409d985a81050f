@@ -64,12 +64,8 @@ public class Reports extends Activity
         //Open database
         openDB();
         //Create the list of items
-        
-        /*
-         * This pull is now working correctly, need to pull in the information, process it, 
-         * and then add it in a normal listview adapter, not a cursor listview
-         */
         Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
+        
         if (cursor != null)
         {
             do 
@@ -85,7 +81,7 @@ public class Reports extends Activity
             }while (cursor.moveToNext());
             
               //Create the arrays for mapping DB columns to elements in the listview
-              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
+              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_PRICESERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
               int[] ints = new int[] {R.id.report_serviceName, R.id.report_instances, R.id.report_avgCost};
               
               //Set the custom listviewadapter on the data and view

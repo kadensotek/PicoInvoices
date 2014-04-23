@@ -48,7 +48,7 @@ public class InvoiceAdapter
 
     public static final String[] ALL_KEYS = new String[] { KEY_ROWID,
             KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DUEDATE,
-            KEY_PRICESERVICE, KEY_SERVICE, KEY_AMOUNTDUE, KEY_STATUS };
+            KEY_PRICESERVICE, KEY_AMOUNTDUE, KEY_STATUS };
 
     // DB info: it's name, and the table we are using (just one).
     public static final String DATABASE_TABLE = "invoices";
@@ -138,7 +138,6 @@ public class InvoiceAdapter
         }
         return c;
     }
-    
     // Return all data from any database.
     public Cursor getAllRows(String db_name, String[] db_keys)
     {

@@ -64,12 +64,8 @@ public class Reports extends Activity
         //Open database
         openDB();
         //Create the list of items
-        
-        /*
-         * This pull is now working correctly, need to pull in the information, process it, 
-         * and then add it in a normal listview adapter, not a cursor listview
-         */
         Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
+//        Cursor cursor = _myDb.query(new String[] { Integer.toString(_sp.getClientID()) },InvoiceAdapter.DATABASE_TABLE);
         if (cursor != null)
         {
             do 

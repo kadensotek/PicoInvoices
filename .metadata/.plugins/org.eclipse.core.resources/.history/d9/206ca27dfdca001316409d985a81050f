@@ -3,6 +3,8 @@ package com.pico.picoinvoices;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class Reports extends Activity
@@ -20,9 +22,9 @@ public class Reports extends Activity
     private void initialize()
     {
         _sp = new SPAdapter(this);
+        _myDb = new InvoiceAdapter(this);
         refresh();
-        ListView listView = (ListView) findViewById(R.id.reports_listView);
-        listView.setEmptyView(findViewById(R.id.emptyReportsList));
+        
     }
     ////////////////////////////////////////////////////////
     /////*
@@ -33,9 +35,8 @@ public class Reports extends Activity
     {
         _myDb.close();
     }
-    private void openDB()
+    private void openDB() 
     {
-        _myDb = new InvoiceAdapter(this);
         _myDb.open();
     }
 
@@ -64,26 +65,11 @@ public class Reports extends Activity
         //Open database
         openDB();
         //Create the list of items
+        Cursor cursor = _myDb.getCustRow(_sp.getClientID());                                 
         
-        /*
-         * This pull is now working correctly, need to pull in the information, process it, 
-         * and then add it in a normal listview adapter, not a cursor listview
-         */
-        Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
-        if (cursor != null)
+        if (cursor.moveToFirst())
         {
-            do 
-            {
-                System.out.println(cursor.getString(0));
-                System.out.println(cursor.getString(1));
-                System.out.println(cursor.getString(2));
-                System.out.println(cursor.getString(3));
-                System.out.println(cursor.getString(4));
-                System.out.println(cursor.getString(5));
-                System.out.println(cursor.getString(6));
-                System.out.println(cursor.getString(7));
-            }while (cursor.moveToNext());
-            
+            System.out.println(cursor.getString(InvoiceAdapter.COL_SERVICE));
               //Create the arrays for mapping DB columns to elements in the listview
               String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
               int[] ints = new int[] {R.id.report_serviceName, R.id.report_instances, R.id.report_avgCost};
@@ -102,20 +88,20 @@ public class Reports extends Activity
         
     }
     
-//    private void registerClickCallback() 
-//    {
-//        //Find listview that was created from populateListView
-//        ListView list = (ListView) findViewById(R.id.client_listView);
-//        
-//        //Set the action for an element selection
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
-//        {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
-//            {
-//                
-//            }
-//        });
-//    }
+    private void registerClickCallback() 
+    {
+        //Find listview that was created from populateListView
+        ListView list = (ListView) findViewById(R.id.client_listView);
+        
+        //Set the action for an element selection
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
+            {
+                
+            }
+        });
+    }
 
 }
