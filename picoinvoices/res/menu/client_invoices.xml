@@ -1,5 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+     <item
+        android:id="@+id/action_editClient"
+        android:icon="@drawable/ic_action_edit"
+        android:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_addInvoice"
         android:icon="@drawable/ic_action_new"

@@ -91,6 +91,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pico.picoinvoices.ClientInvoices" />
         </activity>
+        <activity
+            android:name="com.pico.picoinvoices.EditClientInfo"
+            android:label="@string/title_activity_edit_client_info"
+            android:parentActivityName="com.pico.picoinvoices.ClientInvoices"
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pico.picoinvoices.ClientInvoices" />
+        </activity>
     </application>
 
 </manifest>

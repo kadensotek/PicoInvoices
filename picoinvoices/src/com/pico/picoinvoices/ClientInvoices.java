@@ -83,6 +83,11 @@ public class ClientInvoices extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId())
         {
+            case R.id.action_editClient:
+                Intent edit = new Intent(this, EditClientInfo.class);
+                startActivity(edit);
+//                finish();
+                return true;
             case R.id.action_addInvoice:
                 Intent intent = new Intent(this, AddNewInvoice.class);
                 startActivity(intent);

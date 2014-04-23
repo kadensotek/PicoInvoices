@@ -76,7 +76,7 @@ public class ShowDetailedInvoice extends Activity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.client_invoices, menu);
+        getMenuInflater().inflate(R.menu.show_detailed_invoice, menu);
         return true;
     }
 

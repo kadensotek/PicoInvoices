@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/editClientInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="462dp"
+            android:padding="14dp" >
+
+            <TextView
+                android:id="@+id/lbl_edit_fname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="First Name:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/txt_edit_fname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_edit_fname"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/txt_edit_lname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_edit_lname"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/txt_edit_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_edit_address"
+                android:ems="10"
+                android:inputType="textPostalAddress|textCapWords" />
+
+            <EditText
+                android:id="@+id/txt_edit_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_edit_phone"
+                android:ems="10"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/txt_edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/lbl_edit_email"
+                android:layout_below="@+id/lbl_edit_email"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/lbl_edit_lname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/lbl_edit_fname"
+                android:layout_below="@+id/txt_edit_fname"
+                android:paddingTop="10dp"
+                android:text="Last Name:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/lbl_edit_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/txt_edit_lname"
+                android:layout_below="@+id/txt_edit_lname"
+                android:paddingTop="10dp"
+                android:text="Address:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/lbl_edit_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/txt_edit_address"
+                android:layout_below="@+id/txt_edit_address"
+                android:paddingTop="10dp"
+                android:text="Phone Number:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/lbl_edit_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/lbl_edit_lname"
+                android:layout_below="@+id/txt_edit_phone"
+                android:paddingTop="10dp"
+                android:text="Email:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
