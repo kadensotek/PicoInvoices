@@ -1,0 +1,256 @@
+package com.pico.picoinvoices;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class Reports extends Activity
+{
+
+    private SPAdapter _sp = null;
+    private InvoiceAdapter _myDb = null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reports);
+        initialize();
+    }
+    private void initialize()
+    {
+        _sp = new SPAdapter(this);
+        refresh();
+        ListView listView = (ListView) findViewById(R.id.reports_listView);
+        listView.setEmptyView(findViewById(R.id.emptyReportsList));
+    }
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Database access functions
+    /////*
+    ////////////////////////////////////////////////////////
+    private void closeDB() 
+    {
+        _myDb.close();
+    }
+    private void openDB()
+    {
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
+    }
+
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Refresh functions
+    /////*
+    ////////////////////////////////////////////////////////
+    private void refresh()
+    {
+        //Open database
+        openDB();
+        
+        //Create the list of items on in the listview
+        populateListView();
+        
+        //Set the functionality for selecting a given element in the list
+        //registerClickCallback();
+        
+        //Close database
+        closeDB();
+    }
+    
+    private void populateListView() 
+    {
+        //Open database
+        openDB();
+        //Create the list of items
+        
+        ArrayList<String> serviceInfo = (ArrayList<String>) getUserServiceInfo(0);
+//        /*
+//         * This pull is now working correctly, need to pull in the information, process it, 
+//         * and then add it in a normal listview adapter, not a cursor listview
+//         */
+        ArrayList<String> test = (ArrayList<String>) getUserServiceInfo(0);
+        for(int i=0; i< test.size(); i++)
+        {
+            System.out.println(test.get(i));
+        }
+//            MyAdapter adapter = new MyAdapter(this, R.layout.reports, serviceInfo.get(0), serviceInfo.get(1), serviceInfo.get(2));
+//            ListView list = (ListView) findViewById(R.id.reports_listView);
+//            list.setAdapter(adapter);
+//            
+//              //Create the arrays for mapping DB columns to elements in the listview
+//              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
+//              int[] ints = new int[] {R.id.report_serviceName, R.id.report_instances, R.id.report_avgCost};
+//              
+//              //Set the custom listviewadapter on the data and view
+//              ListViewAdapter adapter = new ListViewAdapter(this, R.layout.reports, cursor,client_name_list , ints, 0);
+//              ListView list = (ListView) findViewById(R.id.reports_listView);
+//              list.setAdapter(adapter);
+//              
+//              //Close database
+        
+        
+//        
+        closeDB();
+        
+    }
+    
+    private ArrayList getUserServiceInfo(int j)
+    {
+        ArrayList<String> services = new ArrayList<String>();
+        ArrayList<Integer> instances = new ArrayList<Integer>();
+        ArrayList<Integer> average = new ArrayList<Integer>();
+        ArrayList<Integer> total = new ArrayList<Integer>();
+        
+        Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
+        if (cursor != null)
+        {
+            do 
+            {
+               String[] servicesAvail = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+               String[] serviceFee = returnServiceFee(cursor.getString(InvoiceAdapter.COL_PRICESERVICE));
+               for (int i = 0; i < servicesAvail.length; i++)
+               {
+                   System.out.println(servicesAvail[i]);
+                   Toast.makeText(Reports.this,servicesAvail[i],Toast.LENGTH_SHORT).show();
+                   if (services.contains(servicesAvail[i]))
+                   {
+                       int value = services.indexOf(servicesAvail[i]);
+                       //increment the number of instances and total for each service
+                       instances.set(value, instances.get(value) + 1);
+                       total.set(value, total.get(value) + Integer.parseInt(serviceFee[i]));
+                       System.out.println(instances.get(value));
+                   }
+                   else
+                   {
+                       services.add(servicesAvail[i]);
+                       instances.add(1);
+                       total.add(Integer.parseInt(serviceFee[i]));
+                       average.add(Integer.parseInt(serviceFee[i]));
+                   }
+               }
+                
+            }while (cursor.moveToNext());
+        }
+        
+        //Add the arraylists to the wrapper arraylist
+        if(j == 0)
+        {
+            return services;
+        }
+        else if (j ==1)
+        {
+            return instances;
+        }
+        else if (j ==2)
+        {
+            return average;
+        }
+        else
+        {
+            return total;
+        }
+        
+    }
+    
+    private String[] returnServiceFee(String string)
+    {
+        return string.split("&");
+    }
+    //Convert the service id into the service name
+    private String[] returnServices(String s)
+    {
+        Cursor cursor = null;
+        String[] services = s.split("&");
+        
+        for (int i = 0; i < services.length; i++)
+        {
+            cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
+            if (cursor.moveToFirst())
+            {
+                services[i] = cursor.getString(RegisterServicesAdapter.COL_NAME).trim();
+            }
+            
+        }
+        cursor.close();
+        return services;
+    }
+//    private void registerClickCallback() 
+//    {
+//        //Find listview that was created from populateListView
+//        ListView list = (ListView) findViewById(R.id.client_listView);
+//        
+//        //Set the action for an element selection
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+//        {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
+//            {
+//                
+//            }
+//        });
+//    }
+    private class MyAdapter extends ArrayAdapter
+    {
+        ArrayList<String> l = null; 
+        ArrayList<Integer> l2 =null, l3 = null;
+
+        public MyAdapter(Context context, int textViewResourceId, List<String> list, List<Integer> list2, List<Integer> list3)
+        {
+            super(context, textViewResourceId);
+            l = (ArrayList<String>) list;
+            l2 = (ArrayList<Integer>) list2;
+            l3 = (ArrayList<Integer>) list3;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView,
+                ViewGroup parent)
+        {
+            //Only return a row if there are elements (clients and services have been registered) in the arraylists
+           if (l.size() > 0 && l2.size() > 0 && l3.size() > 0)
+           {
+                LayoutInflater inflater = getLayoutInflater();
+                View row = inflater.inflate(R.layout.reports, parent,false);
+                
+                TextView serviceName = (TextView) row.findViewById(R.id.report_serviceName);
+                serviceName.setText(l.get(position));
+                TextView instance = (TextView) row.findViewById(R.id.report_instances);
+                instance.setText(l2.get(position));
+                TextView average = (TextView) row.findViewById(R.id.report_avgCost);
+                average.setText(l3.get(position));
+    
+               
+    
+                return row;
+           }
+           else
+           {
+               return null;
+           }
+        }
+
+    }
+}

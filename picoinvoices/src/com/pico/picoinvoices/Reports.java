@@ -1,12 +1,18 @@
 package com.pico.picoinvoices;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class Reports extends Activity
 {
@@ -68,12 +74,22 @@ public class Reports extends Activity
         openDB();
         //Create the list of items
         
-        getUserServiceInfo();
 //        /*
 //         * This pull is now working correctly, need to pull in the information, process it, 
 //         * and then add it in a normal listview adapter, not a cursor listview
 //         */
-//        
+        ArrayList<String> test = (ArrayList<String>) getUserServiceInfo(0);
+        ArrayList<String> test2 = (ArrayList<String>) getUserServiceInfo(1);
+        ArrayList<String> test3 = (ArrayList<String>) getUserServiceInfo(2);
+        for(int i=0; i< test.size(); i++)
+        {
+            System.out.println(test.get(i) + " - " + test2.get(i) + " - " + test3.get(i));
+        }
+        System.out.println("finished printing string array");
+            MyAdapter adapter = new MyAdapter(this, R.layout.reports, test, test2, test3);
+            ListView list = (ListView) findViewById(R.id.reports_listView);
+            list.setAdapter(adapter);
+            System.out.println("Adapter should have been set");
 //            
 //              //Create the arrays for mapping DB columns to elements in the listview
 //              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
@@ -92,12 +108,12 @@ public class Reports extends Activity
         
     }
     
-    private ArrayList<String> getUserServiceInfo()
+    private ArrayList<String> getUserServiceInfo(int j)
     {
         ArrayList<String> services = new ArrayList<String>();
-        ArrayList<Integer> instances = new ArrayList<Integer>();
-        ArrayList<Integer> average = new ArrayList<Integer>();
-        ArrayList<ArrayList> wrapper = new ArrayList<ArrayList>();
+        ArrayList<String> instances = new ArrayList<String>();
+        ArrayList<String> average = new ArrayList<String>();
+        ArrayList<String> total = new ArrayList<String>();
         
         Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
         if (cursor != null)
@@ -105,23 +121,60 @@ public class Reports extends Activity
             do 
             {
                String[] servicesAvail = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+               String[] serviceFee = returnServiceFee(cursor.getString(InvoiceAdapter.COL_PRICESERVICE));
                for (int i = 0; i < servicesAvail.length; i++)
                {
-                   System.out.println(servicesAvail[i]);
-                   Toast.makeText(Reports.this,servicesAvail[i],Toast.LENGTH_SHORT).show();
+                   //System.out.println(servicesAvail[i]);
+//                   Toast.makeText(Reports.this,servicesAvail[i],Toast.LENGTH_SHORT).show();
+                   if (services.contains(servicesAvail[i]))
+                   {
+                       int value = services.indexOf(servicesAvail[i]);
+                       //increment the number of instances and total for each service
+                       instances.set(value, Integer.toString((Integer.parseInt(instances.get(value)) + 1)));
+                       total.set(value, Integer.toString(Integer.parseInt(total.get(value)) + Integer.parseInt(serviceFee[i])));
+                       //System.out.println(instances.get(value));
+                   }
+                   else
+                   {
+                       services.add(servicesAvail[i]);
+                       instances.add("1");
+                       total.add(serviceFee[i]);
+                       average.add(serviceFee[i]);
+                   }
                }
                 
             }while (cursor.moveToNext());
         }
-        return null;
+        
+        //Add the arraylists to the wrapper arraylist
+        if(j == 0)
+        {
+            return services;
+        }
+        else if (j ==1)
+        {
+            return instances;
+        }
+        else if (j ==2)
+        {
+            return total;
+        }
+        else
+        {
+            return average;
+        }
+        
     }
     
-    //Ret
+    private String[] returnServiceFee(String string)
+    {
+        return string.split("&");
+    }
+    //Convert the service id into the service name
     private String[] returnServices(String s)
     {
         Cursor cursor = null;
         String[] services = s.split("&");
-        s = "Services:\n";
         
         for (int i = 0; i < services.length; i++)
         {
@@ -150,5 +203,59 @@ public class Reports extends Activity
 //            }
 //        });
 //    }
+    private class MyAdapter extends ArrayAdapter<String>
+    {
+        ArrayList<String> l = null; 
+        ArrayList<String> l2 =null, l3 = null;
 
+        public MyAdapter(Context context, int textViewResourceId, List<String> list, List<String> list2, List<String> list3)
+        {
+            super(context, textViewResourceId, list);
+            l = (ArrayList<String>) list;
+            l2 = (ArrayList<String>) list2;
+            l3 = (ArrayList<String>) list3;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView,
+                ViewGroup parent)
+        {
+            //Only return a row if there are elements (clients and services have been registered) in the arraylists
+           if (true)
+           {
+               System.out.println(l.get(position) + " - " + l2.get(position) + " - " + l3.get(position)); 
+               
+               LayoutInflater inflater = getLayoutInflater();
+                View row = inflater.inflate(R.layout.reports, parent,false);
+                
+                TextView serviceName = (TextView) row.findViewById(R.id.report_serviceName);
+                serviceName.setText(l.get(position));
+                TextView instance = (TextView) row.findViewById(R.id.report_instances);
+                instance.setText(l2.get(position));
+                TextView average = (TextView) row.findViewById(R.id.report_avgCost);
+                average.setText(l3.get(position));
+    
+               
+    
+                return row;
+           }
+           else
+           {
+              
+               return null;
+           }
+        }
+
+    }
 }

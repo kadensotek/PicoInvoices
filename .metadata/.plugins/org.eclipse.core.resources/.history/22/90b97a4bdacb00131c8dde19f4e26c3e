@@ -1,0 +1,154 @@
+package com.pico.picoinvoices;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.Toast;
+
+public class Reports extends Activity
+{
+
+    private SPAdapter _sp = null;
+    private InvoiceAdapter _myDb = null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reports);
+        initialize();
+    }
+    private void initialize()
+    {
+        _sp = new SPAdapter(this);
+        refresh();
+        ListView listView = (ListView) findViewById(R.id.reports_listView);
+        listView.setEmptyView(findViewById(R.id.emptyReportsList));
+    }
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Database access functions
+    /////*
+    ////////////////////////////////////////////////////////
+    private void closeDB() 
+    {
+        _myDb.close();
+    }
+    private void openDB()
+    {
+        _myDb = new InvoiceAdapter(this);
+        _myDb.open();
+    }
+
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Refresh functions
+    /////*
+    ////////////////////////////////////////////////////////
+    private void refresh()
+    {
+        //Open database
+        openDB();
+        
+        //Create the list of items on in the listview
+        populateListView();
+        
+        //Set the functionality for selecting a given element in the list
+        //registerClickCallback();
+        
+        //Close database
+        closeDB();
+    }
+    
+    private void populateListView() 
+    {
+        //Open database
+        openDB();
+        //Create the list of items
+        
+        getUserServiceInfo();
+//        /*
+//         * This pull is now working correctly, need to pull in the information, process it, 
+//         * and then add it in a normal listview adapter, not a cursor listview
+//         */
+//        
+//            
+//              //Create the arrays for mapping DB columns to elements in the listview
+//              String[] client_name_list = new String[]{InvoiceAdapter.KEY_ROWID, InvoiceAdapter.KEY_SERVICE, InvoiceAdapter.KEY_AMOUNTDUE};
+//              int[] ints = new int[] {R.id.report_serviceName, R.id.report_instances, R.id.report_avgCost};
+//              
+//              //Set the custom listviewadapter on the data and view
+//              ListViewAdapter adapter = new ListViewAdapter(this, R.layout.reports, cursor,client_name_list , ints, 0);
+//              ListView list = (ListView) findViewById(R.id.reports_listView);
+//              list.setAdapter(adapter);
+//              
+//              //Close database
+        
+        
+//        
+        closeDB();
+        
+    }
+    
+    private ArrayList<String> getUserServiceInfo()
+    {
+        ArrayList<String> services = new ArrayList<String>();
+        ArrayList<Integer> instances = new ArrayList<Integer>();
+        ArrayList<Integer> average = new ArrayList<Integer>();
+        ArrayList<ArrayList> wrapper = new ArrayList<ArrayList>();
+        
+        Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
+        if (cursor != null)
+        {
+            do 
+            {
+               String[] servicesAvail = returnServices(cursor.getString(InvoiceAdapter.COL_SERVICE));
+               for (int i = 0; i < servicesAvail.length; i++)
+               {
+                   System.out.println(servicesAvail[i]);
+                   Toast.makeText(Reports.this,servicesAvail[i],Toast.LENGTH_SHORT).show();
+               }
+                
+            }while (cursor.moveToNext());
+        }
+        return null;
+    }
+    
+    //Ret
+    private String[] returnServices(String s)
+    {
+        Cursor cursor = null;
+        String[] services = s.split("&");
+        s = "Services:\n";
+        
+        for (int i = 0; i < services.length; i++)
+        {
+            cursor = _myDb.query(new String[] {services[i]}, RegisterServicesAdapter.DATABASE_TABLE);
+            if (cursor.moveToFirst())
+            {
+                services[i] = cursor.getString(RegisterServicesAdapter.COL_NAME).trim();
+            }
+            
+        }
+        cursor.close();
+        return services;
+    }
+//    private void registerClickCallback() 
+//    {
+//        //Find listview that was created from populateListView
+//        ListView list = (ListView) findViewById(R.id.client_listView);
+//        
+//        //Set the action for an element selection
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+//        {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long idInDB) 
+//            {
+//                
+//            }
+//        });
+//    }
+
+}
