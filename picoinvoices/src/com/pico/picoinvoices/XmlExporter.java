@@ -51,7 +51,7 @@ public class XmlExporter
             } while (c.moveToNext());
         }
         
-        String xmlString = xmlBuilder.end();
+        String xmlString = xmlBuilder.end(dbName);
         writeToFile(xmlString, exportFileNamePrefix + ".xml");
         
         System.out.println("exporting database complete");
@@ -70,19 +70,19 @@ public class XmlExporter
             
             do
             {
-                xmlBuilder.openRow();
+                xmlBuilder.openRow(tableName);
                 
                 for (int i = 0; i < cols; i++)
                 {
                     xmlBuilder.addColumn(c.getColumnName(i), c.getString(i));
                 }
                 
-                xmlBuilder.closeRow();
+                xmlBuilder.closeRow(tableName);
             } while (c.moveToNext());
         }
         
         c.close();
-        xmlBuilder.closeTable();
+        xmlBuilder.closeTable(tableName);
     }
 
     private void writeToFile(final String xmlString, final String exportFileName) throws IOException
@@ -116,15 +116,11 @@ public class XmlExporter
     private static class XmlBuilder
     {
         private static final String OPEN_XML_STANZA = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-        private static final String CLOSE_WITH_TICK = "'>";
         private static final String DB_OPEN = "<database name='";
         private static final String DB_CLOSE = "</database>";
-        private static final String TABLE_OPEN = "<table name='";
-        private static final String TABLE_CLOSE = "</table>";
-        private static final String ROW_OPEN = "<row>";
-        private static final String ROW_CLOSE = "</row>";
-        private static final String COL_OPEN = "<col name='";
-        private static final String COL_CLOSE = "</col>";
+        private static final String OPEN_TAG_START = "<";
+        private static final String CLOSE_TAG_START = "</";
+        private static final String TAG_END = ">";
 
         private final StringBuilder sb;
 
@@ -136,40 +132,47 @@ public class XmlExporter
         void start(final String dbName)
         {
             sb.append(XmlBuilder.OPEN_XML_STANZA);
-            sb.append(XmlBuilder.DB_OPEN + dbName + XmlBuilder.CLOSE_WITH_TICK);
+            sb.append(XmlBuilder.OPEN_TAG_START + dbName + XmlBuilder.TAG_END);
         }
 
-        String end() throws IOException
+        String end(final String dbName) throws IOException
         {
-            sb.append(XmlBuilder.DB_CLOSE);
+            sb.append(XmlBuilder.CLOSE_TAG_START + dbName
+                    + XmlBuilder.TAG_END);
             return sb.toString();
         }
 
         void openTable(final String tableName)
         {
-            sb.append(XmlBuilder.TABLE_OPEN + tableName
-                    + XmlBuilder.CLOSE_WITH_TICK);
+            sb.append(XmlBuilder.OPEN_TAG_START + tableName 
+                    + XmlBuilder.TAG_END);
         }
 
-        void closeTable()
+        void closeTable(final String tableName)
         {
-            sb.append(XmlBuilder.TABLE_CLOSE);
+            sb.append(XmlBuilder.CLOSE_TAG_START + tableName 
+                    + XmlBuilder.TAG_END);
         }
 
-        void openRow()
+        void openRow(final String tableName)
         {
-            sb.append(XmlBuilder.ROW_OPEN);
+            sb.append(XmlBuilder.OPEN_TAG_START 
+                    + tableName.substring(0, tableName.length()-1)
+                    + XmlBuilder.TAG_END);
         }
 
-        void closeRow()
-        {
-            sb.append(XmlBuilder.ROW_CLOSE);
+        void closeRow(final String tableName)
+        {           
+            sb.append(XmlBuilder.CLOSE_TAG_START 
+                    + tableName.substring(0, tableName.length()-1)
+                    + XmlBuilder.TAG_END);
         }
 
         void addColumn(final String name, final String val) throws IOException
         {
-            sb.append(XmlBuilder.COL_OPEN + name + XmlBuilder.CLOSE_WITH_TICK
-                    + val + XmlBuilder.COL_CLOSE);
+            sb.append(XmlBuilder.OPEN_TAG_START + name + XmlBuilder.TAG_END
+                    + val 
+                    + XmlBuilder.CLOSE_TAG_START + name + XmlBuilder.TAG_END);
         }
     }
 }
