@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -53,22 +54,23 @@ public class ExportDB extends Activity
         _sp.saveClientID("0");
         _sp.saveInvioceID("0");
         openDB();
-        // closeDB();
+        //closeDB();
     }
 
-    // @Override
-    // public boolean onCreateOptionsMenu(Menu menu)
-    // {
-    // // Inflate the menu; this adds items to the action bar if it is present.
-    // getMenuInflater().inflate(R.menu.home, menu);
-    // return true;
-    // }
+//     @Override
+//     public boolean onCreateOptionsMenu(Menu menu)
+//     {
+//     // Inflate the menu; this adds items to the action bar if it is present.
+//     getMenuInflater().inflate(R.menu.home, menu);
+//     return true;
+//     }
 
     // //////////////////////////////////////////////////////
     // ///*
     // ///* Database functions
     // ///*
     // //////////////////////////////////////////////////////
+    
     private void closeDB()
     {
         _myDb.close();

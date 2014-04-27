@@ -25,6 +25,10 @@ public class XmlImporter
     private static final String DATASUBDIRECTORY = "/Android/data/com.pico.picoinvoices/";
     private static final String ns = null;
     private final SQLiteDatabase db;
+    
+    private List<Invoice> invoices = null;
+    private List<Client> clients = null;
+    private List<Service> services = null;
 
     public XmlImporter(final SQLiteDatabase db)
     {
@@ -40,12 +44,17 @@ public class XmlImporter
     /* Parses through all invoices */
     public List<Invoice> parseInvoices(InputStream in) throws XmlPullParserException, IOException
     {
+        System.out.println("In parseInvoices");
+        
         try
         {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
+            skip(parser);
+            
+            System.out.println("First parser is: " + parser.getText());
             
             return readDocumentInvoice(parser);
         }
@@ -57,6 +66,7 @@ public class XmlImporter
 
     private List<Invoice> readDocumentInvoice(XmlPullParser parser) throws XmlPullParserException, IOException
     {
+        System.out.println("In readDocumentInvoice");
         List<Invoice> invoices = new ArrayList<Invoice>();
 
         parser.require(XmlPullParser.START_TAG, ns, "picoinvoices");
@@ -97,6 +107,7 @@ public class XmlImporter
 
         private Invoice(String id, String issuedate, String customer, String duedate, String priceservice, String service, String amountdue, String status)
         {
+            System.out.println("Creating an invoice");
             this.id = id;
             this.issuedate = issuedate;
             this.customer = customer;
@@ -111,6 +122,7 @@ public class XmlImporter
     /* Parses the contents of an individual invoice */
     private Invoice readInvoice(XmlPullParser parser) throws XmlPullParserException, IOException
     {
+        System.out.println("Reading an invoice");
         parser.require(XmlPullParser.START_TAG, ns, "invoice");
         String id = null;
         String issuedate = null;
@@ -211,7 +223,7 @@ public class XmlImporter
             String name = parser.getName();
             
             /* Looks for the client tag; skips otherwise */
-            if (name.equals("client"))
+            if (name.equals("contactInfo"))
             {
                 clients.add(readClient(parser));
             }
@@ -249,7 +261,7 @@ public class XmlImporter
     /* Parses the contents of an individual client */
     private Client readClient(XmlPullParser parser) throws XmlPullParserException, IOException
     {
-        parser.require(XmlPullParser.START_TAG, ns, "client");
+        parser.require(XmlPullParser.START_TAG, ns, "contactInf");
         String id = null;
         String fname = null;
         String lname = null;
@@ -310,7 +322,7 @@ public class XmlImporter
     // ///*
     // //////////////////////////////////////////////////////
     
-    /* Parses through all clients */
+    /* Parses through all services */
     public List<Service> parseServices(InputStream in) throws XmlPullParserException, IOException
     {
         try
@@ -611,5 +623,40 @@ public class XmlImporter
                     break;
             }
         }
+    }
+    
+    // //////////////////////////////////////////////////////
+    // ///*
+    // ///* Getters and setters for lists
+    // ///*
+    // //////////////////////////////////////////////////////
+    
+    public void setInvoiceList(List<Invoice> invoices)
+    {
+        this.invoices = invoices;
+    }
+    
+    public List<Invoice> getInvoiceList()
+    {
+        return this.invoices;
+    }
+    
+    public void setClientList(List<Client> clients)
+    {
+        this.clients = clients;
+    }
+    
+    public List<Client> getClientList()
+    {
+        return this.clients;
+    }
+    public void setServiceList(List<Service> services)
+    {
+        this.services = services;
+    }
+    
+    public List<Service> getServiceList()
+    {
+        return this.services;
     }
 }

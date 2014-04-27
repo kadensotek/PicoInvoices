@@ -168,8 +168,12 @@ public class XmlExporter
                     + XmlBuilder.TAG_END);
         }
 
-        void addColumn(final String name, final String val) throws IOException
+        void addColumn(final String name, String val) throws IOException
         {
+            /* Escapes & and ? */
+            val = val.replace("&","&amp;");
+            val = val.replace("?","&#63;");
+            
             sb.append(XmlBuilder.OPEN_TAG_START + name + XmlBuilder.TAG_END
                     + val 
                     + XmlBuilder.CLOSE_TAG_START + name + XmlBuilder.TAG_END);
