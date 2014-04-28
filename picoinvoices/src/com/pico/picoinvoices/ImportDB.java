@@ -197,6 +197,10 @@ public class ImportDB extends Activity
         clientAdapter.open();
         serviceAdapter.open();
         
+        invoiceAdapter.deleteAll();
+        clientAdapter.deleteAll();
+        serviceAdapter.deleteAll();
+        
         for (InvoiceCSV invoice : invoices)
         {
             invoiceAdapter.insertRow(invoice.issuedate, invoice.customer, invoice.duedate,
