@@ -172,9 +172,8 @@ public class ImportDB extends Activity
         List<ServiceCSV> services = null;
         String path = Environment.getExternalStorageDirectory() + "/Android/data/com.pico.picoinvoices/";
         String fileStr = null;
-        this.db = _myDb.getDB();
 
-        csvImporter = new CsvImporter(this.db);
+        csvImporter = new CsvImporter();
 
         try
         {
@@ -189,6 +188,11 @@ public class ImportDB extends Activity
             e.printStackTrace();
         }
         
+        updateDatabase(invoices, clients, services);
+    }
+
+    private void updateDatabase(List<InvoiceCSV> invoices, List<ClientCSV> clients, List<ServiceCSV> services)
+    {
         InvoiceAdapter invoiceAdapter = new InvoiceAdapter(this);
         ClientAdapter clientAdapter = new ClientAdapter(this);
         RegisterServicesAdapter serviceAdapter = new RegisterServicesAdapter(this);
@@ -210,7 +214,6 @@ public class ImportDB extends Activity
         for(ClientCSV client : clients)
         {
             clientAdapter.insertRow(client.fname, client.lname, client.address, client.phone, client.email, "");
-//            System.out.println(client.fname + " " + client.lname + " " + client.address + " " + client.phone + " " + client.email + " " + "");
         }
         
         for(ServiceCSV service : services)

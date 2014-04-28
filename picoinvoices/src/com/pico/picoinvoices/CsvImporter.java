@@ -5,19 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import android.database.sqlite.SQLiteDatabase;
-
 public class CsvImporter
 {
-    private final SQLiteDatabase db;
 
     private List<InvoiceCSV> invoices = null;
     private List<ClientCSV> clients = null;
     private List<ServiceCSV> services = null;
 
-    public CsvImporter(final SQLiteDatabase db)
+    public CsvImporter()
     {
-        this.db = db;
     }
 
     // //////////////////////////////////////////////////////
