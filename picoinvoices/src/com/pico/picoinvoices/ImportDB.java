@@ -189,20 +189,34 @@ public class ImportDB extends Activity
             e.printStackTrace();
         }
         
+        InvoiceAdapter invoiceAdapter = new InvoiceAdapter(this);
+        ClientAdapter clientAdapter = new ClientAdapter(this);
+        RegisterServicesAdapter serviceAdapter = new RegisterServicesAdapter(this);
+        
+        invoiceAdapter.open();
+        clientAdapter.open();
+        serviceAdapter.open();
+        
         for (InvoiceCSV invoice : invoices)
         {
-            System.out.println(invoice.toString());
+            invoiceAdapter.insertRow(invoice.issuedate, invoice.customer, invoice.duedate,
+                    invoice.priceservice, invoice.service, invoice.amountdue, invoice.status);
         }
         
         for(ClientCSV client : clients)
         {
-            System.out.println(client.toString());
+            clientAdapter.insertRow(client.fname, client.lname, client.address, client.phone, client.email, "");
+//            System.out.println(client.fname + " " + client.lname + " " + client.address + " " + client.phone + " " + client.email + " " + "");
         }
         
         for(ServiceCSV service : services)
         {
-            System.out.println(service.toString());
+            serviceAdapter.insertRow(service.name, service.type, service.rate);
         }
+        
+        invoiceAdapter.close();
+        clientAdapter.close();
+        serviceAdapter.close();
     }
 
     private String readFile(String pathname) throws IOException
