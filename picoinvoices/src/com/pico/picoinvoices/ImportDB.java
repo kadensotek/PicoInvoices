@@ -236,6 +236,8 @@ public class ImportDB extends Activity
         }
         
         updateDatabase(invoices, clients, services);
+        
+        Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
     }
 
     private void updateDatabase(List<InvoiceCSV> invoices,

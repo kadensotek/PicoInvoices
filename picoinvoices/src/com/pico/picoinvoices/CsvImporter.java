@@ -20,14 +20,11 @@ public class CsvImporter
     /* Parses through all invoices */
     public List<InvoiceCSV> parseInvoices(String contents) throws IOException
     {
-        System.out.println("In parseInvoices");
-
         return readDocumentInvoice(contents);
     }
 
     private List<InvoiceCSV> readDocumentInvoice(String contents) throws IOException
     {
-        System.out.println("In readDocumentInvoice");
         
         String line = null;
         Scanner scanner = new Scanner(contents);
@@ -89,20 +86,11 @@ public class CsvImporter
             this.amountdue = amountdue;
             this.status = status;
         }
-        
-        public String toString()
-        {
-            String invoice = id + " " + issuedate + " " + customer + " " + duedate
-                    + " " + priceservice + " " + service + " " + amountdue + " " + status;
-            
-            return invoice;
-        }
     }
 
     /* Parses the contents of an individual invoice */
     private InvoiceCSV readInvoice(String line)
     {
-        System.out.println("Reading an invoice");
         String id = null;
         String issuedate = null;
         String customer = null;
@@ -137,15 +125,11 @@ public class CsvImporter
     /* Parses through all clients */
     public List<ClientCSV> parseClients(String contents) throws IOException
     {
-        System.out.println("In parseClients");
-
         return readDocumentClient(contents);
     }
 
     private List<ClientCSV> readDocumentClient(String contents) throws IOException
     {
-        System.out.println("In readDocumentClient");
-        
         String line = null;
         Scanner scanner = new Scanner(contents);
         List<ClientCSV> clients = new ArrayList<ClientCSV>();
@@ -200,19 +184,11 @@ public class CsvImporter
             this.email = email;
             this.business = business;
         }
-        
-        public String toString()
-        {
-            String client = id + " " + fname + " " + lname  + " " + address + " " + phone + " " + email + " " + business;
-            
-            return client;
-        }
     }
     
     /* Parses the contents of an individual invoice */
     private ClientCSV readClient(String line)
     {
-        System.out.println("Reading a client");
         String id = null;
         String fname = null;
         String lname = null;
@@ -255,22 +231,16 @@ public class CsvImporter
     /* Parses through all services */
     public List<ServiceCSV> parseServices(String contents) throws IOException
     {
-        System.out.println("In parseServices");
-
         return readDocumentService(contents);
     }
 
     private List<ServiceCSV> readDocumentService(String contents) throws IOException
     {
-        System.out.println("In readDocumentService");
-        
         String line = null;
         Scanner scanner = new Scanner(contents);
         List<ServiceCSV> services = new ArrayList<ServiceCSV>();
         
         line = scanner.nextLine();
-        
-        int i = 0;
         
         while(scanner.hasNextLine())
         {
@@ -282,7 +252,6 @@ public class CsvImporter
                     
                     if(!line.equals(""))
                     {
-                        System.out.println(i + " - " + line);
                         services.add(readService(line));
                     }
                     else
@@ -315,18 +284,10 @@ public class CsvImporter
             this.rate = rate;
             this.type = type;
         }
-        
-        public String toString()
-        {
-            String service = id + " " + name + " " + rate  + " " + type;
-            
-            return service;
-        }
     }
     
     private ServiceCSV readService(String line)
     {
-        System.out.println("Reading a service");
         String id   = null;
         String name = null;
         String rate = null;
