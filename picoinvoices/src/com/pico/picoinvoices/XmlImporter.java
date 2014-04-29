@@ -216,7 +216,7 @@ public class XmlImporter
                             
                             if(!line.trim().equals("</contactInf>"))
                             {
-                                clientContents = clientContents + line + "\n";  /* Creates invoice subset for parsing */
+                                clientContents = clientContents + line + "\n";  /* Creates client subset for parsing */
                             }
                             else
                             {
@@ -361,7 +361,7 @@ public class XmlImporter
                     
                     if(line.trim().equals("<service>"))
                     {
-                        serviceContents = ""; /* resets invoice contents before building new one */
+                        serviceContents = ""; /* resets services contents before building new one */
                         
                         while(!line.trim().equals("</services>"))
                         {
@@ -369,7 +369,7 @@ public class XmlImporter
                             
                             if(!line.trim().equals("</service>"))
                             {
-                                serviceContents = serviceContents + line + "\n";  /* Creates invoice subset for parsing */
+                                serviceContents = serviceContents + line + "\n";  /* Creates service subset for parsing */
                             }
                             else
                             {
