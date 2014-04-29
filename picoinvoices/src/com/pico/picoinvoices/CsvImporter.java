@@ -25,7 +25,6 @@ public class CsvImporter
 
     private List<InvoiceCSV> readDocumentInvoice(String contents) throws IOException
     {
-        
         String line = null;
         Scanner scanner = new Scanner(contents);
         List<InvoiceCSV> invoices = new ArrayList<InvoiceCSV>();

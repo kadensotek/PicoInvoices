@@ -3,7 +3,6 @@ package com.pico.picoinvoices;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -98,6 +97,8 @@ public class XmlExporter
         file.createNewFile();
 
         ByteBuffer buff = ByteBuffer.wrap(xmlString.getBytes());
+        
+        @SuppressWarnings("resource")  /* Suppressed because the warning is a false positive */
         FileChannel channel = new FileOutputStream(file).getChannel();
         
         try
@@ -111,13 +112,12 @@ public class XmlExporter
                 channel.close();
             }
         }
+        
     }
 
     private static class XmlBuilder
     {
         private static final String OPEN_XML_STANZA = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-        private static final String DB_OPEN = "<database name='";
-        private static final String DB_CLOSE = "</database>";
         private static final String OPEN_TAG_START = "<";
         private static final String CLOSE_TAG_START = "</";
         private static final String TAG_END = ">";

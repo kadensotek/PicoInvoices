@@ -1,15 +1,9 @@
 package com.pico.picoinvoices;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-
-import org.xmlpull.v1.XmlPullParserException;
 
 import com.pico.picoinvoices.XmlImporter.Client;
 import com.pico.picoinvoices.XmlImporter.Invoice;
@@ -161,43 +155,39 @@ public class ImportDB extends Activity
         List<Invoice> invoices = null;
         List<Client> clients = null;
         List<Service> services = null;
-        InputStream stream = null;
         String path = null;
+        String fileStr = null;
         this.db = _myDb.getDB();
 
         path = Environment.getExternalStorageDirectory() + "/Android/data/com.pico.picoinvoices/";
-        xmlImporter = new XmlImporter(this.db);
-        stream = getInputStream(stream, path, "picodatabase.xml");
+        xmlImporter = new XmlImporter();
 
         try
         {
-            invoices = xmlImporter.parseInvoices(stream);
-        }
-        catch(XmlPullParserException e)
-        {
-            Toast.makeText(getBaseContext(), "Error parsing file", Toast.LENGTH_LONG).show();
-            return;
+            fileStr = readFile(path + "picodatabase.xml");
         }
         catch(IOException e)
         {
+            Toast.makeText(getBaseContext(), "File not found", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        try
+        {
+            invoices = xmlImporter.parseInvoices(new String(fileStr));
+            clients = xmlImporter.parseClients(new String(fileStr));
+            services = xmlImporter.parseServices(new String(fileStr));
+        }
+        catch(IOException e1)
+        {
             Toast.makeText(getBaseContext(), "Error parsing file", Toast.LENGTH_LONG).show();
             return;
         }
-
-        // for (Invoice invoice : invoices)
-        // {
-        // System.out.println("For loop");
-        // invoice.toString();
-        // }
-
-        // File xmlFile = null;
-        // String xmlFilepath = null;
-        // xmlFilepath = getXML();
-        // System.out.println("Filepath1 is " + xmlFilepath);
-
-        // xmlFile = new File(xmlFilepath);
-
-        // System.out.println("Final selected file is " + xmlFile.toString());
+        
+        updateDatabaseXML(invoices, clients, services);
+        
+        Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
+        
     }
 
     public void importFromCSV(View v)
@@ -235,12 +225,12 @@ public class ImportDB extends Activity
             return;
         }
         
-        updateDatabase(invoices, clients, services);
+        updateDatabaseCSV(invoices, clients, services);
         
         Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
     }
 
-    private void updateDatabase(List<InvoiceCSV> invoices,
+    private void updateDatabaseCSV(List<InvoiceCSV> invoices,
             List<ClientCSV> clients, List<ServiceCSV> services)
     {
         InvoiceAdapter invoiceAdapter = new InvoiceAdapter(this);
@@ -265,6 +255,38 @@ public class ImportDB extends Activity
         }
 
         for(ServiceCSV service : services)
+        {
+            serviceAdapter.insertRow(service.name, service.type, service.rate);
+        }
+
+        closeAllTables(invoiceAdapter, clientAdapter, serviceAdapter);
+    }
+    
+    private void updateDatabaseXML(List<Invoice> invoices,
+            List<Client> clients, List<Service> services)
+    {
+        InvoiceAdapter invoiceAdapter = new InvoiceAdapter(this);
+        ClientAdapter clientAdapter = new ClientAdapter(this);
+        RegisterServicesAdapter serviceAdapter = new RegisterServicesAdapter(this);
+
+        openAllTables(invoiceAdapter, clientAdapter, serviceAdapter);
+
+        deleteAllRows(invoiceAdapter, clientAdapter, serviceAdapter);
+
+        for(Invoice invoice : invoices)
+        {
+            invoiceAdapter.insertRow(invoice.issuedate, invoice.customer,
+                    invoice.duedate, invoice.priceservice, invoice.service,
+                    invoice.amountdue, invoice.status);
+        }
+
+        for(Client client : clients)
+        {
+            clientAdapter.insertRow(client.fname, client.lname, client.address,
+                    client.phone, client.email, "");
+        }
+
+        for(Service service : services)
         {
             serviceAdapter.insertRow(service.name, service.type, service.rate);
         }
@@ -317,22 +339,6 @@ public class ImportDB extends Activity
         {
             scanner.close();
         }
-    }
-
-    private InputStream getInputStream(InputStream stream, String path,
-            String filename)
-    {
-        /* Opens the xml file as an input stream to be used with xmlImporter */
-        try
-        {
-            stream = new FileInputStream(new File(path + filename));
-        } catch (FileNotFoundException e)
-        {
-            // TODO Auto-generated catch block; needs to be handled
-            System.out.println("File not found");
-            e.printStackTrace();
-        }
-        return stream;
     }
 
     // public String getXML()

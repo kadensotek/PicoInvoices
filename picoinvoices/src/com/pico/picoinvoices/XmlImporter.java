@@ -1,38 +1,14 @@
 package com.pico.picoinvoices;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Xml;
-import android.view.View;
-import android.widget.Toast;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
+import java.util.Scanner;
 
 public class XmlImporter
 {
-    private static final String DATASUBDIRECTORY = "/Android/data/com.pico.picoinvoices/";
-    private static final String ns = null;
-    private final SQLiteDatabase db;
-    
-    private List<Invoice> invoices = null;
-    private List<Client> clients = null;
-    private List<Service> services = null;
-
-    public XmlImporter(final SQLiteDatabase db)
+    public XmlImporter()
     {
-        this.db = db;
     }
     
     // //////////////////////////////////////////////////////
@@ -42,54 +18,64 @@ public class XmlImporter
     // //////////////////////////////////////////////////////
 
     /* Parses through all invoices */
-    public List<Invoice> parseInvoices(InputStream in) throws XmlPullParserException, IOException
+    public List<Invoice> parseInvoices(String contents) throws IOException
     {
         System.out.println("In parseInvoices");
         
-        try
-        {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            skip(parser);
-            
-            System.out.println("First parser is: " + parser.getText());
-            
-            return readDocumentInvoice(parser);
-        }
-        finally
-        {
-            in.close();
-        }
+        return readDocumentInvoice(contents);
     }
 
-    private List<Invoice> readDocumentInvoice(XmlPullParser parser) throws XmlPullParserException, IOException
+    private List<Invoice> readDocumentInvoice(String contents) throws IOException
     {
         System.out.println("In readDocumentInvoice");
+        String line = null;
+        String invoiceContents = null;
+        Scanner scanner = new Scanner(contents);
         List<Invoice> invoices = new ArrayList<Invoice>();
-
-        parser.require(XmlPullParser.START_TAG, ns, "picoinvoices");
         
-        while (parser.next() != XmlPullParser.END_TAG)
+        line = scanner.nextLine();
+        
+        while(scanner.hasNextLine())
         {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
+            if(line.equals("<invoices>"))
             {
-                continue;
-            }
-            
-            String name = parser.getName();
-            
-            /* Looks for the invoice tag; skips otherwise */
-            if (name.equals("invoice"))
-            {
-                invoices.add(readInvoice(parser));
+                while(!line.trim().equals("</invoices>"))
+                {
+                    line = scanner.nextLine();
+                    
+                    if(line.trim().equals("<invoice>"))
+                    {
+                        invoiceContents = ""; /* resets invoice contents before building new one */
+                        
+                        while(!line.trim().equals("</invoices>"))
+                        {
+                            line = scanner.nextLine();
+                            
+                            if(!line.trim().equals("</invoice>"))
+                            {
+                                invoiceContents = invoiceContents + line + "\n";  /* Creates invoice subset for parsing */
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        
+                        invoices.add(readInvoice(invoiceContents));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             else
             {
-                skip(parser);
+                line = scanner.nextLine();
             }
         }
+        
+        scanner.close();
         return invoices;
     }
 
@@ -117,13 +103,20 @@ public class XmlImporter
             this.amountdue = amountdue;
             this.status = status;
         }
+        
+        public void printString()
+        {
+            System.out.println(id + " " + issuedate + " " + customer + " " + duedate + " " + priceservice + " " + service + " " + amountdue + " " + status);
+        }
     }
 
     /* Parses the contents of an individual invoice */
-    private Invoice readInvoice(XmlPullParser parser) throws XmlPullParserException, IOException
+    private Invoice readInvoice(String invoice)
     {
         System.out.println("Reading an invoice");
-        parser.require(XmlPullParser.START_TAG, ns, "invoice");
+        Scanner scanner = new Scanner(invoice);
+        String line = null;
+        
         String id = null;
         String issuedate = null;
         String customer = null;
@@ -133,52 +126,73 @@ public class XmlImporter
         String amountdue = null;
         String status = null;
         
-        while (parser.next() != XmlPullParser.END_TAG)
-        {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
+        line = scanner.nextLine().trim();
+        
+        while (scanner.hasNextLine())
+        {            
+            if (line.contains("<_id>"))
             {
-                continue;
+                line = line.substring(5,line.length());
+                line = line.substring(0,line.length()-6);
+                id = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<issuedate>"))
+            {
+                line = line.substring(11,line.length());
+                line = line.substring(0,line.length()-12);
+                issuedate = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<customer>"))
+            {
+                line = line.substring(10,line.length());
+                line = line.substring(0,line.length()-11);
+                customer = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<duedate>"))
+            {
+                line = line.substring(9,line.length());
+                line = line.substring(0,line.length()-10);
+                duedate = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<priceservice>"))
+            {
+                line = line.substring(14,line.length());
+                line = line.substring(0,line.length()-15);
+                line = line.replace("&amp;","&");
+                priceservice = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<service>"))
+            {
+                line = line.substring(9,line.length());
+                line = line.substring(0,line.length()-10);
+                line = line.replace("&amp;","&");
+                service = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<amountdue>"))
+            {
+                line = line.substring(11,line.length());
+                line = line.substring(0,line.length()-12);
+                amountdue = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<status>"))
+            {
+                line = line.substring(8,line.length());
+                line = line.substring(0,line.length()-9);
+                status = line;
+                System.out.println(line);
             }
             
-            String name = parser.getName();
-            
-            if (name.equals("_id"))
-            {
-                id = readID(parser);
-            }
-            else if (name.equals("issuedate"))
-            {
-                issuedate = readIssueDate(parser);
-            }
-            else if (name.equals("customer"))
-            {
-                customer = readCustomer(parser);
-            }
-            else if (name.equals("duedate"))
-            {
-                duedate = readDueDate(parser);
-            }
-            else if (name.equals("priceservice"))
-            {
-                priceservice = readPriceService(parser);
-            }
-            else if (name.equals("service"))
-            {
-                service = readService(parser);
-            }
-            else if (name.equals("amountdue"))
-            {
-                amountdue = readAmountDue(parser);
-            }
-            else if (name.equals("status"))
-            {
-                status = readStatus(parser);
-            }
-            else
-            {
-                skip(parser);
-            }
+            line = scanner.nextLine().trim();
         }
+        
+        scanner.close();
         
         return new Invoice(id, issuedate, customer, duedate, priceservice, service, amountdue, status);
     }
@@ -190,48 +204,64 @@ public class XmlImporter
     // //////////////////////////////////////////////////////
     
     /* Parses through all clients */
-    public List<Client> parseClients(InputStream in) throws XmlPullParserException, IOException
+    public List<Client> parseClients(String contents) throws IOException
     {
-        try
-        {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            
-            return readDocumentClient(parser);
-        }
-        finally
-        {
-            in.close();
-        }
+        System.out.println("In parseClients");
+        
+        return readDocumentClient(contents);
     }
 
-    private List<Client> readDocumentClient(XmlPullParser parser) throws XmlPullParserException, IOException
+    private List<Client> readDocumentClient(String contents) throws IOException
     {
+        System.out.println("In readDocumentClient");
+        String line = null;
+        String clientContents = null;
+        Scanner scanner = new Scanner(contents);
         List<Client> clients = new ArrayList<Client>();
-
-        parser.require(XmlPullParser.START_TAG, ns, "picoinvoices");
         
-        while (parser.next() != XmlPullParser.END_TAG)
+        line = scanner.nextLine();
+        
+        while(scanner.hasNextLine())
         {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
+            if(line.equals("<contactInfo>"))
             {
-                continue;
-            }
-            
-            String name = parser.getName();
-            
-            /* Looks for the client tag; skips otherwise */
-            if (name.equals("contactInfo"))
-            {
-                clients.add(readClient(parser));
+                while(!line.trim().equals("</contactInfo>"))
+                {
+                    line = scanner.nextLine();
+                    
+                    if(line.trim().equals("<contactInf>"))
+                    {
+                        clientContents = ""; /* resets client contents before building new one */
+                        
+                        while(!line.trim().equals("</contactInf>"))
+                        {
+                            line = scanner.nextLine();
+                            
+                            if(!line.trim().equals("</contactInf>"))
+                            {
+                                clientContents = clientContents + line + "\n";  /* Creates invoice subset for parsing */
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        
+                        clients.add(readClient(clientContents));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             else
             {
-                skip(parser);
+                line = scanner.nextLine();
             }
         }
+        
+        scanner.close();
         return clients;
     }
     
@@ -259,9 +289,12 @@ public class XmlImporter
     }
     
     /* Parses the contents of an individual client */
-    private Client readClient(XmlPullParser parser) throws XmlPullParserException, IOException
+    private Client readClient(String client) throws IOException
     {
-        parser.require(XmlPullParser.START_TAG, ns, "contactInf");
+        System.out.println("Reading a client");
+        Scanner scanner = new Scanner(client);
+        String line = null;
+        
         String id = null;
         String fname = null;
         String lname = null;
@@ -270,48 +303,62 @@ public class XmlImporter
         String email = null;
         String business = null;
         
-        while (parser.next() != XmlPullParser.END_TAG)
+        line = scanner.nextLine().trim();;
+        
+        while (scanner.hasNextLine())
         {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
+            if (line.contains("<_id>"))
             {
-                continue;
+                line = line.substring(5,line.length());
+                line = line.substring(0,line.length()-6);
+                id = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<fname>"))
+            {
+                line = line.substring(7,line.length());
+                line = line.substring(0,line.length()-8);
+                fname = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<lname>"))
+            {
+                line = line.substring(7,line.length());
+                line = line.substring(0,line.length()-8);
+                lname = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<address>"))
+            {
+                line = line.substring(9,line.length());
+                line = line.substring(0,line.length()-10);
+                address = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<phone>"))
+            {
+                line = line.substring(7,line.length());
+                line = line.substring(0,line.length()-8);
+                phone = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<email>"))
+            {
+                line = line.substring(7,line.length());
+                line = line.substring(0,line.length()-8);
+                email = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<business>"))
+            {
+                business = "";
+                System.out.println(line);
             }
             
-            String name = parser.getName();
-            
-            if (name.equals("_id"))
-            {
-                id = readID(parser);
-            }
-            else if (name.equals("fname"))
-            {
-                fname = readFname(parser);
-            }
-            else if (name.equals("lname"))
-            {
-                lname = readLname(parser);
-            }
-            else if (name.equals("address"))
-            {
-                address = readAddress(parser);
-            }
-            else if (name.equals("phone"))
-            {
-                phone = readPhone(parser);
-            }
-            else if (name.equals("email"))
-            {
-                email = readEmail(parser);
-            }
-            else if (name.equals("business"))
-            {
-                business = readBusiness(parser);
-            }
-            else
-            {
-                skip(parser);
-            }
+            line = scanner.nextLine().trim();
         }
+        
+        scanner.close();
         
         return new Client(id, fname, lname, address, phone, email, business);
     }
@@ -323,48 +370,64 @@ public class XmlImporter
     // //////////////////////////////////////////////////////
     
     /* Parses through all services */
-    public List<Service> parseServices(InputStream in) throws XmlPullParserException, IOException
+    public List<Service> parseServices(String contents) throws IOException
     {
-        try
-        {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            
-            return readDocumentService(parser);
-        }
-        finally
-        {
-            in.close();
-        }
+        System.out.println("In parseServices");
+        
+        return readDocumentService(contents);
     }
 
-    private List<Service> readDocumentService(XmlPullParser parser) throws XmlPullParserException, IOException
+    private List<Service> readDocumentService(String contents) throws IOException
     {
+        System.out.println("In readDocumentInvoice");
+        String line = null;
+        String serviceContents = null;
+        Scanner scanner = new Scanner(contents);
         List<Service> services = new ArrayList<Service>();
-
-        parser.require(XmlPullParser.START_TAG, ns, "picoinvoices");
         
-        while (parser.next() != XmlPullParser.END_TAG)
+        line = scanner.nextLine();
+        
+        while(scanner.hasNextLine())
         {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
+            if(line.equals("<services>"))
             {
-                continue;
-            }
-            
-            String name = parser.getName();
-            
-            /* Looks for the service tag; skips otherwise */
-            if (name.equals("service"))
-            {
-                services.add(readServiceTag(parser));
+                while(!line.trim().equals("</services>"))
+                {
+                    line = scanner.nextLine();
+                    
+                    if(line.trim().equals("<service>"))
+                    {
+                        serviceContents = ""; /* resets invoice contents before building new one */
+                        
+                        while(!line.trim().equals("</services>"))
+                        {
+                            line = scanner.nextLine();
+                            
+                            if(!line.trim().equals("</service>"))
+                            {
+                                serviceContents = serviceContents + line + "\n";  /* Creates invoice subset for parsing */
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        
+                        services.add(readService(serviceContents));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             else
             {
-                skip(parser);
+                line = scanner.nextLine();
             }
         }
+        
+        scanner.close();
         return services;
     }
     
@@ -385,278 +448,56 @@ public class XmlImporter
         }
     }
     
-    /* Parses the contents of an individual client */
-    private Service readServiceTag(XmlPullParser parser) throws XmlPullParserException, IOException
+    /* Parses the contents of an individual service */
+    private Service readService(String service) throws IOException
     {
-        parser.require(XmlPullParser.START_TAG, ns, "client");
+        System.out.println("Reading a service");
+        Scanner scanner = new Scanner(service);
+        String line = null;
+        
         String id = null;
         String name = null;
         String rate = null;
         String type = null;
         
-        while (parser.next() != XmlPullParser.END_TAG)
-        {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
+        line = scanner.nextLine().trim();
+        
+        while (scanner.hasNextLine())
+        {            
+            if (line.contains("<_id>"))
             {
-                continue;
+                line = line.substring(5,line.length());
+                line = line.substring(0,line.length()-6);
+                id = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<name>"))
+            {
+                line = line.substring(6,line.length());
+                line = line.substring(0,line.length()-7);
+                name = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<rate>"))
+            {
+                line = line.substring(6,line.length());
+                line = line.substring(0,line.length()-7);
+                rate = line;
+                System.out.println(line);
+            }
+            else if (line.contains("<type>"))
+            {
+                line = line.substring(6,line.length());
+                line = line.substring(0,line.length()-7);
+                type = line;
+                System.out.println(line);
             }
             
-            String tagname = parser.getName();
-            
-            if (tagname.equals("_id"))
-            {
-                id = readID(parser);
-            }
-            else if (tagname.equals("name"))
-            {
-                name = readName(parser);
-            }
-            else if (tagname.equals("rate"))
-            {
-                rate = readRate(parser);
-            }
-            else if (tagname.equals("type"))
-            {
-                type = readType(parser);
-            }
-            else
-            {
-                skip(parser);
-            }
+            line = scanner.nextLine().trim();
         }
+        
+        scanner.close();
         
         return new Service(id, name, rate, type);
-    }
-    
-    // //////////////////////////////////////////////////////
-    // ///*
-    // ///* Tag processing functions
-    // ///*
-    // //////////////////////////////////////////////////////
-    
-    private String readID(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "_id");
-        String id = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "_id");
-        
-        return id;
-    }
-
-    private String readIssueDate(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "issuedate");
-        String issuedate = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "issuedate");
-        
-        return issuedate;
-    }
-    
-    private String readCustomer(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "issuedate");
-        String issuedate = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "issuedate");
-        
-        return issuedate;
-    }
-    
-    private String readDueDate(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "duedate");
-        String duedate = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "duedate");
-        
-        return duedate;
-    }
-    
-    private String readPriceService(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "priceservice");
-        String priceservice = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "priceservice");
-        
-        return priceservice;
-    }
-    
-    private String readService(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "service");
-        String service = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "service");
-        
-        return service;
-    }
-    
-    private String readAmountDue(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "amountdue");
-        String amountdue = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "amountdue");
-        
-        return amountdue;
-    }
-    
-    private String readStatus(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "status");
-        String status = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "status");
-        
-        return status;
-    }
-    
-    private String readFname(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "fname");
-        String fname = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "fname");
-        
-        return fname;
-    }
-    
-    private String readLname(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "lname");
-        String lname = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "lname");
-        
-        return lname;
-    }
-    
-    private String readAddress(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "address");
-        String address = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "address");
-        
-        return address;
-    }
-    
-    private String readPhone(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "phone");
-        String phone = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "phone");
-        
-        return phone;
-    }
-    
-    private String readEmail(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "email");
-        String email = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "email");
-        
-        return email;
-    }
-    
-    private String readBusiness(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "business");
-        String business = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "business");
-        
-        return business;
-    }
-    
-    private String readName(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "name");
-        String name = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "name");
-        
-        return name;
-    }
-    
-    private String readRate(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "rate");
-        String rate = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "rate");
-        
-        return rate;
-    }
-    
-    private String readType(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        parser.require(XmlPullParser.START_TAG, ns, "type");
-        String type = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "type");
-        
-        return type;
-    }
-
-    /* Extracts text values between tags. */
-    private String readText(XmlPullParser parser) throws IOException, XmlPullParserException
-    {
-        String result = "";
-        
-        if (parser.next() == XmlPullParser.TEXT)
-        {
-            result = parser.getText();
-            parser.nextTag();
-        }
-        
-        return result;
-    }
-
-    /* Skips tags using depth to keep track of location */
-    private void skip(XmlPullParser parser) throws XmlPullParserException, IOException
-    {
-        if (parser.getEventType() != XmlPullParser.START_TAG)
-        {
-            throw new IllegalStateException();
-        }
-        
-        int depth = 1;
-        
-        while (depth != 0)
-        {
-            switch (parser.next())
-            {
-                case XmlPullParser.END_TAG:
-                    depth--;
-                    break;
-                case XmlPullParser.START_TAG:
-                    depth++;
-                    break;
-            }
-        }
-    }
-    
-    // //////////////////////////////////////////////////////
-    // ///*
-    // ///* Getters and setters for lists
-    // ///*
-    // //////////////////////////////////////////////////////
-    
-    public void setInvoiceList(List<Invoice> invoices)
-    {
-        this.invoices = invoices;
-    }
-    
-    public List<Invoice> getInvoiceList()
-    {
-        return this.invoices;
-    }
-    
-    public void setClientList(List<Client> clients)
-    {
-        this.clients = clients;
-    }
-    
-    public List<Client> getClientList()
-    {
-        return this.clients;
-    }
-    public void setServiceList(List<Service> services)
-    {
-        this.services = services;
-    }
-    
-    public List<Service> getServiceList()
-    {
-        return this.services;
     }
 }
