@@ -115,7 +115,7 @@ public class XmlImporter
     {
         System.out.println("Reading an invoice");
         Scanner scanner = new Scanner(invoice);
-        String line = null;
+        String line = "";
         
         String id = null;
         String issuedate = null;
@@ -126,10 +126,10 @@ public class XmlImporter
         String amountdue = null;
         String status = null;
         
-        line = scanner.nextLine().trim();
-        
         while (scanner.hasNextLine())
         {            
+            line = scanner.nextLine().trim();
+            
             if (line.contains("<_id>"))
             {
                 line = line.substring(5,line.length());
@@ -188,8 +188,6 @@ public class XmlImporter
                 status = line;
                 System.out.println(line);
             }
-            
-            line = scanner.nextLine().trim();
         }
         
         scanner.close();
@@ -303,10 +301,10 @@ public class XmlImporter
         String email = null;
         String business = null;
         
-        line = scanner.nextLine().trim();;
-        
         while (scanner.hasNextLine())
         {
+            line = scanner.nextLine().trim();
+            
             if (line.contains("<_id>"))
             {
                 line = line.substring(5,line.length());
@@ -354,8 +352,6 @@ public class XmlImporter
                 business = "";
                 System.out.println(line);
             }
-            
-            line = scanner.nextLine().trim();
         }
         
         scanner.close();
@@ -460,10 +456,10 @@ public class XmlImporter
         String rate = null;
         String type = null;
         
-        line = scanner.nextLine().trim();
-        
         while (scanner.hasNextLine())
         {            
+            line = scanner.nextLine().trim();
+            
             if (line.contains("<_id>"))
             {
                 line = line.substring(5,line.length());
@@ -492,8 +488,6 @@ public class XmlImporter
                 type = line;
                 System.out.println(line);
             }
-            
-            line = scanner.nextLine().trim();
         }
         
         scanner.close();
