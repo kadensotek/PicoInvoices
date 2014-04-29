@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 public class ImportDB extends Activity
 {
-
     DBAdapter _myDb = null;
     SPAdapter _sp = null;
     SQLiteDatabase db = null;
@@ -184,6 +183,7 @@ public class ImportDB extends Activity
             return;
         }
         
+        resetDatabase();
         updateDatabaseXML(invoices, clients, services);
         
         Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
@@ -225,6 +225,7 @@ public class ImportDB extends Activity
             return;
         }
         
+        resetDatabase();
         updateDatabaseCSV(invoices, clients, services);
         
         Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
@@ -300,6 +301,11 @@ public class ImportDB extends Activity
         invoiceAdapter.close();
         clientAdapter.close();
         serviceAdapter.close();
+    }
+    
+    private void resetDatabase()
+    {
+        _myDb.reset();
     }
 
     private void deleteAllRows(InvoiceAdapter invoiceAdapter,

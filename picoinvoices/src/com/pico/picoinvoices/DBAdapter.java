@@ -167,4 +167,17 @@ public class DBAdapter
     {
         return this.db;
     }
+    
+    public void reset()
+    {
+     // Destroy old database:
+        db.execSQL("DROP TABLE IF EXISTS " + ClientAdapter.DATABASE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + InvoiceAdapter.DATABASE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RegisterServicesAdapter.DATABASE_TABLE);
+        
+        // Recreate new database:
+        db.execSQL(CREATE_TABLE_INVOICE);
+        db.execSQL(CREATE_TABLE_CLIENT);
+        db.execSQL(CREATE_TABLE_SERVICES);
+    }
 }
