@@ -131,7 +131,7 @@ public class XmlExporter
 
         void start(final String dbName)
         {
-            sb.append(XmlBuilder.OPEN_XML_STANZA);
+            sb.append(XmlBuilder.OPEN_XML_STANZA + "\n");
             sb.append(XmlBuilder.OPEN_TAG_START + dbName + XmlBuilder.TAG_END + "\n");
         }
 
