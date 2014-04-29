@@ -123,7 +123,7 @@ public class ExportDB extends Activity
             return;
         }
         
-        Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Export completed.", Toast.LENGTH_LONG).show();
     }
     
     public void exportToCSV(View v)

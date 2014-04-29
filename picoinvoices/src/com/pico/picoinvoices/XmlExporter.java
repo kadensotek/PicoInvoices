@@ -132,40 +132,40 @@ public class XmlExporter
         void start(final String dbName)
         {
             sb.append(XmlBuilder.OPEN_XML_STANZA);
-            sb.append(XmlBuilder.OPEN_TAG_START + dbName + XmlBuilder.TAG_END);
+            sb.append(XmlBuilder.OPEN_TAG_START + dbName + XmlBuilder.TAG_END + "\n");
         }
 
         String end(final String dbName) throws IOException
         {
             sb.append(XmlBuilder.CLOSE_TAG_START + dbName
-                    + XmlBuilder.TAG_END);
+                    + XmlBuilder.TAG_END + "\n");
             return sb.toString();
         }
 
         void openTable(final String tableName)
         {
             sb.append(XmlBuilder.OPEN_TAG_START + tableName 
-                    + XmlBuilder.TAG_END);
+                    + XmlBuilder.TAG_END + "\n");
         }
 
         void closeTable(final String tableName)
         {
             sb.append(XmlBuilder.CLOSE_TAG_START + tableName 
-                    + XmlBuilder.TAG_END);
+                    + XmlBuilder.TAG_END + "\n");
         }
 
         void openRow(final String tableName)
         {
-            sb.append(XmlBuilder.OPEN_TAG_START 
+            sb.append("    " + XmlBuilder.OPEN_TAG_START 
                     + tableName.substring(0, tableName.length()-1)
-                    + XmlBuilder.TAG_END);
+                    + XmlBuilder.TAG_END + "\n");
         }
 
         void closeRow(final String tableName)
         {           
-            sb.append(XmlBuilder.CLOSE_TAG_START 
+            sb.append("    " + XmlBuilder.CLOSE_TAG_START 
                     + tableName.substring(0, tableName.length()-1)
-                    + XmlBuilder.TAG_END);
+                    + XmlBuilder.TAG_END + "\n");
         }
 
         void addColumn(final String name, String val) throws IOException
@@ -174,9 +174,9 @@ public class XmlExporter
             val = val.replace("&","&amp;");
             val = val.replace("?","&#63;");
             
-            sb.append(XmlBuilder.OPEN_TAG_START + name + XmlBuilder.TAG_END
+            sb.append("        " + XmlBuilder.OPEN_TAG_START + name + XmlBuilder.TAG_END
                     + val 
-                    + XmlBuilder.CLOSE_TAG_START + name + XmlBuilder.TAG_END);
+                    + XmlBuilder.CLOSE_TAG_START + name + XmlBuilder.TAG_END + "\n");
         }
     }
 }
