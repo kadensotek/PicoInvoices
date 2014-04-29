@@ -34,35 +34,35 @@ public class XmlImporter
         
         while(scanner.hasNextLine())
         {
-            if(line.equals("<invoices>"))
-            {
-                while(!line.trim().equals("</invoices>"))
+            if(line.equals("<invoices>"))                         //
+            {                                                     //    This reads everything between <invoices> and </invoices> tags
+                while(!line.trim().equals("</invoices>"))         //
                 {
                     line = scanner.nextLine();
                     
-                    if(line.trim().equals("<invoice>"))
-                    {
-                        invoiceContents = ""; /* resets invoice contents before building new one */
-                        
-                        while(!line.trim().equals("</invoices>"))
+                    if(line.trim().equals("<invoice>"))            //
+                    {                                              //
+                        invoiceContents = "";                      //  This reads everything between <invoice> and </invoice> tags
+                                                                   //
+                        while(!line.trim().equals("</invoice>"))   //
                         {
                             line = scanner.nextLine();
                             
-                            if(!line.trim().equals("</invoice>"))
-                            {
-                                invoiceContents = invoiceContents + line + "\n";  /* Creates invoice subset for parsing */
-                            }
+                            if(!line.trim().equals("</invoice>"))                 //
+                            {                                                     //   Pulls all individual lines between <invoice> and </invoice>
+                                invoiceContents = invoiceContents + line + "\n";  //   into a new string for separate processing
+                            }                                                     //
                             else
                             {
-                                break;
+                                break;   // Breaks out to check for next <invoice>
                             }
                         }
                         
-                        invoices.add(readInvoice(invoiceContents));
+                        invoices.add(readInvoice(invoiceContents));     // Sends the invoice contents for processing
                     }
                     else
                     {
-                        break;
+                        break; // </invoice> reached, so jump out and discard rest of file
                     }
                 }
             }
@@ -116,6 +116,8 @@ public class XmlImporter
         String amountdue = null;
         String status = null;
         
+        /* This goes through each line, checking for appropriate tags, 
+         * splitting the string based on the tags and making the assignment */
         while (scanner.hasNextLine())
         {            
             line = scanner.nextLine().trim();
@@ -279,6 +281,8 @@ public class XmlImporter
         String email = null;
         String business = null;
         
+        /* This goes through each line, checking for appropriate tags, 
+         * splitting the string based on the tags and making the assignment */
         while (scanner.hasNextLine())
         {
             line = scanner.nextLine().trim();
@@ -423,6 +427,8 @@ public class XmlImporter
         String rate = null;
         String type = null;
         
+        /* This goes through each line, checking for appropriate tags, 
+         * splitting the string based on the tags and making the assignment */
         while (scanner.hasNextLine())
         {            
             line = scanner.nextLine().trim();
