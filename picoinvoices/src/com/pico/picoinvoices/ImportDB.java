@@ -173,12 +173,12 @@ public class ImportDB extends Activity
         {
             invoices = xmlImporter.parseInvoices(stream);
         }
-        catch (XmlPullParserException e)
+        catch(XmlPullParserException e)
         {
             Toast.makeText(getBaseContext(), "Error parsing file", Toast.LENGTH_LONG).show();
             return;
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             Toast.makeText(getBaseContext(), "Error parsing file", Toast.LENGTH_LONG).show();
             return;
@@ -217,7 +217,7 @@ public class ImportDB extends Activity
         {
             fileStr = readFile(path + "picodatabase.csv");
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             Toast.makeText(getBaseContext(), "File not found", Toast.LENGTH_LONG).show();
             return;
@@ -243,27 +243,26 @@ public class ImportDB extends Activity
     {
         InvoiceAdapter invoiceAdapter = new InvoiceAdapter(this);
         ClientAdapter clientAdapter = new ClientAdapter(this);
-        RegisterServicesAdapter serviceAdapter = new RegisterServicesAdapter(
-                this);
+        RegisterServicesAdapter serviceAdapter = new RegisterServicesAdapter(this);
 
         openAllTables(invoiceAdapter, clientAdapter, serviceAdapter);
 
         deleteAllRows(invoiceAdapter, clientAdapter, serviceAdapter);
 
-        for (InvoiceCSV invoice : invoices)
+        for(InvoiceCSV invoice : invoices)
         {
             invoiceAdapter.insertRow(invoice.issuedate, invoice.customer,
                     invoice.duedate, invoice.priceservice, invoice.service,
                     invoice.amountdue, invoice.status);
         }
 
-        for (ClientCSV client : clients)
+        for(ClientCSV client : clients)
         {
             clientAdapter.insertRow(client.fname, client.lname, client.address,
                     client.phone, client.email, "");
         }
 
-        for (ServiceCSV service : services)
+        for(ServiceCSV service : services)
         {
             serviceAdapter.insertRow(service.name, service.type, service.rate);
         }
@@ -305,13 +304,14 @@ public class ImportDB extends Activity
 
         try
         {
-            while (scanner.hasNextLine())
+            while(scanner.hasNextLine())
             {
                 fileContents.append(scanner.nextLine() + lineSeparator);
             }
 
             return fileContents.toString();
-        } finally
+        }
+        finally
         {
             scanner.close();
         }
