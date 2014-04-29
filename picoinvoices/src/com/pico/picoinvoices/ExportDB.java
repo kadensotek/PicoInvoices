@@ -122,6 +122,8 @@ public class ExportDB extends Activity
             Toast.makeText(getBaseContext(), "Error exporting database", Toast.LENGTH_LONG).show();
             return;
         }
+        
+        Toast.makeText(getBaseContext(), "Import completed.", Toast.LENGTH_LONG).show();
     }
     
     public void exportToCSV(View v)
@@ -142,6 +144,8 @@ public class ExportDB extends Activity
             Toast.makeText(getBaseContext(), "Error exporting database", Toast.LENGTH_LONG).show();
             return;
         }
+        
+        Toast.makeText(getBaseContext(), "Export completed.", Toast.LENGTH_LONG).show();
     }
 
     public void xmlConfirmation(final View v)
