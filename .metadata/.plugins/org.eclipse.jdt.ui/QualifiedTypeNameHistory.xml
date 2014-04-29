@@ -2,11 +2,13 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="com.example.myfirstapp.R.id"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="android.widget.SimpleCursorAdapter"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.RegisterServicesAdapter"/>
 <fullyQualifiedTypeName name="android.R.layout"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.R"/>
 <fullyQualifiedTypeName name="com.pico.picoinvoices.R.id"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.Reports"/>
+<fullyQualifiedTypeName name="com.pico.picoinvoices.R.layout"/>
 </qualifiedTypeNameHistroy>
