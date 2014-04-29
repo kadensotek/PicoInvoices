@@ -117,7 +117,7 @@ public class ExportDB extends Activity
         {
             xmlExporter.export("picoinvoices", "picodatabase");
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             Toast.makeText(getBaseContext(), "Error exporting database", Toast.LENGTH_LONG).show();
             return;
@@ -137,7 +137,7 @@ public class ExportDB extends Activity
         {
             csvExporter.export("picoinvoices", "picodatabase");
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             Toast.makeText(getBaseContext(), "Error exporting database", Toast.LENGTH_LONG).show();
             return;
@@ -189,7 +189,7 @@ public class ExportDB extends Activity
         {
             System.out.println("directory does not exist; creating directory");
             
-            if (!file.mkdirs())
+            if(!file.mkdirs())
             {
                 System.out.println("Problem creating data storage folder");
                 exists = false;

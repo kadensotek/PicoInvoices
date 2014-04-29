@@ -7,11 +7,6 @@ import java.util.Scanner;
 
 public class CsvImporter
 {
-
-    private List<InvoiceCSV> invoices = null;
-    private List<ClientCSV> clients = null;
-    private List<ServiceCSV> services = null;
-
     public CsvImporter()
     {
     }
@@ -345,41 +340,5 @@ public class CsvImporter
         type    = segments[3];
 
         return new ServiceCSV(id, name, rate, type);
-    }
-
-    // //////////////////////////////////////////////////////
-    // ///*
-    // ///* Getters and setters for lists
-    // ///*
-    // //////////////////////////////////////////////////////
-
-    public void setInvoiceList(List<InvoiceCSV> invoices)
-    {
-        this.invoices = invoices;
-    }
-
-    public List<InvoiceCSV> getInvoiceList()
-    {
-        return this.invoices;
-    }
-
-    public void setClientList(List<ClientCSV> clients)
-    {
-        this.clients = clients;
-    }
-
-    public List<ClientCSV> getClientList()
-    {
-        return this.clients;
-    }
-
-    public void setServiceList(List<ServiceCSV> services)
-    {
-        this.services = services;
-    }
-
-    public List<ServiceCSV> getServiceList()
-    {
-        return this.services;
     }
 }
