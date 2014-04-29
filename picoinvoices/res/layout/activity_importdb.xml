@@ -38,7 +38,7 @@
 	        android:layout_below="@+id/importdb_btnToImportXML"
 	        android:layout_centerHorizontal="true"
 	        android:minHeight="80dp"
-	        android:onClick="onClick_toImportCSV"
+	        android:onClick="onClick_ToImportCSV"
 	        android:text="Import from CSV" />
 	
     </LinearLayout>
