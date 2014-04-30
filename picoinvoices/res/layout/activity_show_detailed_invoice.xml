@@ -21,17 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/home_btnEmail" >
+        android:layout_below="@+id/detail_StatusSpinner" >
+
     </ExpandableListView>
 
-    <Button
-        android:id="@+id/home_btnEmail"
+    <Spinner
+        android:id="@+id/detail_StatusSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/expandableListView1"
-        android:minWidth="80dp"
-        android:onClick="onClick_Email"
-        android:text="Email" />
+        android:layout_alignRight="@+id/expandableListView1" />
 
 </RelativeLayout>

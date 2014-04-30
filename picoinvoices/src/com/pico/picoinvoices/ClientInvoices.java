@@ -83,6 +83,9 @@ public class ClientInvoices extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId())
         {
+            case R.id.action_report:
+                onClick_Reports();
+                return true;
             case R.id.action_editClient:
                 Intent edit = new Intent(this, EditClientInfo.class);
                 startActivity(edit);
@@ -254,7 +257,7 @@ public class ClientInvoices extends Activity
     // /////* OnClick listener for reports
     // /////*
     // ////////////////////////////////////////////////////////
-    public void onClick_Reports(View v)
+    public void onClick_Reports()
     {
         Intent intent = new Intent(this, Reports.class);
         startActivity(intent);

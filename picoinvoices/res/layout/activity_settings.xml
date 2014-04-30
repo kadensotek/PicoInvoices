@@ -22,33 +22,38 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true">
+
         <Button
-	        android:id="@+id/settings_btnToUserData"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="89dp"
-	        android:minHeight="80dp"
-	        android:onClick="onClick_toUserData"
-	        android:text="Edit User Information" />
+            android:id="@+id/settings_btnToUserData"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="89dp"
+            android:maxWidth="250dp"
+            android:minHeight="80dp"
+            android:onClick="onClick_toUserData"
+            android:text="Edit User Information" />
         
         <Button
-	        android:id="@+id/settings_btnToImport"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:minHeight="80dp"
-	        android:onClick="onClick_toImport"
-	        android:text="Import Database" />
+            android:id="@+id/settings_btnToImport"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:maxWidth="250dp"
+            android:minHeight="80dp"
+            android:onClick="onClick_toImport"
+            android:text="Import Database" />
         
         <Button
-	        android:id="@+id/settings_btnToExport"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:minHeight="80dp"
-	        android:onClick="onClick_toExport"
-	        android:text="Export Database" />
+            android:id="@+id/settings_btnToExport"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:maxWidth="250dp"
+            android:minHeight="80dp"
+            android:onClick="onClick_toExport"
+            android:text="Export Database" />
+
     </LinearLayout>
 
 </RelativeLayout>

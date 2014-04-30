@@ -22,15 +22,16 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true">
+
         <Button
-	        android:id="@+id/home_btnToClients"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="89dp"
-	        android:minHeight="80dp"
-	        android:onClick="onClick_ToClients"
-	        android:text="Clients" />
+            android:id="@+id/home_btnToClients"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="89dp"
+            android:maxWidth="250dp"
+            android:minHeight="80dp"
+            android:onClick="onClick_ToClients"
+            android:text="Clients" />
 	
 	    <Button
 	        android:id="@+id/home_btnToManageInvoices"
@@ -38,6 +39,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/home_btnToClients"
 	        android:layout_centerHorizontal="true"
+	        android:maxWidth="250dp"
 	        android:minHeight="80dp"
 	        android:onClick="onClick_toManageInvoices"
 	        android:text="Manage Invoices" />
@@ -48,6 +50,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/home_btnToManageInvoices"
 	        android:layout_centerHorizontal="true"
+	        android:maxWidth="250dp"
 	        android:minHeight="80dp"
 	        android:onClick="onClick_toServices"
 	        android:text="Services" />
@@ -59,9 +62,11 @@
 	        android:layout_below="@+id/home_btnEmail"
 	        android:layout_centerHorizontal="true"
 	        android:maxHeight="80dp"
+	        android:maxWidth="250dp"
 	        android:minHeight="80dp"
 	        android:onClick="onClick_toSettings"
 	        android:text="Settings" />
+
     </LinearLayout>
 
 </RelativeLayout>

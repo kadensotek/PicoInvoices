@@ -115,6 +115,9 @@ public class Reports extends Activity
         ArrayList<String> average = new ArrayList<String>();
         ArrayList<String> total = new ArrayList<String>();
         
+//        services.add("Services");
+//        instances.add("# of services");
+//        average.add("Avg $");
         Cursor cursor = _myDb.getCustomerInvoice(_sp.getClientID());                                 
         if (cursor != null)
         {
@@ -232,8 +235,6 @@ public class Reports extends Activity
                 ViewGroup parent)
         {
             //Only return a row if there are elements (clients and services have been registered) in the arraylists
-           if (true)
-           {
                System.out.println(l.get(position) + " - " + l2.get(position) + " - " + l3.get(position)); 
                
                LayoutInflater inflater = getLayoutInflater();
@@ -249,12 +250,6 @@ public class Reports extends Activity
                
     
                 return row;
-           }
-           else
-           {
-              
-               return null;
-           }
         }
 
     }

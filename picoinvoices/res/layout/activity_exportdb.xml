@@ -21,15 +21,17 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true">
+
         <Button
-	        android:id="@+id/exportdb_btnToExportXML"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="89dp"
-	        android:minHeight="80dp"
-	        android:onClick="onClick_ToExportXML"
-	        android:text="Export to XML" />
+            android:id="@+id/exportdb_btnToExportXML"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="89dp"
+            android:maxWidth="250dp"
+            android:minHeight="80dp"
+            android:onClick="onClick_ToExportXML"
+            android:text="Export to XML" />
 	
 	    <Button
 	        android:id="@+id/exportdb_btnToExportCSV"
@@ -37,6 +39,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/exportdb_btnToExportCSV"
 	        android:layout_centerHorizontal="true"
+	        android:maxWidth="250dp"
 	        android:minHeight="80dp"
 	        android:onClick="onClick_ToExportCSV"
 	        android:text="Export to CSV" />

@@ -21,15 +21,17 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true">
+
         <Button
-	        android:id="@+id/importdb_btnToImportXML"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="89dp"
-	        android:minHeight="80dp"
-	        android:onClick="onClick_ToImportXML"
-	        android:text="Import from XML" />
+            android:id="@+id/importdb_btnToImportXML"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="89dp"
+            android:maxWidth="250dp"
+            android:minHeight="80dp"
+            android:onClick="onClick_ToImportXML"
+            android:text="Import from XML" />
 	
 	    <Button
 	        android:id="@+id/importdb_btnToImportCSV"
@@ -37,6 +39,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/importdb_btnToImportXML"
 	        android:layout_centerHorizontal="true"
+	        android:maxWidth="250dp"
 	        android:minHeight="80dp"
 	        android:onClick="onClick_ToImportCSV"
 	        android:text="Import from CSV" />

@@ -11,14 +11,21 @@ import java.util.Locale;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ShowDetailedInvoice extends Activity
@@ -86,6 +93,9 @@ public class ShowDetailedInvoice extends Activity
         // Handle presses on the action bar items
         switch (item.getItemId())
         {
+            case R.id.sendMail:
+                onClick_Email();
+                return true;
             case R.id.goto_Home:
                 Intent home = new Intent(this, Home.class);
                 startActivity(home);
@@ -141,6 +151,8 @@ public class ShowDetailedInvoice extends Activity
         createGroupList();
 
         createCollection();
+        
+        addItemsOnSpinner();
 
         _expListView = (ExpandableListView) findViewById(R.id.expandableListView1);
         final ExpandableListViewAdapter expListAdapter = new ExpandableListViewAdapter(
@@ -161,8 +173,53 @@ public class ShowDetailedInvoice extends Activity
         });
         closeDB();
     }
+    
+    public void addItemsOnSpinner()
+    {
+
+        Spinner spinner = (Spinner) findViewById(R.id.detail_StatusSpinner);
+        List<String> list = new ArrayList<String>();
+        list.add("Quote");
+        list.add("Pending");
+        list.add("Overdue");
+        list.add("Paid");
+        
+       
+        MyAdapter dataAdapter = new MyAdapter(this,
+                R.layout.simple_spinner_layout,list);
+        spinner.setAdapter(dataAdapter);
+//        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_spinner_item, list);
+//        dataAdapter
+//                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        _spinner.setAdapter(dataAdapter);
+        addListenerOnSpinnerItemSelection();
+    }
+
+    public void addListenerOnSpinnerItemSelection()
+    {
+        Spinner spinner = (Spinner) findViewById(R.id.detail_StatusSpinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                    int pos, long id)
+            {
+                System.out.println("Changed to");
+//                TextView tv = (TextView) view.findViewById(R.id.detail_StatusSpinner);
+                
+//                Toast.makeText(ShowDetailedInvoice.this,"You have changed to " + tv.getText().toString(),Toast.LENGTH_SHORT).show();
+            }
+
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                return;
+            }
+        });
+    }
+    
     private void populateValues()
     {
+        openDB();
         // Populate the values for the contact information.
         Cursor cursor = _myDb.query(new String[] { Integer.toString(_sp.getClientID()) },ClientAdapter.DATABASE_TABLE);
 
@@ -196,7 +253,7 @@ public class ShowDetailedInvoice extends Activity
         }
         
         cursor.close();
-
+        closeDB();
     }
     private String returnServices(String s, String v)
     {
@@ -299,7 +356,7 @@ public class ShowDetailedInvoice extends Activity
     // }
 
 
-    public void onClick_Email(View v)
+    public void onClick_Email()
     {
         System.out.println(_email.substring(_email.indexOf("\t"), _email.length()).trim());
         //This version only selects mail applications and will format the body with html
@@ -307,8 +364,55 @@ public class ShowDetailedInvoice extends Activity
         intent.setType("text/html");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{_email.substring(_email.indexOf("\t"), _email.length()).trim()});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Invoice - " + _issuedate);
-        intent.putExtra(Intent.EXTRA_TEXT,"<b>" +  _fname +" " + _lname +"</b>\n\t" + _service + "\n" + _amountdue);
+        intent.putExtra(Intent.EXTRA_TEXT,"" +  _fname +" " + _lname +"\n\t" + _service + "\n" + _amountdue);
   
         startActivity(Intent.createChooser(intent, "Send Email"));
+    }
+    
+    private class MyAdapter extends ArrayAdapter<String>
+    {
+        ArrayList<String> l = null;
+
+        public MyAdapter(Context context, int textViewResourceId,List<String> list)
+        {
+            super(context, textViewResourceId, list);
+            l = (ArrayList<String>) list;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView,
+                ViewGroup parent)
+        {
+            //Only return a row if there are elements (clients and services have been registered) in the arraylists
+           if (l.size() > 0)
+           {
+                LayoutInflater inflater = getLayoutInflater();
+                View row = inflater.inflate(R.layout.simple_spinner_layout, parent,false);
+                TextView label = (TextView) row.findViewById(R.id.simple_spinner_tv);
+                // if (position > 0)
+                // label.setText(l.get(position-1));
+                // else
+                label.setText(l.get(position));
+    
+    
+                return row;
+           }
+           else
+           {
+               return null;
+           }
+        }
+
     }
 }

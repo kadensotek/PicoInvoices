@@ -1,6 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-     <item
+    <item
+        android:id="@+id/action_report"
+        android:icon="@drawable/ic_action_paste"
+        android:showAsAction="always"/>
+    <item
         android:id="@+id/action_editClient"
         android:icon="@drawable/ic_action_edit"
         android:showAsAction="always"/>

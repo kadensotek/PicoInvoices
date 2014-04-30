@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/addNewInvoice_serviceSpinner"
                 android:layout_below="@+id/addNewInvoice_serviceSpinner"
-                android:text="Rate ($/hour)"
+                android:text="Price ($)"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText

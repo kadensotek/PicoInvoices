@@ -251,7 +251,23 @@ public class InvoiceAdapter
         // Insert it into the database.
         return db.update(DATABASE_TABLE, newValues, where, null) != 0;
     }
+    public boolean updateStatus(long rowId, String status)
+    {
 
+        String where = KEY_ROWID + "=" + rowId;
+
+        /*
+         * CHANGE 4:
+         */
+        // TODO: Update data in the row with new fields.
+        // TODO: Also change the function's arguments to be what you need!
+        // Create row's data:
+        ContentValues newValues = new ContentValues();
+        newValues.put(KEY_STATUS, status);
+
+        // Insert it into the database.
+        return db.update(DATABASE_TABLE, newValues, where, null) != 0;
+    }
     // ///////////////////////////////////////////////////////////////////
     // Private Helper Classes:
     // ///////////////////////////////////////////////////////////////////

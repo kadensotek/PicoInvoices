@@ -15,9 +15,12 @@ import com.pico.picoinvoices.CsvImporter.ServiceCSV;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -63,6 +66,48 @@ public class ImportDB extends Activity
         _sp.saveInvioceID("0");
         openDB();
         // closeDB();
+    }
+    
+    ////////////////////////////////////////////////////////
+    /////*
+    /////*  Action bar functions
+    /////*
+    ////////////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        //Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.importdb, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.goto_Home:
+                Intent home = new Intent(this, Home.class);
+                startActivity(home);
+                return true;
+            case R.id.goto_Clients:
+                Intent clients = new Intent(this, ClientList.class);
+                startActivity(clients);
+                return true;
+            case R.id.goto_ManageInvoices:
+                Intent manage = new Intent(this, ManageInvoices.class);
+                startActivity(manage);
+                return true;
+            case R.id.goto_Services:
+                Intent services = new Intent(this, RegisterServices.class);
+                startActivity(services);
+                return true;
+            case R.id.goto_Settings:
+                Intent settings = new Intent(this, Settings.class);
+                startActivity(settings);
+                return true;
+            default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     // @Override
