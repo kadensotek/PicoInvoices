@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="89dp"
-            android:maxWidth="250dp"
+            android:maxWidth="150dp"
             android:minHeight="80dp"
             android:onClick="onClick_ToExportXML"
             android:text="Export to XML" />
@@ -39,7 +39,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/exportdb_btnToExportCSV"
 	        android:layout_centerHorizontal="true"
-	        android:maxWidth="250dp"
+	        android:maxWidth="150dp"
 	        android:minHeight="80dp"
 	        android:onClick="onClick_ToExportCSV"
 	        android:text="Export to CSV" />

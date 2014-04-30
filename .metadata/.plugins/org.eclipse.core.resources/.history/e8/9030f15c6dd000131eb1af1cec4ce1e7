@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ImportDB" >
+    tools:context=".ExportDB" >
 
     <ImageView
         android:id="@+id/imageView1"
@@ -23,26 +23,26 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/importdb_btnToImportXML"
+            android:id="@+id/exportdb_btnToExportXML"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="89dp"
-            android:maxWidth="150dp"
+            android:maxWidth="250dp"
             android:minHeight="80dp"
-            android:onClick="onClick_ToImportXML"
-            android:text="Import from XML" />
+            android:onClick="onClick_ToExportXML"
+            android:text="Export to XML" />
 	
 	    <Button
-	        android:id="@+id/importdb_btnToImportCSV"
+	        android:id="@+id/exportdb_btnToExportCSV"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/importdb_btnToImportXML"
+	        android:layout_below="@+id/exportdb_btnToExportCSV"
 	        android:layout_centerHorizontal="true"
-	        android:maxWidth="150dp"
+	        android:maxWidth="250dp"
 	        android:minHeight="80dp"
-	        android:onClick="onClick_ToImportCSV"
-	        android:text="Import from CSV" />
+	        android:onClick="onClick_ToExportCSV"
+	        android:text="Export to CSV" />
 	
     </LinearLayout>
 

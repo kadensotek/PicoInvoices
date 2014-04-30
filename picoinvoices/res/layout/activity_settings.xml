@@ -32,14 +32,15 @@
             android:maxWidth="250dp"
             android:minHeight="80dp"
             android:onClick="onClick_toUserData"
-            android:text="Edit User Information" />
+            android:text="Edit User Information"
+            android:visibility="invisible" />
         
         <Button
             android:id="@+id/settings_btnToImport"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:maxWidth="250dp"
+            android:maxWidth="150dp"
             android:minHeight="80dp"
             android:onClick="onClick_toImport"
             android:text="Import Database" />
@@ -49,7 +50,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:maxWidth="250dp"
+            android:maxWidth="150dp"
             android:minHeight="80dp"
             android:onClick="onClick_toExport"
             android:text="Export Database" />
