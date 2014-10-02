@@ -38,6 +38,7 @@ public class Home extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		initialize();
+		
 		if (_showNotes == true)
 		{
 		      getNotifications();
@@ -46,7 +47,8 @@ public class Home extends Activity
 		
 		//Use shared preferences to make sure that the notification is only shown once per application life
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		if(!prefs.getBoolean("firstTime", false)) {
+		if(!prefs.getBoolean("firstTime", false))
+		{
 		    
     		SharedPreferences.Editor editor = prefs.edit();
     		editor.putBoolean("firstTime", true);
@@ -61,6 +63,7 @@ public class Home extends Activity
 
         closevDB();
     }
+	
 	@Override
     protected void onResume()
     {
@@ -85,8 +88,6 @@ public class Home extends Activity
 //		return true;
 //	}
 
-	
-
     @SuppressLint("SimpleDateFormat")
     private void getNotifications() 
     {
@@ -96,6 +97,7 @@ public class Home extends Activity
        String notice = "";
        Cursor cursor = _myDb.getAllRows();
 //       Cursor cursor = _myDb.querySort2(new String[] { InvoiceAdapter.KEY_DUEDATE },InvoiceAdapter.DATABASE_TABLE);
+       
        if (cursor.moveToFirst())
        {
           do 
@@ -108,6 +110,7 @@ public class Home extends Activity
                String s = df.format(c.getTime());
                Date sevenDayDate = null;
                Date invoiceDate = null;
+               
                try
                {
                     sevenDayDate = df.parse(s);
@@ -127,7 +130,10 @@ public class Home extends Activity
           }while(cursor.moveToNext());
        } 
        else
-           Toast.makeText(Home.this, "No invoices have been found.",Toast.LENGTH_SHORT).show();
+       {
+         //  Toast.makeText(Home.this, "No invoices have been found.",Toast.LENGTH_SHORT).show();
+       }
+           
        //Display the notification with the included invoices due within the following week
        if(displayNote == true)
        {
@@ -135,7 +141,8 @@ public class Home extends Activity
            builder.setMessage("Upcoming payments due...\n" + notice)
                   .setCancelable(false)
                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                      public void onClick(DialogInterface dialog, int id) {
+                      @Override
+                    public void onClick(DialogInterface dialog, int id) {
                            //do things
                       }
                   });

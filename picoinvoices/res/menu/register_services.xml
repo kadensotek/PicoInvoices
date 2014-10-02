@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_addService"
+        android:icon="@drawable/ic_action_new"
+        android:showAsAction="ifRoom"
+        android:title=""/>
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_action_overflow"
         android:showAsAction="always"

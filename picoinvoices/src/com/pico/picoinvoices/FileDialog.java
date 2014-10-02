@@ -62,6 +62,7 @@ public class FileDialog
         {
             builder.setPositiveButton("Select directory", new OnClickListener()
             {
+                @Override
                 public void onClick(DialogInterface dialog, int which)
                 {
                     Log.d(TAG, currentPath.getPath());
@@ -72,6 +73,7 @@ public class FileDialog
 
         builder.setItems(fileList, new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog, int which)
             {
                 String fileChosen = fileList[which];
@@ -132,6 +134,7 @@ public class FileDialog
         fileListenerList
                 .fireEvent(new FireHandler<FileDialog.FileSelectedListener>()
                 {
+                    @Override
                     public void fireEvent(FileSelectedListener listener)
                     {
                         listener.fileSelected(file);
@@ -144,6 +147,7 @@ public class FileDialog
         dirListenerList
                 .fireEvent(new FireHandler<FileDialog.DirectorySelectedListener>()
                 {
+                    @Override
                     public void fireEvent(DirectorySelectedListener listener)
                     {
                         listener.directorySelected(directory);
@@ -165,6 +169,7 @@ public class FileDialog
             
             FilenameFilter filter = new FilenameFilter()
             {
+                @Override
                 public boolean accept(File dir, String filename)
                 {
                     File sel = new File(dir, filename);
@@ -194,7 +199,7 @@ public class FileDialog
             }
         }
         
-        fileList = (String[]) r.toArray(new String[] {});
+        fileList = r.toArray(new String[] {});
     }
 
     /* Used for navigating around file system */

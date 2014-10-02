@@ -78,9 +78,9 @@ public class Reports extends Activity
 //         * This pull is now working correctly, need to pull in the information, process it, 
 //         * and then add it in a normal listview adapter, not a cursor listview
 //         */
-        ArrayList<String> test = (ArrayList<String>) getUserServiceInfo(0);
-        ArrayList<String> test2 = (ArrayList<String>) getUserServiceInfo(1);
-        ArrayList<String> test3 = (ArrayList<String>) getUserServiceInfo(2);
+        ArrayList<String> test = getUserServiceInfo(0);
+        ArrayList<String> test2 = getUserServiceInfo(1);
+        ArrayList<String> test3 = getUserServiceInfo(2);
         for(int i=0; i< test.size(); i++)
         {
             System.out.println(test.get(i) + " - " + test2.get(i) + " - " + test3.get(i));

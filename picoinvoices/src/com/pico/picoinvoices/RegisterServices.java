@@ -1,7 +1,5 @@
 package com.pico.picoinvoices;
 
-import java.util.Random;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,8 +13,8 @@ import android.widget.SimpleCursorAdapter;
 
 public class RegisterServices extends Activity
 {
-
     private RegisterServicesAdapter myDb = null;
+    SPAdapter _sp = null;
     String customerID = "";
     
     ////////////////////////////////////////////////////////
@@ -29,8 +27,17 @@ public class RegisterServices extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_services);
+        
+         //initialize SharedPreferences
+        _sp = new SPAdapter(getApplicationContext());
         refresh();
+        System.out.println("Created..");
+        
+        //Make sure that there is a message if the listview is empty
+        ListView listView = (ListView) findViewById(R.id.services_listView);
+        listView.setEmptyView(findViewById(R.id.emptyRegisteredServices));
     }
+    
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -60,6 +67,7 @@ public class RegisterServices extends Activity
         super.onPause();
         closeDB();
     }
+    
     ////////////////////////////////////////////////////////
     /////*
     /////*  Action bar functions
@@ -77,6 +85,10 @@ public class RegisterServices extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
+            case R.id.action_addService:
+                Intent intent = new Intent(this, AddNewService.class);
+                startActivity(intent);
+                return true;
             case R.id.goto_Home:
                 Intent home = new Intent(this, Home.class);
                 startActivity(home);
@@ -98,7 +110,7 @@ public class RegisterServices extends Activity
                 startActivity(settings);
                 return true;
             default:
-            return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
        }
     }
 
@@ -124,12 +136,23 @@ public class RegisterServices extends Activity
     ////////////////////////////////////////////////////////
     private void refresh()
     {
-      //Make sure that there is a message if the listview is empty
-        ListView listView = (ListView) findViewById(R.id.services_listView);
-        listView.setEmptyView(findViewById(R.id.emptyRegisteredServices));
+//      //Make sure that there is a message if the listview is empty
+//        ListView listView = (ListView) findViewById(R.id.services_listView);
+//        listView.setEmptyView(findViewById(R.id.emptyRegisteredServices));
+//        openDB();
+//        populateListView();
+//        registerClickCallback();
+//        closeDB();
+      //Open database
         openDB();
+        
+        //Create the list of items on in the listview
         populateListView();
+        
+        //Set the functionality for selecting a given element in the list
         registerClickCallback();
+        
+        //Close database
         closeDB();
     }
     
@@ -173,50 +196,13 @@ public class RegisterServices extends Activity
     
     ////////////////////////////////////////////////////////
     /////*
-    /////*  Utility functions 
-    /////*
-    ////////////////////////////////////////////////////////
-    private String getDateTime() {
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(100) + 20;
-        String value = Integer.toString(rand);
-        
-        return value;
-    }
-    
-    private String getType()
-    {
-        String[] types = new String[] {"Education", "Packaging", "Construction", "Insurance", "Finance", "Repair", "Installation", "Advertising", "Business Management", "Medical Services",
-                "Legal Services"};
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(11);
-        
-        return types[rand];
-        
-    }
-    private String getName()
-    {
-        String[] types = new String[] {"Lawn Mow", "Spring Cleanup", "Mulch", "Trim", "Clean Gutters", "Plow Driveway", "Weed", "Hedge Clipping"};
-        Random randomGenerator = new Random();
-        int rand = randomGenerator.nextInt(8);
-        
-        return types[rand];
-        
-    }
-    ////////////////////////////////////////////////////////
-    /////*
     /////*  OnClick listener for adding an invoice as described in the xml
     /////*
     ////////////////////////////////////////////////////////
     public void onClick_AddNewService(View v)
     {
-        openDB();
-        String name = getName();
-        String type = getType();
-        String rate = getDateTime();
-        
-        myDb.insertRow(name, type, rate);
-        closeDB();
-        refresh();
+      //Create intent to send user to AddNewClient activity
+        Intent intent = new Intent(this, AddNewService.class);
+        startActivity(intent);
     }
 }

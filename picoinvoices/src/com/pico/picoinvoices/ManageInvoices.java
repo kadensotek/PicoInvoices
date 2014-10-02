@@ -258,6 +258,7 @@ public class ManageInvoices extends Activity
         spinner = (Spinner) findViewById(R.id.spinner2);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id)
             {
@@ -268,6 +269,7 @@ public class ManageInvoices extends Activity
                 refresh();
             }
 
+            @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
                 return;

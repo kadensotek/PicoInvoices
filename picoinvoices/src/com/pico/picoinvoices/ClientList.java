@@ -164,7 +164,6 @@ public class ClientList extends Activity
 	
 	private void populateListView() 
 	{
-		//Open database
 	    openDB();
 	    //Create the list of items
 	    Cursor cursor = _myDb.getAllRows(); 								
@@ -178,7 +177,6 @@ public class ClientList extends Activity
 		ListView list = (ListView) findViewById(R.id.client_listView);
 		list.setAdapter(adapter);
 		
-		//Close database
 		closeDB();
 		
 	}

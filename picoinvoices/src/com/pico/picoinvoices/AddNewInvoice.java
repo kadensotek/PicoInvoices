@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -208,6 +209,7 @@ public class AddNewInvoice extends Activity
         Spinner spinner = (Spinner) findViewById(spinnerID);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id)
             {
@@ -216,6 +218,7 @@ public class AddNewInvoice extends Activity
                 }
             }
 
+            @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
                 return;
@@ -320,6 +323,7 @@ public class AddNewInvoice extends Activity
         .setPositiveButton(android.R.string.yes,
         new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog,
                     int which)
             {
@@ -329,6 +333,7 @@ public class AddNewInvoice extends Activity
         .setNegativeButton(android.R.string.no,
         new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog,
                     int which)
             {
@@ -344,6 +349,7 @@ public class AddNewInvoice extends Activity
         .setPositiveButton(android.R.string.yes,
         new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog,
                     int which)
             {
@@ -418,6 +424,7 @@ public class AddNewInvoice extends Activity
         .setNegativeButton(android.R.string.no,
         new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog,
                     int which)
             {
@@ -491,7 +498,7 @@ public class AddNewInvoice extends Activity
 
             // Use the ArrayList of stored, newly added spinners to retrieve as
             // a 'View' and remove them from last to first
-            View view = (View) findViewById(_rIdStore.get(size));
+            View view = findViewById(_rIdStore.get(size));
             layout.removeView(view);
             if (_rIdStore.size() > 1)
             {
@@ -530,7 +537,7 @@ public class AddNewInvoice extends Activity
 
         // Set the layout rules for the new service_rows layout and add it to
         // the activity layout
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, _nextBelowID);
         layout.addView(l, params);
 

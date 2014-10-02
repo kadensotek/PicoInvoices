@@ -163,6 +163,7 @@ public class ShowDetailedInvoice extends Activity
 
         _expListView.setOnChildClickListener(new OnChildClickListener()
         {
+            @Override
             public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id)
             {
                 final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
@@ -201,6 +202,7 @@ public class ShowDetailedInvoice extends Activity
         Spinner spinner = (Spinner) findViewById(R.id.detail_StatusSpinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id)
             {
@@ -210,6 +212,7 @@ public class ShowDetailedInvoice extends Activity
 //                Toast.makeText(ShowDetailedInvoice.this,"You have changed to " + tv.getText().toString(),Toast.LENGTH_SHORT).show();
             }
 
+            @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
                 return;

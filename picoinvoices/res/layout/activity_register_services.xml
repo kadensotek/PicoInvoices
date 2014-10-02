@@ -8,15 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RegisterServices" >
 
-    <Button
-        android:id="@+id/registerService_AddNewService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:minWidth="80dp"
-        android:onClick="onClick_AddNewService"
-        android:text="Add" />
 
     <TextView
         android:id="@+id/manageInvoices"
@@ -33,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/registerService_AddNewService"
-        android:layout_below="@+id/registerService_AddNewService" >
+        android:layout_below="@+id/manageInvoices" >
     </ListView>
     <TextView
         android:id="@+id/emptyRegisteredServices"

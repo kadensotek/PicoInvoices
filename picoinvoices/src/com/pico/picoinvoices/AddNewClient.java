@@ -109,6 +109,7 @@ public class AddNewClient extends Activity
                 .setPositiveButton(android.R.string.yes,
                 new DialogInterface.OnClickListener()
                 {
+                    @Override
                     public void onClick(DialogInterface dialog,
                             int which)
                     {
@@ -161,6 +162,7 @@ public class AddNewClient extends Activity
                 .setNegativeButton(android.R.string.no,
                 new DialogInterface.OnClickListener()
                 {
+                    @Override
                     public void onClick(DialogInterface dialog,
                             int which)
                     {
@@ -177,6 +179,7 @@ public class AddNewClient extends Activity
         .setPositiveButton(android.R.string.yes,
         new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog,
                     int which)
             {
@@ -186,6 +189,7 @@ public class AddNewClient extends Activity
         .setNegativeButton(android.R.string.no,
         new DialogInterface.OnClickListener()
         {
+            @Override
             public void onClick(DialogInterface dialog,
                     int which)
             {

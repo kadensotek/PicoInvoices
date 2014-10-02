@@ -16,7 +16,7 @@ public class SPAdapter
     public SPAdapter(Context context)
     {
         this._sharedPrefs = context.getSharedPreferences(APP_SHARED_PREFS,
-                Activity.MODE_PRIVATE);
+                Context.MODE_PRIVATE);
         this._prefsEditor = _sharedPrefs.edit();
     }
 

@@ -27,17 +27,20 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
         this._content = content;
     }
 
+    @Override
     public Object getChild(int groupPosition, int childPosition)
     {
         return _invoice.get(_content.get(groupPosition)).get(
                 childPosition);
     }
 
+    @Override
     public long getChildId(int groupPosition, int childPosition)
     {
         return childPosition;
     }
 
+    @Override
     public View getChildView(final int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent)
     {
         final String laptop = (String) getChild(groupPosition, childPosition);
@@ -54,26 +57,31 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
         return convertView;
     }
 
+    @Override
     public int getChildrenCount(int groupPosition)
     {
         return _invoice.get(_content.get(groupPosition)).size();
     }
 
+    @Override
     public Object getGroup(int groupPosition)
     {
         return _content.get(groupPosition);
     }
 
+    @Override
     public int getGroupCount()
     {
         return _content.size();
     }
 
+    @Override
     public long getGroupId(int groupPosition)
     {
         return groupPosition;
     }
 
+    @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent)
     {
@@ -90,11 +98,13 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
         return convertView;
     }
 
+    @Override
     public boolean hasStableIds()
     {
         return true;
     }
 
+    @Override
     public boolean isChildSelectable(int groupPosition, int childPosition)
     {
         return true;
