@@ -136,29 +136,20 @@ public class RegisterServices extends Activity
     ////////////////////////////////////////////////////////
     private void refresh()
     {
-//      //Make sure that there is a message if the listview is empty
-//        ListView listView = (ListView) findViewById(R.id.services_listView);
-//        listView.setEmptyView(findViewById(R.id.emptyRegisteredServices));
-//        openDB();
-//        populateListView();
-//        registerClickCallback();
-//        closeDB();
-      //Open database
+      //Make sure that there is a message if the listview is empty
+        ListView listView = (ListView) findViewById(R.id.services_listView);
+        listView.setEmptyView(findViewById(R.id.emptyRegisteredServices));
+        
         openDB();
-        
-        //Create the list of items on in the listview
         populateListView();
-        
-        //Set the functionality for selecting a given element in the list
         registerClickCallback();
-        
-        //Close database
         closeDB();
     }
     
     private void populateListView()
     {
         openDB();
+        
         //Create the list of items
         Cursor cursor = myDb.getAllRows();                          
         
@@ -167,7 +158,6 @@ public class RegisterServices extends Activity
         int[] ints = new int[] {R.id.services_Name, R.id.service_Type, R.id.service_Rate};
     
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.service_layout_template, cursor, client_name_list , ints, 0);
-        
         
         ListView list = (ListView) findViewById(R.id.services_listView);
         list.setAdapter(adapter);
@@ -178,6 +168,7 @@ public class RegisterServices extends Activity
     private void registerClickCallback() 
     {
         ListView list = (ListView) findViewById(R.id.services_listView);
+        System.out.println("registerClickCallback in services");
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {
             @Override
@@ -190,13 +181,21 @@ public class RegisterServices extends Activity
 //                    intent1.putExtra("CustomerID", customerID);
 //                     System.out.println(customerID);
 //                    startActivity(intent1);
+                
+              //Create intent to send user to ClientInvoices activity
+                Intent goToInvoices = new Intent(RegisterServices.this, ClientInvoices.class);
+                
+                //Set the value of the CLIENT_ID value in the shared preferences
+                //This will be used to access which client was selected in subsequent activities (ClientInvoices and ShowDetailedInvoice)
+                _sp.saveClientID(Long.toString(idInDB));
+                startActivity(goToInvoices);
             }
         });
     }
     
     ////////////////////////////////////////////////////////
     /////*
-    /////*  OnClick listener for adding an invoice as described in the xml
+    /////*  OnClick listener for adding a service
     /////*
     ////////////////////////////////////////////////////////
     public void onClick_AddNewService(View v)

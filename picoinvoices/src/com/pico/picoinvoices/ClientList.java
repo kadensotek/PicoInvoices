@@ -214,5 +214,4 @@ public class ClientList extends Activity
 	    Intent intent = new Intent(this, AddNewClient.class);
 		startActivity(intent);
 	}
-
 }
