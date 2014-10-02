@@ -168,7 +168,8 @@ public class RegisterServices extends Activity
     private void registerClickCallback() 
     {
         ListView list = (ListView) findViewById(R.id.services_listView);
-        System.out.println("registerClickCallback in services");
+        
+        /* Handles clicking on item; no current functionality */
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {
             @Override
@@ -181,14 +182,6 @@ public class RegisterServices extends Activity
 //                    intent1.putExtra("CustomerID", customerID);
 //                     System.out.println(customerID);
 //                    startActivity(intent1);
-                
-              //Create intent to send user to ClientInvoices activity
-                Intent goToInvoices = new Intent(RegisterServices.this, ClientInvoices.class);
-                
-                //Set the value of the CLIENT_ID value in the shared preferences
-                //This will be used to access which client was selected in subsequent activities (ClientInvoices and ShowDetailedInvoice)
-                _sp.saveClientID(Long.toString(idInDB));
-                startActivity(goToInvoices);
             }
         });
     }
