@@ -40,10 +40,12 @@ public class ClientList extends Activity
 		_sp = new SPAdapter(getApplicationContext());
 		refresh();
 		 System.out.println("Created..");
+		 
 		 //Make sure that there is a message if the listview is empty
 		 ListView listView = (ListView) findViewById(R.id.client_listView);
 		 listView.setEmptyView(findViewById(R.id.emptyClientList));
 	}
+	
 	@Override
 	protected void onDestroy()
 	{
@@ -80,6 +82,7 @@ public class ClientList extends Activity
         refresh();
         System.out.println("Restarted..");
     }
+	
     ////////////////////////////////////////////////////////
     /////*
     /////*  Action bar functions
@@ -178,7 +181,6 @@ public class ClientList extends Activity
 		list.setAdapter(adapter);
 		
 		closeDB();
-		
 	}
 	
 	private void registerClickCallback() 

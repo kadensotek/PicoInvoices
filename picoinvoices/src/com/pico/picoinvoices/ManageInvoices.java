@@ -144,6 +144,7 @@ public class ManageInvoices extends Activity
     {
         _sp = new SPAdapter(getApplicationContext());
         addItemsOnSpinner();
+        
         //Make sure that there is a message if the listview is empty
         ListView listView = (ListView) findViewById(R.id.manageInvoices_listView);
         listView.setEmptyView(findViewById(R.id.emptyManageInvoices));
@@ -229,7 +230,6 @@ public class ManageInvoices extends Activity
     // //////////////////////////////////////////////////////
     public void addItemsOnSpinner()
     {
-
         _spinner = (Spinner) findViewById(R.id.spinner2);
         List<String> list = new ArrayList<String>();
         list.add(InvoiceAdapter.KEY_CUSTOMER);
@@ -242,6 +242,7 @@ public class ManageInvoices extends Activity
         shownList.add("Date Due");
         shownList.add("Date Issued");
         shownList.add("Current Status");
+        
         MyAdapter dataAdapter = new MyAdapter(this,
                 R.layout.spinner_text_layout,shownList,list);
         _spinner.setAdapter(dataAdapter);

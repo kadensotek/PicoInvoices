@@ -259,6 +259,7 @@ public class ClientInvoices extends Activity
     // ////////////////////////////////////////////////////////
     public void onClick_Reports()
     {
+        System.out.println("Reports");
         Intent intent = new Intent(this, Reports.class);
         startActivity(intent);
     }
