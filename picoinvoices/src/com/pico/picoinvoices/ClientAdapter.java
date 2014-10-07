@@ -1,6 +1,3 @@
-// ------------------------------------ DBADapter.java ---------------------------------------------
-
-// TODO: Change the package to match your project.
 package com.pico.picoinvoices;
 
 import android.content.ContentValues;
@@ -9,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-// TO USE:
-// Change the package (at top) to match your project.
-// Search for "TODO", and make the appropriate changes.
 public class ClientAdapter  
 {
 
@@ -22,10 +16,7 @@ public class ClientAdapter
 	// DB Fields
 	public static final String KEY_ROWID = "_id";
 	public static final int COL_ROWID = 0;
-	/*
-	 * CHANGE 1:
-	 */
-	// TODO: Setup your fields here:
+
 	public static final String KEY_FNAME = "fname";
 	public static final String KEY_LNAME = "lname";
 	public static final String KEY_ADDRESS = "address";
@@ -33,7 +24,6 @@ public class ClientAdapter
 	public static final String KEY_EMAIL = "email";
 	public static final String KEY_BUSINESS = "business";
 	
-	// TODO: Setup your field numbers here (0 = KEY_ROWID, 1=...)
 	public static final int COL_FNAME = 1;
 	public static final int COL_LNAME = 2;
 	public static final int COL_ADDRESS = 3;
@@ -79,12 +69,6 @@ public class ClientAdapter
 	// Add a new set of values to the database.
 	public long insertRow(String fname, String lname, String address, String phone, String email, String business) 
 	{
-		/*
-		 * CHANGE 3:
-		 */		
-		// TODO: Update data in the row with new fields.
-		// TODO: Also change the function's arguments to be what you need!
-		// Create row's data:
 	    //ContentValues use variable binding behind the scenes and therefore do not allow sql injection
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_FNAME, fname);
@@ -94,7 +78,6 @@ public class ClientAdapter
 		initialValues.put(KEY_EMAIL, email);
 		initialValues.put(KEY_BUSINESS, business);
 		
-		// Insert it into the database.
 		return db.insert(DATABASE_TABLE, null, initialValues);
 	}
 	
@@ -150,11 +133,6 @@ public class ClientAdapter
 	{
 		String where = KEY_ROWID + "=" + rowId;
 
-		/*
-		 * CHANGE 4:
-		 */
-		// TODO: Update data in the row with new fields.
-		// TODO: Also change the function's arguments to be what you need!
 		// Create row's data:
 		ContentValues newValues = new ContentValues();
 		newValues.put(KEY_FNAME, fname);

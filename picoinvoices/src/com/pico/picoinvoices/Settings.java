@@ -167,14 +167,12 @@ public class Settings extends Activity
         // startActivity(intent);
     }
 
-    // TODO Implement importing database
     public void onClick_toImport(View v)
     {
         Intent intent = new Intent(this, ImportDB.class);
         startActivity(intent);
     }
 
-    // TODO Implement exporting database
     public void onClick_toExport(View v)
     {
         System.out.println("Export database selected.");

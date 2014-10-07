@@ -1,6 +1,3 @@
-// ------------------------------------ DBADapter.java ---------------------------------------------
-
-// TODO: Change the package to match your project.
 package com.pico.picoinvoices;
 
 import android.content.ContentValues;
@@ -75,11 +72,6 @@ public class InvoiceAdapter
     public long insertRow(String issuedate, String customer,String duedate, String priceservice, 
                             String service, String amountdue, String status)
     {
-        /*
-         * CHANGE 3:
-         */
-        // TODO: Update data in the row with new fields.
-        // TODO: Also change the function's arguments to be what you need!
         // Create row's data:
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ISSUEDATE, issuedate);
@@ -244,11 +236,6 @@ public class InvoiceAdapter
 
         String where = KEY_ROWID + "=" + rowId;
 
-        /*
-         * CHANGE 4:
-         */
-        // TODO: Update data in the row with new fields.
-        // TODO: Also change the function's arguments to be what you need!
         // Create row's data:
         ContentValues newValues = new ContentValues();
         newValues.put(KEY_ISSUEDATE, issuedate);
@@ -266,12 +253,6 @@ public class InvoiceAdapter
 
         String where = KEY_ROWID + "=" + rowId;
 
-        /*
-         * CHANGE 4:
-         */
-        // TODO: Update data in the row with new fields.
-        // TODO: Also change the function's arguments to be what you need!
-        // Create row's data:
         ContentValues newValues = new ContentValues();
         newValues.put(KEY_STATUS, status);
 

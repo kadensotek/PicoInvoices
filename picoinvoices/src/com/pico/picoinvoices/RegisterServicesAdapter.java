@@ -1,6 +1,3 @@
-// ------------------------------------ DBADapter.java ---------------------------------------------
-
-// TODO: Change the package to match your project.
 package com.pico.picoinvoices;
 
 import android.content.ContentValues;
@@ -9,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-// TO USE:
-// Change the package (at top) to match your project.
-// Search for "TODO", and make the appropriate changes.
 public class RegisterServicesAdapter  
 {
 
@@ -22,15 +16,11 @@ public class RegisterServicesAdapter
     // DB Fields
     public static final String KEY_ROWID = "_id";
     public static final int COL_ROWID = 0;
-    /*
-     * CHANGE 1:
-     */
-    // TODO: Setup your fields here:
+    
     public static final String KEY_NAME = "name";
     public static final String KEY_TYPE = "type";
     public static final String KEY_RATE = "rate";
     
-    // TODO: Setup your field numbers here (0 = KEY_ROWID, 1=...)
     public static final int COL_NAME = 1;
     public static final int COL_TYPE= 2;
     public static final int COL_RATE= 3;
@@ -73,11 +63,6 @@ public class RegisterServicesAdapter
     // Add a new set of values to the database.
     public long insertRow(String name, String type, String rate) 
     {
-        /*
-         * CHANGE 3:
-         */     
-        // TODO: Update data in the row with new fields.
-        // TODO: Also change the function's arguments to be what you need!
         // Create row's data:
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAME, name);
@@ -140,17 +125,10 @@ public class RegisterServicesAdapter
     {
         String where = KEY_ROWID + "=" + rowId;
 
-        /*
-         * CHANGE 4:
-         */
-        // TODO: Update data in the row with new fields.
-        // TODO: Also change the function's arguments to be what you need!
-        // Create row's data:
         ContentValues newValues = new ContentValues();
         newValues.put(KEY_NAME, name);
         newValues.put(KEY_TYPE, type);
         newValues.put(KEY_RATE, rate);
-        
         
         // Insert it into the database.
         return db.update(DATABASE_TABLE, newValues, where, null) != 0;

@@ -19,18 +19,7 @@ public class DBAdapter
             + InvoiceAdapter.KEY_ROWID
             + " integer primary key autoincrement, "
 
-            /*
-             * CHANGE 2:
-             */
-            // TODO: Place your fields here!
-            // + KEY_{...} + " {type} not null"
-            // - Key is the column name you created above.
-            // - {type} is one of: text, integer, real, blob
-            // (http://www.sqlite.org/datatype3.html)
-            // - "not null" means it is a required field (must be given a
-            // value).
-            // NOTE: All must be comma separated (end of line!) Last one must
-            // have NO comma!!
+            /* Sets up invoice key fields*/
             + InvoiceAdapter.KEY_ISSUEDATE + " string not null, "
             + InvoiceAdapter.KEY_CUSTOMER + " integer not null, "
             + InvoiceAdapter.KEY_DUEDATE + " string not null, "
@@ -48,18 +37,7 @@ public class DBAdapter
             + ClientAdapter.KEY_ROWID
             + " integer primary key autoincrement, "
 
-            /*
-             * CHANGE 2:
-             */
-            // TODO: Place your fields here!
-            // + KEY_{...} + " {type} not null"
-            // - Key is the column name you created above.
-            // - {type} is one of: text, integer, real, blob
-            // (http://www.sqlite.org/datatype3.html)
-            // - "not null" means it is a required field (must be given a
-            // value).
-            // NOTE: All must be comma separated (end of line!) Last one must
-            // have NO comma!!
+            /* Sets up client key fields */
             + ClientAdapter.KEY_FNAME + " string not null, "
             + ClientAdapter.KEY_LNAME + " string not null, "
             + ClientAdapter.KEY_ADDRESS + " string not null, "
@@ -77,18 +55,7 @@ public class DBAdapter
             + RegisterServicesAdapter.KEY_ROWID
             + " integer primary key autoincrement, "
 
-            /*
-             * CHANGE 2:
-             */
-            // TODO: Place your fields here!
-            // + KEY_{...} + " {type} not null"
-            // - Key is the column name you created above.
-            // - {type} is one of: text, integer, real, blob
-            // (http://www.sqlite.org/datatype3.html)
-            // - "not null" means it is a required field (must be given a
-            // value).
-            // NOTE: All must be comma separated (end of line!) Last one must
-            // have NO comma!!
+            /*Service key fields */
             + RegisterServicesAdapter.KEY_NAME + " string not null, "
             + RegisterServicesAdapter.KEY_RATE + " string not null, "
             + RegisterServicesAdapter.KEY_TYPE + " string "
