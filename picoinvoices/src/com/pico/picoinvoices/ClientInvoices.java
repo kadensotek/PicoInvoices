@@ -17,6 +17,7 @@ public class ClientInvoices extends Activity
 
     private InvoiceAdapter _myDb = null;
     private SPAdapter _sp = null;
+    private boolean hasInvoices;
 
     // //////////////////////////////////////////////////////
     // ///*
@@ -89,37 +90,30 @@ public class ClientInvoices extends Activity
             case R.id.action_editClient:
                 Intent edit = new Intent(this, EditClientInfo.class);
                 startActivity(edit);
-//                finish();
                 return true;
             case R.id.action_addInvoice:
                 Intent intent = new Intent(this, AddNewInvoice.class);
                 startActivity(intent);
-//                finish();
                 return true;
             case R.id.goto_Home:
                 Intent home = new Intent(this, Home.class);
                 startActivity(home);
-//                finish();
                 return true;
             case R.id.goto_Clients:
                 Intent clients = new Intent(this, ClientList.class);
                 startActivity(clients);
-//                finish();
                 return true;
             case R.id.goto_ManageInvoices:
                 Intent manage = new Intent(this, ManageInvoices.class);
                 startActivity(manage);
-                finish();
                 return true;
             case R.id.goto_Services:
                 Intent services = new Intent(this, RegisterServices.class);
                 startActivity(services);
-//                finish();
                 return true;
             case R.id.goto_Settings: 
                 Intent settings = new Intent(this, Settings.class);
                 startActivity(settings);
-//                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -184,6 +178,9 @@ public class ClientInvoices extends Activity
         String[] client_name_list = new String[] { InvoiceAdapter.KEY_ROWID,
                 InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_DUEDATE, InvoiceAdapter.KEY_STATUS,
                 InvoiceAdapter.KEY_CUSTOMER };
+        
+        System.out.println("Does this trip");
+        
         int[] ints = new int[] {
                 R.id.invoice_listview_layout_template_txtInvoiceNumber,
                 R.id.invoice_listview_layout_template_txtDate,
@@ -199,7 +196,6 @@ public class ClientInvoices extends Activity
         ListView list = (ListView) findViewById(R.id.client_invoices_listView);
         list.setAdapter(adapter);
 
-        // Close the database
         closeDB();
     }
 
@@ -239,95 +235,36 @@ public class ClientInvoices extends Activity
         Cursor cursor = _myDb.query(
                 new String[] { Long.toString(_sp.getClientID()) },
                 ClientAdapter.DATABASE_TABLE);
+        
         if (cursor.moveToFirst())
         {
             name += cursor.getString(ClientAdapter.COL_FNAME);
             name += " ";
             name += cursor.getString(ClientAdapter.COL_LNAME);
-        } else
+        }
+        else
+        {
             Toast.makeText(ClientInvoices.this, "Failed to load client name.",
                     Toast.LENGTH_SHORT).show();
+        }
 
         cursor.close();
         closeDB();
         return name;
     }
+       
     // ////////////////////////////////////////////////////////
     // /////*
     // /////* OnClick listener for reports
     // /////*
     // ////////////////////////////////////////////////////////
+    
+    
+    // TODO Implement method to disable this if no invoices. Crashes now
     public void onClick_Reports()
     {
         System.out.println("Reports");
         Intent intent = new Intent(this, Reports.class);
         startActivity(intent);
     }
-    
-    
-    // ////////////////////////////////////////////////////////
-    // /////*
-    // /////* OnClick listener for adding an invoice as described in the xml
-    // /////*
-    // ////////////////////////////////////////////////////////
-    // private String getDateTime() {
-    // SimpleDateFormat dateFormat = new SimpleDateFormat(
-    // "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-    // Date date = new Date();
-    // return dateFormat.format(date);
-    // }
-    // private String getType()
-    // {
-    // String[] types = new String[] {"Education", "Packaging", "Construction",
-    // "Insurance", "Finance", "Repair", "Installation", "Advertising",
-    // "Business Management", "Medical Services",
-    // "Legal Services"};
-    // Random randomGenerator = new Random();
-    // int rand = randomGenerator.nextInt(11);
-    //
-    // return types[rand];
-    //
-    // }
-    // private String getName()
-    // {
-    // String[] types = new String[] {"Lawn Mow", "Spring Cleanup", "Mulch",
-    // "Trim", "Clean Gutters", "Plow Driveway", "Weed", "Hedge Clipping"};
-    // Random randomGenerator = new Random();
-    // int rand = randomGenerator.nextInt(8);
-    //
-    // return types[rand];
-    // }
-    // private String getPrice() {
-    // Random randomGenerator = new Random();
-    // int rand = randomGenerator.nextInt(100) + 20;
-    // String value = Integer.toString(rand);
-    //
-    // return value;
-    // }
-    // private String getStatus() {
-    // String[] types = new String[] {"Open", "Pending", "Paid"};
-    // Random randomGenerator = new Random();
-    // int rand = randomGenerator.nextInt(3);
-    //
-    // return types[rand];
-    // }
-    // public void onClick_AddInvoice(View v)
-    // {
-    // openDB();
-    // String issuedate = getDateTime();
-    // String customer = Long.toString(_sp.getClientID());
-    // String duedate = getDateTime();
-    // String priceservice = getPrice();
-    // String service = getName();
-    // String amountdue = getPrice();
-    // String status = getStatus();
-    //
-    // _myDb.insertRow(issuedate, customer, duedate, priceservice, service,
-    // amountdue, status);
-    // closeDB();
-    // refresh();
-    // // Intent intent = new Intent(this, AddNewInvoice.class);
-    // // startActivity(intent);
-    // }
-
 }

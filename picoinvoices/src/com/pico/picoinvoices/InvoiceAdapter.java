@@ -9,11 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-// TO USE:
-// Change the package (at top) to match your project.
-// Search for "TODO", and make the appropriate changes.
-
-
 public class InvoiceAdapter
 {
 
@@ -24,10 +19,7 @@ public class InvoiceAdapter
     // DB Fields
     public static final String KEY_ROWID = "_id";
     public static final int COL_ROWID = 0;
-    /*
-     * CHANGE 1:
-     */
-    // TODO: Setup your fields here:
+
     public static final String KEY_ISSUEDATE = "issuedate";
     public static final String KEY_CUSTOMER = "customer";
     public static final String KEY_SERVICE = "service";
@@ -36,7 +28,6 @@ public class InvoiceAdapter
     public static final String KEY_AMOUNTDUE = "amountdue";
     public static final String KEY_STATUS = "status";
 
-    // TODO: Setup your field numbers here (0 = KEY_ROWID, 1=...)
     public static final int COL_ISSUEDATE = 1;
     public static final int COL_CUSTOMER = 2;
     public static final int COL_DUEDATE = 3;
@@ -50,10 +41,8 @@ public class InvoiceAdapter
             KEY_ISSUEDATE, KEY_CUSTOMER, KEY_DUEDATE,
             KEY_PRICESERVICE, KEY_SERVICE, KEY_AMOUNTDUE, KEY_STATUS };
 
-    // DB info: it's name, and the table we are using (just one).
     public static final String DATABASE_TABLE = "invoices";
 
-    // Context of application who uses us.
     private final Context context;
 
     private DatabaseHelper myDBHelper;
@@ -83,7 +72,8 @@ public class InvoiceAdapter
     }
 
     // Add a new set of values to the database.
-    public long insertRow(String issuedate, String customer,String duedate, String priceservice, String service, String amountdue, String status)
+    public long insertRow(String issuedate, String customer,String duedate, String priceservice, 
+                            String service, String amountdue, String status)
     {
         /*
          * CHANGE 3:
@@ -215,6 +205,26 @@ public class InvoiceAdapter
             c.moveToFirst();
         }
         return c;
+    }
+    
+    // Return if customer has invoices associated 
+    public boolean customerHasInvoices(long rowId)
+    {
+        boolean hasInvoices;
+        String where = KEY_CUSTOMER + "=" + rowId;
+        Cursor c = db.query(true, DATABASE_TABLE, ALL_KEYS, where, null, null,
+                null, null, null);
+        
+        if (c != null)
+        {
+            hasInvoices=true;
+        }
+        else
+        {
+            hasInvoices=false;
+        }
+        
+        return hasInvoices;
     }
    
 
