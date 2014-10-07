@@ -259,7 +259,6 @@ public class ClientInvoices extends Activity
     // /////*
     // ////////////////////////////////////////////////////////
     
-    
     // TODO Implement method to disable this if no invoices. Crashes now
     public void onClick_Reports()
     {
