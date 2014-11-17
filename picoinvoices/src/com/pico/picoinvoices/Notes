@@ -13,16 +13,16 @@ Basic Requirements to be completed
 			-->This is tied to the objective above... There needs to be a good way to search the db and parse for the number of services/goods
 		   		in an effective manner to be used for reporting.
 		   
-( )Settings activity (email, time for notification, number of invoices to display, etc...)
+(*)Settings activity (email, time for notification, number of invoices to display, etc...)
 		-->Currently in progress
 		
-	( )Import/Export capabilites
+	(*)Import/Export capabilites
 			-->Accessed via settings 
 ( )Create an edit view for specific invoices
 
 (*)Validate data before inserting/updating
 
-( )Overall look and feel of application
+(*)Overall look and feel of application
 
 (*)Email functionality
 		( )Format the email properly so that the invoice looks correct.			
@@ -41,41 +41,3 @@ May not be completed before EoS
 
 ( )Edit all activities for final release
 
-
------------------------------------------------------------------------------------------
-Checklist of Activities to check
-
-Mike
-------
-(*)Home
-(*)Drop down menu in the action bar so that "main" activity can get accessed through any other activity
-(*)ClientList
-(*)AddNewClient
-	(*)-->Enforce that every EditText is filled out before accepting
-	(*)-->Figure out best way to cancel ==> Added delete and add button in the action bar 
-	
-(*)ClientInvoice
-	(*)-->Format the listview rows to be more meaningful
-	(*)-->Remove "Add" button
-	
-( )ShowDetailedInvoice 
-	(*)-->Started, need to format the expandable rows better
-	(*)-->Figure out why gmail crashes 
-	( )-->Be able to edit the status of the invoice
-	
-(*)AddNewInvoice
-	(*)-->Format the spinners for appearance
-	(*)-->Figure out why the amount for each service is not parsing properly
-	
-(*)ManageInvoices
-	(*)-->Format the spinner and listview rows
-	(*)-->Create more meaningful sorts
-	(*)-->Figure out why it does not refresh after adding an invoice from this activity ==>Added an initialize function and further lifecycle functions
-
-( )RegisterServices
-	( )-->Create a method for registering new services
-( )LucidCharts for UML?
-
-Bobby
-------
-( )Settings
