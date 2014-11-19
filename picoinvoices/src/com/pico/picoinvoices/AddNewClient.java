@@ -36,12 +36,14 @@ public class AddNewClient extends Activity
         super.onDestroy();
         closeDB();
     }
+
     @Override
     protected void onPause()
     {
         super.onPause();
         closeDB();
     }
+
     @Override
     protected void onStop()
     {
@@ -107,95 +109,108 @@ public class AddNewClient extends Activity
                 .setTitle("Add Client")
                 .setMessage("Do you want to add new client?")
                 .setPositiveButton(android.R.string.yes,
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                            int which)
-                    {
-
-                        // First Name
-                        EditText fname = (EditText) findViewById(R.id.txt_addNew_fname);
-                        final String fname_txt = fname.getText()
-                                .toString().trim()
-                                + " ";
-
-                        // Last Name
-                        EditText lname = (EditText) findViewById(R.id.txt_addNew_lname);
-                        final String lname_txt = lname.getText()
-                                .toString().trim();
-
-                        // Address
-                        EditText address = (EditText) findViewById(R.id.txt_addNew_address);
-                        final String address_txt = address.getText()
-                                .toString().trim();
-
-                        // Phone
-                        EditText phone = (EditText) findViewById(R.id.txt_addNew_phone);
-                        final String phone_txt = phone.getText()
-                                .toString().trim();
-
-                        // EMail
-                        EditText email = (EditText) findViewById(R.id.txt_addNew_email);
-                        final String email_txt = email.getText()
-                                .toString().trim();
-                        
-                        //Check to make sure that the fields are filled out
-                        //Do not need to do sqlinjection checking here because ContentValues are used to insert into DB
-                        if (fname_txt.matches(" ") || lname_txt.matches("") || address_txt.matches("") || phone_txt.matches("") || email_txt.matches(""))
+                        new DialogInterface.OnClickListener()
                         {
-                            Toast.makeText(getBaseContext(), "Please fill out all fields", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            
-                            myDb.insertRow(fname_txt, lname_txt,address_txt, phone_txt, email_txt,"");
-                            // Call finish() to prevent the flow of
-                            // activities from accessing this activity from
-                            // the backstack
-                            Intent intent =  new Intent(AddNewClient.this, ClientList.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                })
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which)
+                            {
+
+                                // First Name
+                                EditText fname = (EditText) findViewById(R.id.txt_addNew_fname);
+                                final String fname_txt = fname.getText()
+                                        .toString().trim()
+                                        + " ";
+
+                                // Last Name
+                                EditText lname = (EditText) findViewById(R.id.txt_addNew_lname);
+                                final String lname_txt = lname.getText()
+                                        .toString().trim();
+
+                                // Address
+                                EditText address = (EditText) findViewById(R.id.txt_addNew_address);
+                                final String address_txt = address.getText()
+                                        .toString().trim();
+
+                                // Phone
+                                EditText phone = (EditText) findViewById(R.id.txt_addNew_phone);
+                                final String phone_txt = phone.getText()
+                                        .toString().trim();
+
+                                // EMail
+                                EditText email = (EditText) findViewById(R.id.txt_addNew_email);
+                                final String email_txt = email.getText()
+                                        .toString().trim();
+
+                                // Check to make sure that the fields are filled
+                                // out
+                                // Do not need to do sqlinjection checking here
+                                // because ContentValues are used to insert into
+                                // DB
+                                if (fname_txt.matches(" ")
+                                        || lname_txt.matches("")
+                                        || address_txt.matches("")
+                                        || phone_txt.matches("")
+                                        || email_txt.matches(""))
+                                {
+                                    Toast.makeText(getBaseContext(),
+                                            "Please fill out all fields",
+                                            Toast.LENGTH_LONG).show();
+                                } else
+                                {
+
+                                    myDb.insertRow(fname_txt, lname_txt,
+                                            address_txt, phone_txt, email_txt,
+                                            "");
+                                    // Call finish() to prevent the flow of
+                                    // activities from accessing this activity
+                                    // from
+                                    // the backstack
+                                    Intent intent = new Intent(
+                                            AddNewClient.this, ClientList.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        })
                 .setNegativeButton(android.R.string.no,
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                            int which)
-                    {
-                        
-                    }
-                }).setIcon(R.drawable.ic_launcher).show();
+                        new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which)
+                            {
+
+                            }
+                        }).setIcon(R.drawable.ic_launcher).show();
 
     }
+
     public void onClick_cancelAdd()
     {
         new AlertDialog.Builder(this)
-        .setTitle("Add Client")
-        .setMessage("Cancel add?")
-        .setPositiveButton(android.R.string.yes,
-        new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog,
-                    int which)
-            {
-               finish();
-            }
-        })
-        .setNegativeButton(android.R.string.no,
-        new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog,
-                    int which)
-            {
-                //Do nothing to go back to the current entry
-            }
-        }).setIcon(R.drawable.ic_launcher).show();
+                .setTitle("Add Client")
+                .setMessage("Cancel add?")
+                .setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which)
+                            {
+                                finish();
+                            }
+                        })
+                .setNegativeButton(android.R.string.no,
+                        new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which)
+                            {
+                                // Do nothing to go back to the current entry
+                            }
+                        }).setIcon(R.drawable.ic_launcher).show();
     }
 
 }

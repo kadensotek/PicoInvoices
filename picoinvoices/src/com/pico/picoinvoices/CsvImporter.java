@@ -23,38 +23,37 @@ public class CsvImporter
         return readDocumentInvoice(contents);
     }
 
-    private List<InvoiceCSV> readDocumentInvoice(String contents) throws IOException
+    private List<InvoiceCSV> readDocumentInvoice(String contents)
+            throws IOException
     {
         String line = null;
         Scanner scanner = new Scanner(contents);
         List<InvoiceCSV> invoices = new ArrayList<InvoiceCSV>();
-        
+
         line = scanner.nextLine();
-        
-        while(scanner.hasNextLine())
+
+        while (scanner.hasNextLine())
         {
-            if(line.equals("invoices"))
+            if (line.equals("invoices"))
             {
-                while(scanner.hasNextLine())
+                while (scanner.hasNextLine())
                 {
                     line = scanner.nextLine();
-                    
-                    if(!line.equals(""))
+
+                    if (!line.equals(""))
                     {
                         invoices.add(readInvoice(line));
-                    }
-                    else
+                    } else
                     {
                         break;
                     }
                 }
-            }
-            else
+            } else
             {
                 line = scanner.nextLine();
             }
         }
-        
+
         scanner.close();
         return invoices;
     }
@@ -98,71 +97,69 @@ public class CsvImporter
         String service = null;
         String amountdue = null;
         String status = null;
-        
+
         String[] segments = line.split(",");
-        
-        id            = segments[0];
-        issuedate     = segments[1];
-        customer      = segments[2];
-        duedate       = segments[3];
-        priceservice  = segments[4];
-        service       = segments[5];
-        amountdue     = segments[6];
-        status        = segments[7];
+
+        id = segments[0];
+        issuedate = segments[1];
+        customer = segments[2];
+        duedate = segments[3];
+        priceservice = segments[4];
+        service = segments[5];
+        amountdue = segments[6];
+        status = segments[7];
 
         return new InvoiceCSV(id, issuedate, customer, duedate, priceservice,
                 service, amountdue, status);
     }
 
-    
     // //////////////////////////////////////////////////////
     // ///*
     // ///* Client functions
     // ///*
     // //////////////////////////////////////////////////////
-    
+
     /* Parses through all clients */
     public List<ClientCSV> parseClients(String contents) throws IOException
     {
         return readDocumentClient(contents);
     }
 
-    private List<ClientCSV> readDocumentClient(String contents) throws IOException
+    private List<ClientCSV> readDocumentClient(String contents)
+            throws IOException
     {
         String line = null;
         Scanner scanner = new Scanner(contents);
         List<ClientCSV> clients = new ArrayList<ClientCSV>();
-        
+
         line = scanner.nextLine();
-        
-        while(scanner.hasNextLine())
+
+        while (scanner.hasNextLine())
         {
-            if(line.equals("contactInfo"))
+            if (line.equals("contactInfo"))
             {
-                while(scanner.hasNextLine())
+                while (scanner.hasNextLine())
                 {
                     line = scanner.nextLine();
-                    
-                    if(!line.equals(""))
+
+                    if (!line.equals(""))
                     {
                         clients.add(readClient(line));
-                    }
-                    else
+                    } else
                     {
                         break;
                     }
                 }
-            }
-            else
+            } else
             {
                 line = scanner.nextLine();
             }
         }
-        
+
         scanner.close();
         return clients;
     }
-    
+
     public class ClientCSV
     {
         public final String id;
@@ -173,7 +170,8 @@ public class CsvImporter
         public final String email;
         public final String business;
 
-        private ClientCSV(String id, String fname, String lname, String address, String phone, String email, String business)
+        private ClientCSV(String id, String fname, String lname,
+                String address, String phone, String email, String business)
         {
             this.id = id;
             this.fname = fname;
@@ -184,7 +182,7 @@ public class CsvImporter
             this.business = business;
         }
     }
-    
+
     /* Parses the contents of an individual invoice */
     private ClientCSV readClient(String line)
     {
@@ -195,80 +193,87 @@ public class CsvImporter
         String phone = null;
         String email = null;
         String business = null;
-        
+
         String[] segments = line.split(",");
-        
+
         int i = 0;
-        id        = segments[i++];
-        fname     = segments[i++];
-        lname     = segments[i++];
-        address   = segments[i++];
-        
-        if(address.startsWith("\""))
+        id = segments[i++];
+        fname = segments[i++];
+        lname = segments[i++];
+        address = segments[i++];
+
+        if (address.startsWith("\""))
         {
-            while(!address.endsWith("\""))
+            while (!address.endsWith("\""))
             {
-                address = address + "," + segments[i++];  /* Appends next segment until closing quote is found */
+                address = address + "," + segments[i++]; /*
+                                                          * Appends next segment
+                                                          * until closing quote
+                                                          * is found
+                                                          */
             }
-            address = address.substring(1,address.length()-1);  /* Trims leading and trailing quotes */
+            address = address.substring(1, address.length() - 1); /*
+                                                                   * Trims
+                                                                   * leading and
+                                                                   * trailing
+                                                                   * quotes
+                                                                   */
         }
-        
-        phone     = segments[i++];
-        email     = segments[i++];
-//        business  = segments[i];
+
+        phone = segments[i++];
+        email = segments[i++];
+        // business = segments[i];
 
         return new ClientCSV(id, fname, lname, address, phone, email, business);
     }
 
-    
     // //////////////////////////////////////////////////////
     // ///*
     // ///* Service functions
     // ///*
     // //////////////////////////////////////////////////////
-    
+
     /* Parses through all services */
     public List<ServiceCSV> parseServices(String contents) throws IOException
     {
         return readDocumentService(contents);
     }
 
-    private List<ServiceCSV> readDocumentService(String contents) throws IOException
+    private List<ServiceCSV> readDocumentService(String contents)
+            throws IOException
     {
         String line = null;
         Scanner scanner = new Scanner(contents);
         List<ServiceCSV> services = new ArrayList<ServiceCSV>();
-        
+
         line = scanner.nextLine();
-        
-        while(scanner.hasNextLine())
+
+        while (scanner.hasNextLine())
         {
-            if(line.equals("services"))
+            if (line.equals("services"))
             {
-                while(scanner.hasNextLine())
+                while (scanner.hasNextLine())
                 {
                     line = scanner.nextLine();
-                    
-                    if(!line.equals(""))
+
+                    if (!line.equals(""))
                     {
                         services.add(readService(line));
-                    }
-                    else
+                    } else
                     {
                         break;
                     }
                 }
-            }
-            else
+            } else
             {
                 line = scanner.nextLine();
             }
         }
-        
+
         scanner.close();
         return services;
     }
-    
+
     public static class ServiceCSV
     {
         public final String id;
@@ -284,20 +289,20 @@ public class CsvImporter
             this.type = type;
         }
     }
-    
+
     private ServiceCSV readService(String line)
     {
-        String id   = null;
+        String id = null;
         String name = null;
         String rate = null;
         String type = null;
-        
+
         String[] segments = line.split(",");
-        
-        id      = segments[0];
-        name    = segments[1];
-        rate    = segments[2];
-        type    = segments[3];
+
+        id = segments[0];
+        name = segments[1];
+        rate = segments[2];
+        type = segments[3];
 
         return new ServiceCSV(id, name, rate, type);
     }

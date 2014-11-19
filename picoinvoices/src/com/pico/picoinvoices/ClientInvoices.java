@@ -17,7 +17,6 @@ public class ClientInvoices extends Activity
 
     private InvoiceAdapter _myDb = null;
     private SPAdapter _sp = null;
-    private boolean hasInvoices;
 
     // //////////////////////////////////////////////////////
     // ///*
@@ -52,12 +51,14 @@ public class ClientInvoices extends Activity
         super.onDestroy();
         closeDB();
     }
+
     @Override
     protected void onPause()
     {
         super.onPause();
         closeDB();
     }
+
     @Override
     protected void onStop()
     {
@@ -111,7 +112,7 @@ public class ClientInvoices extends Activity
                 Intent services = new Intent(this, RegisterServices.class);
                 startActivity(services);
                 return true;
-            case R.id.goto_Settings: 
+            case R.id.goto_Settings:
                 Intent settings = new Intent(this, Settings.class);
                 startActivity(settings);
                 return true;
@@ -176,11 +177,11 @@ public class ClientInvoices extends Activity
         // String array to use as a map for which db rows should be mapped to
         // which element in the template layout
         String[] client_name_list = new String[] { InvoiceAdapter.KEY_ROWID,
-                InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_DUEDATE, InvoiceAdapter.KEY_STATUS,
-                InvoiceAdapter.KEY_CUSTOMER };
-        
+                InvoiceAdapter.KEY_ISSUEDATE, InvoiceAdapter.KEY_DUEDATE,
+                InvoiceAdapter.KEY_STATUS, InvoiceAdapter.KEY_CUSTOMER };
+
         System.out.println("Does this trip");
-        
+
         int[] ints = new int[] {
                 R.id.invoice_listview_layout_template_txtInvoiceNumber,
                 R.id.invoice_listview_layout_template_txtDate,
@@ -235,14 +236,13 @@ public class ClientInvoices extends Activity
         Cursor cursor = _myDb.query(
                 new String[] { Long.toString(_sp.getClientID()) },
                 ClientAdapter.DATABASE_TABLE);
-        
+
         if (cursor.moveToFirst())
         {
             name += cursor.getString(ClientAdapter.COL_FNAME);
             name += " ";
             name += cursor.getString(ClientAdapter.COL_LNAME);
-        }
-        else
+        } else
         {
             Toast.makeText(ClientInvoices.this, "Failed to load client name.",
                     Toast.LENGTH_SHORT).show();
@@ -252,13 +252,13 @@ public class ClientInvoices extends Activity
         closeDB();
         return name;
     }
-       
+
     // ////////////////////////////////////////////////////////
     // /////*
     // /////* OnClick listener for reports
     // /////*
     // ////////////////////////////////////////////////////////
-    
+
     // TODO Implement method to disable this if no invoices. Crashes now
     public void onClick_Reports()
     {

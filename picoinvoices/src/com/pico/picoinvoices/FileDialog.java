@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -42,12 +43,12 @@ public class FileDialog
     public FileDialog(Activity activity, File path)
     {
         this.activity = activity;
-        
+
         if (!path.exists())
         {
             path = Environment.getExternalStorageDirectory();
         }
-        
+
         loadFileList(path);
     }
 
@@ -57,7 +58,7 @@ public class FileDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setTitle(currentPath.getPath());
-        
+
         if (selectDirectoryOption)
         {
             builder.setPositiveButton("Select directory", new OnClickListener()
@@ -78,18 +79,18 @@ public class FileDialog
             {
                 String fileChosen = fileList[which];
                 File chosenFile = getChosenFile(fileChosen);
-                
+
                 if (chosenFile.isDirectory())
                 {
                     loadFileList(chosenFile);
                     dialog.cancel();
                     dialog.dismiss();
                     showDialog();
-                }
-                else
+                } else
                 {
                     setSelectedFilepath(chosenFile.toString());
-//                    System.out.println("Final selected file is " + getSelectedFilepath());
+                    // System.out.println("Final selected file is " +
+                    // getSelectedFilepath());
                     fireFileSelectedEvent(chosenFile);
                 }
             }
@@ -159,46 +160,46 @@ public class FileDialog
     {
         this.currentPath = path;
         List<String> r = new ArrayList<String>();
-        
+
         if (path.exists())
         {
             if (path.getParentFile() != null)
             {
                 r.add(PARENT_DIR);
             }
-            
+
             FilenameFilter filter = new FilenameFilter()
             {
                 @Override
                 public boolean accept(File dir, String filename)
                 {
                     File sel = new File(dir, filename);
-                    
+
                     if (!sel.canRead())
                     {
                         return false;
                     }
-                    
+
                     if (selectDirectoryOption)
                     {
                         return sel.isDirectory();
                     }
                     else
                     {
-                        boolean endsWith = fileEndsWith != null ? filename.toLowerCase().endsWith(fileEndsWith) : true;
+                        boolean endsWith = fileEndsWith != null ? filename.toLowerCase(Locale.ENGLISH).endsWith(fileEndsWith) : true;
                         return endsWith || sel.isDirectory();
                     }
                 }
             };
-            
+
             String[] fileList1 = path.list(filter);
-            
+
             for (String file : fileList1)
             {
                 r.add(file);
             }
         }
-        
+
         fileList = r.toArray(new String[] {});
     }
 
@@ -218,21 +219,21 @@ public class FileDialog
     /* Used to filter file types */
     public void setFileEndsWith(String fileEndsWith)
     {
-        this.fileEndsWith = fileEndsWith != null ? fileEndsWith.toLowerCase() : fileEndsWith;
+        this.fileEndsWith = fileEndsWith != null ? fileEndsWith.toLowerCase(Locale.ENGLISH)
+                : fileEndsWith;
     }
-    
+
     public String getSelectedFilepath()
     {
         return this.selectedFilepath;
     }
-    
+
     public void setSelectedFilepath(String path)
     {
         System.out.println("Setting selected filepath to " + path);
         this.selectedFilepath = path;
     }
 }
-
 
 // //////////////////////////////////////////////////////
 // ///*
@@ -256,7 +257,7 @@ class ListenerList<L>
     public void fireEvent(FireHandler<L> fireHandler)
     {
         List<L> copy = new ArrayList<L>(listenerList);
-        
+
         for (L l : copy)
         {
             fireHandler.fireEvent(l);
