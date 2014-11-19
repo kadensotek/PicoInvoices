@@ -15,5 +15,22 @@
     <string name="title_activity_add_new_service">AddNewService</string>
     <string name="title_activity_reports">Reports</string>
     <string name="title_activity_edit_client_info">EditClientInfo</string>
+    <string name="client_first_name">First Name:</string>
+    <string name="client_last_name">Last Name:</string>
+    <string name="client_address">Address:</string>
+    <string name="client_phone_number">Phone Number:</string>
+    <string name="client_email">Email:</string>
+    <string name="invoice_customer">Customer</string>
+    <string name="invoice_service">Service</string>
+    <string name="invoice_minus">-</string>
+    <string name="invoice_plus">+</string>
+    <string name="invoice_price">Price ($)</string>
+    <string name="service_service">Service:</string>
+    <string name="service_type">Type:</string>
+    <string name="no_client_invoices">No invoices added yet for this client.</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="no_clients_added">No clients added yet.</string>
+    
+    
 
 </resources>

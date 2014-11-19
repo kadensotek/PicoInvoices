@@ -23,14 +23,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/client_invoices_txtClientName"
         android:gravity="center_horizontal|center_vertical"
-        android:text="No invoices added yet for this client." />
+        android:text="@string/no_client_invoices" />
 
     <TextView
         android:id="@+id/client_invoices_txtClientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/client_invoices_listView"
-        android:text="Customer Name"
+        android:text="@string/customer_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

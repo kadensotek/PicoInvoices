@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="First Name:"
+                android:text="@string/client_first_name"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
@@ -69,7 +69,7 @@
                 android:layout_alignRight="@+id/lbl_addNew_fname"
                 android:layout_below="@+id/txt_addNew_fname"
                 android:paddingTop="10dp"
-                android:text="Last Name:"
+                android:text="@string/client_last_name"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_alignLeft="@+id/txt_addNew_lname"
                 android:layout_below="@+id/txt_addNew_lname"
                 android:paddingTop="10dp"
-                android:text="Address:"
+                android:text="@string/client_address"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -89,7 +89,7 @@
                 android:layout_alignLeft="@+id/txt_addNew_address"
                 android:layout_below="@+id/txt_addNew_address"
                 android:paddingTop="10dp"
-                android:text="Phone Number:"
+                android:text="@string/client_phone_number"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -99,7 +99,7 @@
                 android:layout_alignLeft="@+id/lbl_addNew_lname"
                 android:layout_below="@+id/txt_addNew_phone"
                 android:paddingTop="10dp"
-                android:text="Email:"
+                android:text="@string/client_email"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>

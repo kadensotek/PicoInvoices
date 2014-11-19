@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="Customer"
+                android:text="@string/invoice_customer"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/addNewInvoice_customerSpinner"
                 android:layout_below="@+id/addNewInvoice_customerSpinner"
-                android:text="Service"
+                android:text="@string/invoice_service"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
@@ -62,14 +62,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onClick_removeServiceDyn"
-                    android:text="-" />
+                    android:text="@string/invoice_minus" />
 
                 <Button
                     android:id="@+id/addNewInvoice_newServiceButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onClick_addServiceDyn"
-                    android:text="+" />
+                    android:text="invoice_plus" />
 
             </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/addNewInvoice_serviceSpinner"
                 android:layout_below="@+id/addNewInvoice_serviceSpinner"
-                android:text="Price ($)"
+                android:text="@string/invoice_price"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
